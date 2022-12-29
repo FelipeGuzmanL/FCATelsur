@@ -30,9 +30,6 @@
         @if (auth()->check())
         <div class="fixed-plugin">
           <div class="dropdown show-dropdown">
-            <a href="#" data-toggle="dropdown">
-              <i class="fa fa-cog fa-2x"> </i>
-            </a>
             <ul class="dropdown-menu">
               <li class="header-title"> Sidebar Filters</li>
               <li class="adjustments-line">

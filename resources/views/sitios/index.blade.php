@@ -33,7 +33,7 @@
                                     @endif
                                     <div class="row">
                                         <div class="col-12 text-right">
-                                            <a href="{{ route('sitios.create') }}" class="btn btn-sm btn-facebook">Añadir Sitio</a>
+                                            <a href="{{ route('sitios.create') }}" class="btn btn-sm btn-primary">Añadir Sitio</a>
                                         </div>
                                     </div>
                                     <div class="table-responsive">

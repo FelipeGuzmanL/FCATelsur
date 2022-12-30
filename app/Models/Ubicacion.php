@@ -20,6 +20,10 @@ class Ubicacion extends Model
 
     public function ciudad()
     {
-        return $this->belongsTo(Ciudad::class, 'id_ciudad');
+        return $this->belongsTo(Sitio::class, 'id_ciudad');
+    }
+    public function msan()
+    {
+        return $this->hasMany(EquiposMSAN::class, 'id_ubicacion');
     }
 }

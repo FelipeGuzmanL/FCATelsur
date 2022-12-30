@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Ciudad extends Model
+class Sitio extends Model
 {
     use HasFactory;
 
@@ -14,10 +14,12 @@ class Ciudad extends Model
     protected $fillable = [
         'nombre',
         'abreviacion',
+        'descripcion',
+        'url',
     ];
 
     public function ubicacion()
     {
-        return $this->hasMany(Ubicacion::class, 'id_ciudad');
+        return $this->hasMany(Ubicacion::class, 'id_sitio');
     }
 }

@@ -23,6 +23,11 @@ class CreateEquiposMsanTable extends Migration
             $table->integer('numero');
             $table->string('tecnologia');
         });
+        Schema::create('estado', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->string('estado');
+        });
     }
 
     /**

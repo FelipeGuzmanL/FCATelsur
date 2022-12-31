@@ -57,5 +57,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
     Route::resource('sitios', App\Http\Controllers\SitiosController::class);
 	Route::resource('equiposmsan', App\Http\Controllers\EquiposMSANController::class);
+	Route::resource('equiposmsan.slots', App\Http\Controllers\SlotController::class);
 });
 

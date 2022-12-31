@@ -48,6 +48,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/web.php'));
         });
         Route::model('equiposmsan', \App\Models\EquiposMSAN::class);
+        Route::model('slots', \App\Models\Slot::class);
     }
 
     /**

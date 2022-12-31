@@ -56,7 +56,7 @@
                                                     <td>{{ $equipo->Ubicacion->ciudad->nombre }}</td>
                                                     <td>MSAN {{ $equipo->numero }}</td>
                                                     <td>{{ $equipo->Ubicacion->coordenadas }}</td>
-                                                    <td><h5><a href="{{ route('sitios.index')}}">Slots MSAN {{ $equipo->numero }}</a></h5></td>
+                                                    <td><h5><a href="{{ route('equiposmsan.slots.index', $equipo->id)}}">Slots MSAN {{ $equipo->numero }}</a></h5></td>
                                                     <td class="td-actions text-right">
                                                         @if ( $equipo->Ubicacion->link_gmaps == NULL)
                                                         @elseif ( $equipo->Ubicacion->link_gmaps != NULL)

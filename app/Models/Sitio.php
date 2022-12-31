@@ -22,4 +22,8 @@ class Sitio extends Model
     {
         return $this->hasMany(Ubicacion::class, 'id_sitio');
     }
+    public function msan()
+    {
+        return $this->hasMany(EquiposMSAN::class, 'id_sitio');
+    }
 }

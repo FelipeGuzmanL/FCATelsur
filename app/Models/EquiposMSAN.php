@@ -13,8 +13,9 @@ class EquiposMSAN extends Model
 
     protected $fillable = [
         'id_ubicacion',
+        'id_sitio',
         'numero',
-        'slot',
+        'tecnologia',
     ];
 
     public function ubicacion()
@@ -24,5 +25,9 @@ class EquiposMSAN extends Model
     public function slotmsan()
     {
         return $this->hasMany(SlotMSAN::class, 'id_msan');
+    }
+    public function sitio()
+    {
+        return $this->belongsTo(Sitio::class, 'id_sitio');
     }
 }

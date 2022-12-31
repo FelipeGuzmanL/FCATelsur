@@ -15,7 +15,9 @@ class Ubicacion extends Model
         'id_ciudad',
         'direccion',
         'coordenadas',
-        'link-gmaps',
+        'link_gmaps',
+        'sitio_fca',
+        'descripcion_sitio',
     ];
 
     public function ciudad()

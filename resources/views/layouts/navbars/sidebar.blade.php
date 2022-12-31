@@ -17,7 +17,7 @@
             <p>{{ __('Dashboard') }}</p>
         </a>
       </li>
-      <li class="nav-item {{ ($activePage == 'profile' || $activePage == 'user-management') ? ' active' : '' }}">
+      <!--li class="nav-item {{ ($activePage == 'profile' || $activePage == 'user-management') ? ' active' : '' }}">
         <a class="nav-link" data-toggle="collapse" href="#laravelExample" aria-expanded="true">
           <i><img style="width:25px" src="{{ asset('material') }}/img/laravel.svg"></i>
           <p>{{ __('Laravel Examples') }}
@@ -40,20 +40,20 @@
             </li>
           </ul>
         </div>
-      </li>
+      </li-->
       <li class="nav-item{{ $activePage == 'sitios' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('sitios.index') }}">
           <i class="material-icons">location_on</i>
             <p>{{ __('Lista de Sitios') }}</p>
         </a>
       </li>
-      <li class="nav-item{{ $activePage == 'equipos msan' ? ' active' : '' }}">
-        <a class="nav-link" href="{{ route('sitios.index') }}">
+      <li class="nav-item{{ $activePage == 'equiposmsan' ? ' active' : '' }}">
+        <a class="nav-link" href="{{ route('equiposmsan.index') }}">
           <i class="material-icons">dns</i>
             <p>{{ __('Equipos MSAN') }}</p>
         </a>
       </li>
-      <li class="nav-item{{ $activePage == 'table' ? ' active' : '' }}">
+      <!--li class="nav-item{{ $activePage == 'table' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('table') }}">
           <i class="material-icons">content_paste</i>
             <p>{{ __('Table List') }}</p>
@@ -88,7 +88,7 @@
           <i class="material-icons">language</i>
           <p>{{ __('RTL Support') }}</p>
         </a>
-      </li>
+      </li-->
     </ul>
   </div>
 </div>

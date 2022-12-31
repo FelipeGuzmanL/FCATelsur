@@ -18,8 +18,10 @@ class CreateEquiposMsanTable extends Migration
             $table->timestamps();
             $table->UnsignedBigInteger('id_ubicacion');
             $table->foreign('id_ubicacion')->references('id')->on('ubicacion');
+            $table->UnsignedBigInteger('id_sitio');
+            $table->foreign('id_sitio')->references('id')->on('ciudad');
             $table->integer('numero');
-            $table->string('slot');
+            $table->string('tecnologia');
         });
     }
 
@@ -32,6 +34,7 @@ class CreateEquiposMsanTable extends Migration
     {
         Schema::table('equipos_msan', function (Blueprint $table) {
             $table->dropColumn('id_ubicacion');
+            $table->dropColumn('id_sitio');
         });
         Schema::dropIfExists('equipos_msan');
     }

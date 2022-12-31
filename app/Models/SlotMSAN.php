@@ -12,17 +12,22 @@ class SlotMSAN extends Model
     protected $table = 'slot_msan';
 
     protected $fillable = [
-        'id_msan',
-        'olt',
+        'id_slot',
+        'id_cable',
         'sitio_fca',
+        'descripcion_fca',
+        'olt',
         'spl',
-        'descripcion_sitio',
-        'cable',
         'filam',
+        'estado',
     ];
 
     public function msan()
     {
-        return $this->belongsTo(EquiposMSAN::class, 'id_msan');
+        return $this->belongsTo(Slot::class, 'id_slot');
+    }
+    public function cable()
+    {
+        return $this->belongsToMany(Cable::class, 'id_cable');
     }
 }

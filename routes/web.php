@@ -56,5 +56,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
     Route::resource('sitios', App\Http\Controllers\SitiosController::class);
+	Route::resource('equiposmsan', App\Http\Controllers\EquiposMSANController::class);
 });
 

@@ -20,7 +20,9 @@ class CreateUbicacionTable extends Migration
             $table->foreign('id_ciudad')->references('id')->on('ciudad');
             $table->string('direccion')->nullable();
             $table->string('coordenadas')->nullable();
-            $table->text('link-gmaps')->nullable();
+            $table->text('link_gmaps')->nullable();
+            $table->string('sitio_fca')->nullable();
+            $table->text('descripcion_sitio')->nullable();
         });
     }
 

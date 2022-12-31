@@ -42,7 +42,7 @@
                                     <div class="form-group">
                                         <select class="form-control selectpicker" data-style="btn btn-link" id="exampleFormControlSelect1" name="id_ubicacion">
                                         @foreach ( $sitio as $sitio )
-                                            <option value="{{ $sitio->id }}" {{$equipos->Ubicacion->ciudad->id == $sitio->id ? 'selecte d' : ''}}>{{ $sitio->nombre }} - {{ $sitio->abreviacion}}</option>
+                                            <option value="{{ $sitio->id }}" {{$equipos->Ubicacion->ciudad->id == $sitio->id ? 'selected' : ''}}>{{ $sitio->nombre }} - {{ $sitio->abreviacion}}</option>
                                         @endforeach
                                         </select>
                                       </div>

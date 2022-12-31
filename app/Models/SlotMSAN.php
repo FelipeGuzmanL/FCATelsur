@@ -14,6 +14,7 @@ class SlotMSAN extends Model
     protected $fillable = [
         'id_slot',
         'id_cable',
+        'id_estado',
         'sitio_fca',
         'descripcion_fca',
         'olt',
@@ -29,5 +30,9 @@ class SlotMSAN extends Model
     public function cable()
     {
         return $this->belongsToMany(Cable::class, 'id_cable');
+    }
+    public function estado()
+    {
+        return $this->belongsTo(Estado::class, 'id_estado');
     }
 }

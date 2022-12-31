@@ -18,6 +18,8 @@ class CreateSlotTable extends Migration
             $table->timestamps();
             $table->UnsignedBigInteger('id_msan');
             $table->foreign('id_msan')->references('id')->on('equipos_msan');
+            $table->UnsignedBigInteger('id_estado');
+            $table->foreign('id_estado')->references('id')->on('estado');
             $table->string('slot_msan');
         });
     }
@@ -31,6 +33,7 @@ class CreateSlotTable extends Migration
     {
         Schema::table('slot', function (Blueprint $table) {
             $table->dropColumn('id_msan');
+            $table->dropColumn('id_estado');
         });
         Schema::dropIfExists('slot');
     }

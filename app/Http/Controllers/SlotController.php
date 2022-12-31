@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EquiposMSAN;
 use App\Models\Slot;
+use App\Models\Estado;
 use Illuminate\Http\Request;
 
 class SlotController extends Controller
@@ -13,10 +14,11 @@ class SlotController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(EquiposMSAN $equipo, Slot $slots)
+    public function index(EquiposMSAN $equipo, Slot $slots, Estado $estado)
     {
         $slots = Slot::all();
-        return view('slots.index', compact('slots','equipo'));
+        $estado = Estado::all();
+        return view('slots.index', compact('slots','equipo','estado'));
     }
 
     /**
@@ -38,7 +40,7 @@ class SlotController extends Controller
     public function store(Request $request, EquiposMSAN $equipo)
     {
         $slot_msan = $equipo->numero.'-'.$request->slot_msan;
-        $slot = Slot::create(array_merge($request->only('id_msan','slot_msan'),['id_msan'=>$equipo->id,'slot_msan'=>$slot_msan]));
+        $slot = Slot::create(array_merge($request->only('id_msan','id_estado','slot_msan'),['id_msan'=>$equipo->id,'slot_msan'=>$slot_msan,'id_estado'=>$request->id_estado]));
         return redirect()->route('equiposmsan.slots.index', $equipo->id)->with('success','Slot guardado correctamente.');
     }
 
@@ -59,9 +61,9 @@ class SlotController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(EquiposMSAN $equipo, Slot $slot)
     {
-        //
+        return view('slots.edit', compact('equipo','slot'),['estado'=>Estado::all()]);
     }
 
     /**
@@ -71,9 +73,10 @@ class SlotController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, EquiposMSAN $equipo, Slot $slot)
     {
-        //
+        $slot->update(array_merge($request->only('slot_msan','id_estado'),['id_estado'=>$request->id_estado]));
+        return redirect()->route('equiposmsan.slots.index', $equipo->id)->with('success','Slot actualizado correctamente.');
     }
 
     /**
@@ -82,8 +85,9 @@ class SlotController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(EquiposMSAN $equipo, Slot $slot, Request $request)
     {
-        //
+        $slot->delete();
+        return redirect()->route('equiposmsan.slots.index', $equipo->id);
     }
 }

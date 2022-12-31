@@ -13,6 +13,7 @@ class Slot extends Model
 
     protected $fillable = [
         'id_msan',
+        'id_estado',
         'slot_msan',
     ];
 
@@ -24,5 +25,9 @@ class Slot extends Model
     public function slotmsan()
     {
         return $this->hasMany(SlotMSAN::class, 'id_slot');
+    }
+    public function estado()
+    {
+        return $this->belongsTo(Estado::class, 'id_estado');
     }
 }

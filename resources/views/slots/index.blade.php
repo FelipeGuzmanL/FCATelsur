@@ -47,6 +47,19 @@
                                                         @endif
                                                     </div>
                                                 </div>
+                                                <div class="row">
+                                                    <label for="id_estado" class="col-sm-2 col-form-label">Estado</label>
+                                                    <div class="col-sm-7">
+                                                        <div class="form-group">
+                                                            <select class="form-control " data-style="btn btn-link" id="exampleFormControlSelect1" name="id_estado">
+                                                            @foreach ( $estado as $est )
+                                                                <option value="{{ $est->id }}">{{ $est->estado }}</option>
+                                                            @endforeach
+                                                            </select>
+                                                          </div>
+                                                    </div>
+                                                </div>
+
                                             <div class="card-footer ml-auto mr-auto">
                                                 <button type="submit" class="btn btn-primary">{{ __('Guardar') }}</button>
                                             </div>
@@ -58,14 +71,25 @@
                                                 <th>Slot</th>
                                                 <th>Estado</th>
                                                 <th>Ver Tarjeta</th>
+                                                <th>Acciones</th>
                                             </thead>
                                             <tbody>
                                             @foreach ($slots as $slot)
                                             @if ($slot->id_msan == $equipo->id)
                                             <tr>
                                                 <td>{{ $slot->slot_msan }}</td>
-                                                <td>Disponible</td>
+                                                <td>{{ $slot->estado->estado}}</td>
                                                 <td><h5><a href="#">Ver</a></h5></td>
+                                                <td class="td-actions text-center">
+                                                    <a href="{{ route('equiposmsan.slots.edit', [$equipo,$slot]) }}" class="btn btn-warning"><i class="material-icons">edit</i></a>
+                                                    <form action="{{route('equiposmsan.slots.destroy', [$equipo,$slot])}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Estás seguro?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-danger" type="submit" rel="tooltip">
+                                                        <i class="material-icons">close</i>
+                                                    </button>
+                                                    </form>
+                                                </td>
                                             </tr>
                                             @endif
                                             @endforeach

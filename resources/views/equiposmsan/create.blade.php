@@ -39,7 +39,7 @@
                                 <label for="id_ubicacion" class="col-sm-2 col-form-label">Sitio</label>
                                 <div class="col-sm-7">
                                     <div class="form-group">
-                                        <select class="form-control selectpicker" data-style="btn btn-link" id="exampleFormControlSelect1" name="id_ubicacion">
+                                        <select class="form-control" data-style="btn btn-link" id="exampleFormControlSelect1" name="id_ubicacion">
                                         @foreach ( $sitio as $sitio )
                                             <option value="{{ $sitio->id }}">{{ $sitio->nombre }} - {{ $sitio->abreviacion}}</option>
                                         @endforeach

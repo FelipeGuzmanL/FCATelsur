@@ -58,5 +58,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('sitios', App\Http\Controllers\SitiosController::class);
 	Route::resource('equiposmsan', App\Http\Controllers\EquiposMSANController::class);
 	Route::resource('equiposmsan.slots', App\Http\Controllers\SlotController::class);
+	Route::resource('equiposmsan.slots.olt', App\Http\Controllers\SlotMSANController::class);
+	Route::resource('equiposmsan.slots.olt.cable', App\Http\Controllers\CableController::class);
 });
 

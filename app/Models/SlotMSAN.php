@@ -20,7 +20,6 @@ class SlotMSAN extends Model
         'olt',
         'spl',
         'filam',
-        'estado',
     ];
 
     public function msan()
@@ -29,10 +28,14 @@ class SlotMSAN extends Model
     }
     public function cable()
     {
-        return $this->belongsToMany(Cable::class, 'id_cable');
+        return $this->belongsTo(Cable::class, 'id_cable');
     }
-    public function estado()
+    public function estad()
     {
         return $this->belongsTo(Estado::class, 'id_estado');
+    }
+    public function cableslot()
+    {
+        return $this->hasMany(CableSlot::class, 'id_slot');
     }
 }

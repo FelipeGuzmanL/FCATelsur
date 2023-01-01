@@ -15,4 +15,8 @@ class Estado extends Model
     {
         return $this->hasMany(Slot::class, 'id_estado');
     }
+    public function slotmsan()
+    {
+        return $this->hasMany(SlotMSAN::class, 'id_estado');
+    }
 }

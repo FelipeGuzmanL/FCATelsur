@@ -21,4 +21,8 @@ class Cable extends Model
     {
         return $this->hasMany(SlotMSAN::class, 'id_cable');
     }
+    public function cableslot()
+    {
+        return $this->hasMany(CableSlot::class, 'id_cable');
+    }
 }

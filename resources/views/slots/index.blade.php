@@ -38,10 +38,11 @@
                                         @csrf
                                         <div class="card">
                                             <div class="card-body">
+                                                <h4 class="card-tittle text-center text-primary">Añadir Slot MSAN {{ $equipo->numero}}</h4>
                                                 <div class="row">
                                                 <label for="slot_msan" class="col-sm-2 col-form-label">Slot MSAN</label>
                                                     <div class="col-sm-7">
-                                                        <input type="text" class="form-control" name="slot_msan" placeholder="Slot MSAN" value="{{old('slot_msan')}}" autofocus required oninvalid="this.setCustomValidity('Ingrese ID de licitación')" oninput="this.setCustomValidity('')"/>
+                                                        <input type="text" class="form-control" name="slot_msan" placeholder="Slot MSAN  ejemplo: (1-1, 1-2, ...)" value="{{old('slot_msan')}}" autofocus required oninvalid="this.setCustomValidity('Ingrese ID de licitación')" oninput="this.setCustomValidity('')"/>
                                                         @if ($errors->has('slot_msan'))
                                                             <span class="error text-danger" for="input-slot_msan">{{$errors -> first('slot_msan')}}</span>
                                                         @endif
@@ -79,7 +80,7 @@
                                             <tr>
                                                 <td>{{ $slot->slot_msan }}</td>
                                                 <td>{{ $slot->estado->estado}}</td>
-                                                <td><h5><a href="#">Ver</a></h5></td>
+                                                <td><h5><a href="{{route('equiposmsan.slots.olt.index', [$equipo,$slot])}}">Ver</a></h5></td>
                                                 <td class="td-actions text-center">
                                                     <a href="{{ route('equiposmsan.slots.edit', [$equipo,$slot]) }}" class="btn btn-warning"><i class="material-icons">edit</i></a>
                                                     <form action="{{route('equiposmsan.slots.destroy', [$equipo,$slot])}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Estás seguro?')">

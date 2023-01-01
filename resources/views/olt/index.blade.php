@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'equiposmsan', 'titlePage' => 'Lista de Equipos MSAN'])
+@extends('layouts.app', ['activePage' => 'equiposmsan', 'titlePage' => 'Lista de OLT MSAN'])
 @section('content')
     <div class="content">
         <div class="container-fuid">
@@ -8,10 +8,10 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header card-header-primary">
-                                    <h4 class="card-tittle">Lista de Equipos MSAN</h4>
+                                    <h4 class="card-tittle">Lista de OLT MSAN {{ $slot->slot_msan}}</h4>
                                     <div class="row">
                                         <div class="col-7 text-right d-felx">
-                                            <form action="{{route('equiposmsan.index')}}" method="get">
+                                            <form action="{{route('equiposmsan.slots.olt.index', [$equipo,$slot])}}" method="get">
                                                 <div class="form-row">
                                                     <div class="col-sm-4 align-self-center" style="text-align: right">
                                                         <input type="text" class="form-control float-right" name="texto" value="{{$texto ?? ''}}" placeholder="Buscar...">
@@ -23,7 +23,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <p class="card-category">Datos de Equipos MSAN</p>
+                                    <p class="card-category">Datos de OLT MSAN {{$slot->slot_msan}}</p>
                                 </div>
                                 <div class="card-body">
                                     @if (session('success'))
@@ -33,38 +33,49 @@
                                     @endif
                                     <div class="row">
                                         <div class="col-12 text-right">
-                                            <a href="{{ route('equiposmsan.create') }}" class="btn btn-primary">Añadir MSAN</a>
+                                            <a href="{{ route('equiposmsan.slots.olt.create', [$equipo,$slot]) }}" class="btn btn-primary">Añadir OLT</a>
+                                            <a href="{{ route('equiposmsan.slots.index', $equipo->id) }}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>
                                         </div>
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="text-primary">
-                                                <th>Sitio</th>
-                                                <th>Nombre</th>
-                                                <th>Coordenadas</th>
-                                                <th>Slots</th>
+                                                <th>OLT</th>
+                                                <th>Sitio FCA</th>
+                                                <th>SPL</th>
+                                                <th>Descripción Sitio</th>
+                                                <th>Cable</th>
+                                                <th>Filam</th>
+                                                <th>Estado</th>
                                                 <th class="text-right">Acciones</th>
                                             </thead>
                                             <tbody>
-                                            @if (count($equipos)<=0)
+                                            @if (count($olts)<=0)
                                                 <div class="alert alert-danger" style="text-align:center" role="alert">
-                                                    <h4>No se han encontrado equipos</h4>
+                                                    <h4>No se han encontrado olt</h4>
                                                 </div>
                                             @endif
-                                            @foreach ($equipos as $equipo)
+                                            @foreach ($olts as $olt)
+                                                @if ($olt->id_slot == $slot->id)
                                                 <tr>
-                                                    <td>{{ $equipo->Ubicacion->ciudad->nombre }}</td>
-                                                    <td>MSAN {{ $equipo->numero }}</td>
-                                                    <td>{{ $equipo->Ubicacion->coordenadas }}</td>
-                                                    <td><h5><a href="{{ route('equiposmsan.slots.index', $equipo->id)}}">Slots MSAN {{ $equipo->numero }}</a></h5></td>
+                                                    <td>{{ $olt->olt }}</td>
+                                                    <td>{{ $olt->sitio_fca}}</td>
+                                                    <td>{{ $olt->spl}}</td>
+                                                    <td>{{ $olt->descripcion_fca}}</td>
+                                                    @php
+                                                        $cable = $olt->cable
+                                                    @endphp
+                                                    <td><a href="{{ route('equiposmsan.slots.olt.cable.index', [$equipo,$slot,$olt])}}">{{ $olt->cable->nombre_cable}}</a></td>
+                                                    <td>{{ $olt->filam}}</td>
+                                                    @if ($olt->estad->id == "1")
+                                                        <td class="text-success">{{ $olt->estad->estado}}</td>
+                                                    @endif
+                                                    @if ($olt->estad->id == "2")
+                                                        <td class="text-danger">{{ $olt->estad->estado}}</td>
+                                                    @endif
                                                     <td class="td-actions text-right">
-                                                        @if ( $equipo->Ubicacion->link_gmaps == NULL)
-                                                        @elseif ( $equipo->Ubicacion->link_gmaps != NULL)
-                                                            <a href="{{ $equipo->Ubicacion->link_gmaps }}" target="_blank" class="btn btn-success"><i class="material-icons">location_on</i></a>
-                                                        @endif
-                                                        <!--a href="{{ route('equiposmsan.show', $equipo->id) }}" class="btn btn-info"><i class="material-icons">library_books</i></a-->
-                                                        <a href="{{ route('equiposmsan.edit', $equipo->id) }}" class="btn btn-warning"><i class="material-icons">edit</i></a>
-                                                        <form action="{{route('equiposmsan.destroy', $equipo->id)}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Estás seguro?')">
+                                                        <a href="{{ route('equiposmsan.slots.olt.edit', [$equipo,$slot,$olt]) }}" class="btn btn-warning"><i class="material-icons">edit</i></a>
+                                                        <form action="{{route('equiposmsan.slots.olt.destroy', [$equipo,$slot,$olt])}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Estás seguro?')">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="btn btn-danger" type="submit" rel="tooltip">
@@ -73,6 +84,7 @@
                                                         </form>
                                                     </td>
                                                 </tr>
+                                                @endif
                                                 @endforeach
                                             </tbody>
                                         </table>

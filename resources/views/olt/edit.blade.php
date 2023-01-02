@@ -31,9 +31,13 @@
                                 <label for="id_cable" class="col-sm-2 col-form-label">Cable</label>
                                 <div class="col-sm-7">
                                     <div class="form-group">
-                                        <select class="form-control " data-style="btn btn-link" id="exampleFormControlSelect1" name="id_cable">
+                                        <select class="form-control micoso" data-style="btn btn-link" id="micoso" name="id_cable">
                                         @foreach ( $cables as $cable )
-                                            <option value="{{ $cable->id }}" {{$cable->id == $olt->cable->id ? 'selected' : ''}}>{{ $cable->nombre_cable }}</option>
+                                            @if ($cable->id == "1")
+                                                <option value="{{ $cable->id }}" {{$cable->id == $olt->cable->id ? 'selected' : ''}}>{{ $cable->nombre_cable }}</option>
+                                            @elseif ($cable->id > "1")
+                                                <option value="{{ $cable->id }}" {{$cable->id == $olt->cable->id ? 'selected' : ''}}>{{ $cable->nombre_cable }} - {{ $cable->sitio->abreviacion }}</option>
+                                            @endif
                                         @endforeach
                                         </select>
                                       </div>
@@ -92,6 +96,15 @@
                         </div>
                     </div>
                 </form>
+                <script>
+                    $("#micoso").select2({
+                    });
+                </script>
+                <style>
+                    .select2 {
+                        width: 100% !important;
+                    }
+                </style>
             </div>
         </div>
     </div>

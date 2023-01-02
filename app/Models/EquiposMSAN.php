@@ -28,6 +28,10 @@ class EquiposMSAN extends Model
     {
         return $this->hasMany(SlotMSAN::class, 'id_msan');
     }
+    public function slot()
+    {
+        return $this->hasMany(Slot::class, 'id_msan');
+    }
     public function sitio()
     {
         return $this->belongsTo(Sitio::class, 'id_sitio');

@@ -117,6 +117,14 @@ class EquiposMSANController extends Controller
      */
     public function destroy(EquiposMSAN $equipo, Request $request)
     {
+        $contador = $equipo->slot;
+        for ($i=1; $i <= count($contador) ; $i++) { 
+            $contador2 = $equipo->slot[$i-1]->slotmsan;
+            for ($i=1; $i <= count($contador2) ; $i++) { 
+                $contador2[$i-1]->delete();
+            }
+            $contador[$i-1]->delete();
+        }
         $equipo->delete();
         $equipo->ubicacion->delete();
         return redirect()->route('equiposmsan.index')->with('success','Equipo MSAN eliminado correctamente.');

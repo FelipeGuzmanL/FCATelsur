@@ -30,7 +30,7 @@
                                 <label for="id_sitio" class="col-sm-2 col-form-label">Sitio</label>
                                 <div class="col-sm-7">
                                     <div class="form-group">
-                                        <select class="form-control" data-style="btn btn-link" id="exampleFormControlSelect1" name="id_sitio">
+                                        <select class="form-control sitios" data-style="btn btn-link" id="sitios" name="id_sitio">
                                         @foreach ( $sitio as $sitio )
                                             <option value="{{ $sitio->id }}">{{ $sitio->nombre }} - {{ $sitio->abreviacion}}</option>
                                         @endforeach
@@ -62,6 +62,15 @@
                     </div>
                 </form>
             </div>
+            <script>
+                $("#sitios").select2({
+                });
+            </script>
+            <style>
+                .select2 {
+                    width: 100% !important;
+                }
+            </style>
         </div>
     </div>
 </div>

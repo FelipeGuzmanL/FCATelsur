@@ -33,7 +33,7 @@
                                     @endif
                                     <div class="row">
                                         <div class="col-12 text-right">
-                                            <a href="{{ route('sitios.create') }}" class="btn btn-sm btn-primary">Añadir Sitio</a>
+                                            <a href="{{ route('sitios.create') }}" class="btn btn-primary">Añadir Sitio</a>
                                         </div>
                                     </div>
                                     <div class="table-responsive">
@@ -74,6 +74,9 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
+                                        <div class="d-flex justify-content-center">
+                                            {!! $sitios->links("pagination::bootstrap-4") !!}
+                                        </div>
                                     </div>
                                 </div>
                         </div>

@@ -88,7 +88,7 @@
                                                 <td><h5><a href="{{route('equiposmsan.slots.olt.index', [$equipo,$slot])}}">Ver Tarjeta</a></h5></td>
                                                 <td class="td-actions text-center">
                                                     <a href="{{ route('equiposmsan.slots.edit', [$equipo,$slot]) }}" class="btn btn-warning"><i class="material-icons">edit</i></a>
-                                                    <form action="{{route('equiposmsan.slots.destroy', [$equipo,$slot])}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Estás seguro?')">
+                                                    <form action="{{route('equiposmsan.slots.destroy', [$equipo,$slot])}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Estás seguro?, Si elimina este Slot, eliminará todas las OLT registradas')">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn btn-danger" type="submit" rel="tooltip">

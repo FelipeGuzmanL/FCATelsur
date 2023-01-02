@@ -64,9 +64,9 @@ class SlotMSANController extends Controller
     public function store(Request $request, EquiposMSAN $equipo, Slot $slot, SlotMSAN $olt)
     {
         $contador = $slot->slotmsan;
-        
+
         if (count($contador)==0){
-            for ($i=1; $i <= $equipo->slotec->slots ; $i++) { 
+            for ($i=1; $i <= $equipo->slotec->slots ; $i++) {
                 $olt = SlotMSAN::create(array_merge($request->only('id_slot','id_cable','id_estado','olt'),[
                     'olt'=>$i,
                     'id_slot'=>$slot->id,
@@ -79,12 +79,12 @@ class SlotMSANController extends Controller
         else{
             return redirect()->route('equiposmsan.slots.olt.index', [$equipo,$slot])->with('failure','OLTs ya creadas.');
         }
-        
+
     }
     public function generarolts(Request $request, EquiposMSAN $equipo, Slot $slot, CableSlot $cableslot)
     {
         dd($equipo);
-        for ($i=1; $i <= $equipo->slotec->slots ; $i++) { 
+        for ($i=1; $i <= $equipo->slotec->slots ; $i++) {
             $olt = SlotMSAN::create(array_merge($request->only('id_slot','id_cable','id_estado','olt'),[
                 'olt'=>$i,
                 'id_slot'=>$slot->id,
@@ -128,7 +128,7 @@ class SlotMSANController extends Controller
     {
         $olt->update(array_merge($request->only('id_cable','id_estado','sitio_fca','descripcion_fca','olt','spl','filam'),[
             'id_cable'=>$request->id_cable,
-            'id_estado'=>$request->id_estado
+            'id_estado'=>'2'
         ]));
         return redirect()->route('equiposmsan.slots.olt.index', [$equipo,$slot,$olt])->with('success','OLT actualizada correctamente.');
     }
@@ -139,9 +139,20 @@ class SlotMSANController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(EquiposMSAN $equipo, Slot $slot, SlotMSAN $olt)
+    public function destroy(Request $request, EquiposMSAN $equipo, Slot $slot, SlotMSAN $olt)
     {
-        $olt->delete();
+        $cable = $olt->cable->id;
+        $estado = $olt->estad->id;
+        $null = NULL;
+        $olt->update(array_merge($request->only('id_cable','id_estado','sitio_fca','descripcion_fca','olt','spl','filam'),[
+            'id_cable'=>'1',
+            'id_estado'=>'1',
+            'sitio_fca'=>$null,
+            'descripcion_fca'=>$null,
+            'spl'=>$null,
+            'filam'=>$null
+        ]));
+        //$olt->delete();
         return redirect()->route('equiposmsan.slots.olt.index', [$equipo,$slot]);
     }
 }

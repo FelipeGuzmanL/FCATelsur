@@ -79,7 +79,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="row">
+                            <!--div class="row">
                                 <label for="id_estado" class="col-sm-2 col-form-label">Estado</label>
                                 <div class="col-sm-7">
                                     <div class="form-group">
@@ -90,7 +90,7 @@
                                         </select>
                                       </div>
                                 </div>
-                            </div>
+                            </div-->
                         <div class="card-footer ml-auto mr-auto">
                             <button type="submit" class="btn btn-primary">{{ __('Guardar') }}</button>
                         </div>

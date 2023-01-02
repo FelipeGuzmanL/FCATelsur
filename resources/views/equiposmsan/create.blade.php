@@ -20,19 +20,36 @@
                             <div class="row">
                             <label for="numero" class="col-sm-2 col-form-label">Numero MSAN</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="numero" placeholder="Numero MSAN" value="{{old('numero')}}" autofocus required oninvalid="this.setCustomValidity('Ingrese ID de licitación')" oninput="this.setCustomValidity('')"/>
+                                    <input type="text" class="form-control" name="numero" placeholder="Numero MSAN" value="{{old('numero')}}" autofocus required oninvalid="this.setCustomValidity('Ingrese numero del MSAN')" oninput="this.setCustomValidity('')"/>
                                     @if ($errors->has('numero'))
                                         <span class="error text-danger" for="input-numero">{{$errors -> first('numero')}}</span>
                                     @endif
                                 </div>
                             </div>
                             <div class="row">
-                                <label for="tecnologia" class="col-sm-2 col-form-label">Tecnología</label>
+                                <label for="id_tecnologia" class="col-sm-2 col-form-label">Tecnología</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="tecnologia" placeholder="Ingrese tecnología" value="{{old('tecnologia')}}">
-                                    @if ($errors->has('tecnologia'))
-                                        <span class="error text-danger" for="input-tecnologia">{{$errors -> first('tecnologia')}}</span>
-                                    @endif
+                                    <div class="form-group">
+                                        <select class="form-control" data-style="btn btn-link" id="exampleFormControlSelect1" name="id_tecnologia" required oninvalid="this.setCustomValidity('Seleccione tecnología')" oninput="this.setCustomValidity('')"/>
+                                            <option disabled selected value="">Seleccione Tecnología</option>
+                                        @foreach ( $tecnologias as $tecnologia )
+                                            <option value="{{ $tecnologia->id }}" >{{ $tecnologia->nombre_tec }}</option>
+                                        @endforeach
+                                        </select>
+                                      </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label for="id_slotec" class="col-sm-2 col-form-label">Slots de Tecnología</label>
+                                <div class="col-sm-7">
+                                    <div class="form-group">
+                                        <select class="form-control" data-style="btn btn-link" id="exampleFormControlSelect1" name="id_slotec" required oninvalid="this.setCustomValidity('Seleccione tecnología')" oninput="this.setCustomValidity('')"/>
+                                            <option disabled selected value="">Seleccione Tecnología</option>
+                                        @foreach ( $slotstec as $slotec )
+                                            <option value="{{ $slotec->id }}" >{{ $slotec->slots }} - {{ $slotec->tecnologia->nombre_tec}}</option>
+                                        @endforeach
+                                        </select>
+                                      </div>
                                 </div>
                             </div>
                             <div class="row">

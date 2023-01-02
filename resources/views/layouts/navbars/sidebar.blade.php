@@ -47,6 +47,12 @@
             <p>{{ __('Lista de Sitios') }}</p>
         </a>
       </li>
+      <li class="nav-item{{ $activePage == 'cable' ? ' active' : '' }}">
+        <a class="nav-link" href="{{ route('cable.index') }}">
+          <i class="material-icons">cable</i>
+            <p>{{ __('Cables') }}</p>
+        </a>
+      </li>
       <li class="nav-item{{ $activePage == 'equiposmsan' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('equiposmsan.index') }}">
           <i class="material-icons">dns</i>

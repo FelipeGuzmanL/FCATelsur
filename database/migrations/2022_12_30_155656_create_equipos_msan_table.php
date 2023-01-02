@@ -20,8 +20,11 @@ class CreateEquiposMsanTable extends Migration
             $table->foreign('id_ubicacion')->references('id')->on('ubicacion');
             $table->UnsignedBigInteger('id_sitio');
             $table->foreign('id_sitio')->references('id')->on('ciudad');
+            $table->UnsignedBigInteger('id_tecnologia');
+            $table->foreign('id_tecnologia')->references('id')->on('tecnologia');
+            $table->UnsignedBigInteger('id_slotec');
+            $table->foreign('id_slotec')->references('id')->on('slots_tec');
             $table->integer('numero');
-            $table->string('tecnologia');
         });
         Schema::create('estado', function (Blueprint $table) {
             $table->id();
@@ -40,6 +43,8 @@ class CreateEquiposMsanTable extends Migration
         Schema::table('equipos_msan', function (Blueprint $table) {
             $table->dropColumn('id_ubicacion');
             $table->dropColumn('id_sitio');
+            $table->dropColumn('id_tecnologia');
+            $table->dropColumn('id_slotec');
         });
         Schema::dropIfExists('equipos_msan');
     }

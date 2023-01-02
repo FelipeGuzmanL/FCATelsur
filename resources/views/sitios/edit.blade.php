@@ -9,8 +9,8 @@
                     @method('PUT')
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-tittle">Actualizar Sitio</h4>
-                            <p class="card-category">Ingresar datos</p>
+                            <h4 class="card-tittle">Sitio {{$sitio->nombre}} - {{$sitio->abreviacion}}</h4>
+                            <p class="card-category">Actualizar datos</p>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -21,16 +21,16 @@
                             <div class="row">
                             <label for="nombre" class="col-sm-2 col-form-label">Nombre Sitio</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="nombre" placeholder="nombre" value="{{old('nombre', $sitio->nombre)}}" autofocus required oninvalid="this.setCustomValidity('Ingrese ID de licitación')" oninput="this.setCustomValidity('')"/>
+                                    <input type="text" class="form-control" name="nombre" placeholder="Nombre Sitio" value="{{old('nombre', $sitio->nombre)}}" autofocus required oninvalid="this.setCustomValidity('Ingrese Nombre del Sitio')" oninput="this.setCustomValidity('')"/>
                                     @if ($errors->has('nombre'))
                                         <span class="error text-danger" for="input-nombre">{{$errors -> first('nombre')}}</span>
                                     @endif
                                 </div>
                             </div>
                             <div class="row">
-                                <label for="abreviacion" class="col-sm-2 col-form-label">Abreviación</label>
+                                <label for="abreviacion" class="col-sm-2 col-form-label">Nemotécnico</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="abreviacion" placeholder="Ingrese nombre abreviacion" value="{{old('abreviacion', $sitio->abreviacion)}}">
+                                    <input type="text" class="form-control" name="abreviacion" placeholder="Ingrese Nemotécnico" value="{{old('abreviacion', $sitio->abreviacion)}}" required oninvalid="this.setCustomValidity('Ingrese nemotécnico')" oninput="this.setCustomValidity('')"/>
                                     @if ($errors->has('abreviacion'))
                                         <span class="error text-danger" for="input-abreviacion">{{$errors -> first('abreviacion')}}</span>
                                     @endif

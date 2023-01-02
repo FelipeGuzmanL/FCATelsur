@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\EquiposMSAN;
 use App\Models\Sitio;
+use App\Models\Tecnologia;
 use App\Models\Ubicacion;
+use App\Models\SlotTecnologia;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
@@ -44,7 +46,7 @@ class EquiposMSANController extends Controller
      */
     public function create()
     {
-        return view('equiposmsan.create', ['equiposmsan'=>EquiposMSAN::all(),'ubicacion'=>Ubicacion::all(),'sitio'=>Sitio::all()]);
+        return view('equiposmsan.create', ['equiposmsan'=>EquiposMSAN::all(),'ubicacion'=>Ubicacion::all(),'sitio'=>Sitio::all(),'tecnologias'=>Tecnologia::all(),'slotstec'=>SlotTecnologia::all()]);
     }
 
     /**
@@ -56,7 +58,12 @@ class EquiposMSANController extends Controller
     public function store(Request $request)
     {
         $ubicacion = Ubicacion::create(array_merge($request->only('id_ciudad','direccion','coordenadas','link_gmaps','sitio_fca','descripcion_sitio'),['id_ciudad'=>$request->id_ubicacion]));
-        $msan = EquiposMSAN::create(array_merge($request->only('id_ubicacion','id_sitio','numero','tecnologia'),['id_ubicacion'=>$ubicacion->id,'id_sitio'=>$request->id_ubicacion]));
+        $msan = EquiposMSAN::create(array_merge($request->only('id_ubicacion','id_sitio','id_tecnologia','id_slotec','numero'),[
+            'id_ubicacion'=>$ubicacion->id,
+            'id_sitio'=>$request->id_ubicacion,
+            'id_tecnologia'=>$request->id_tecnologia,
+            'id_slotec'=>$request->id_slotec
+        ]));
         return redirect()->route('equiposmsan.index')->with('success','Equipo MSAN guardado correctamente.');
     }
 
@@ -79,7 +86,7 @@ class EquiposMSANController extends Controller
      */
     public function edit(EquiposMSAN $equipos)
     {   
-        return view('equiposmsan.edit', compact('equipos'),['ubicacion'=>Ubicacion::all(),'sitio'=>Sitio::all()]);
+        return view('equiposmsan.edit', compact('equipos'),['ubicacion'=>Ubicacion::all(),'sitio'=>Sitio::all(),'tecnologias'=>Tecnologia::all(),'slotstec'=>SlotTecnologia::all()]);
     }
 
     /**
@@ -93,7 +100,12 @@ class EquiposMSANController extends Controller
     {
         $ubicacion = $equipos->Ubicacion;
         $ubicacion->update(array_merge($request->only('id_ciudad','direccion','coordenadas','link_gmaps','sitio_fca','descripcion_sitio'),['id_ciudad'=>$request->id_ubicacion]));
-        $equipos->update(array_merge($request->only('id_ubicacion','id_sitio','numero','tecnologia'),['id_ubicacion'=>$ubicacion->id,'id_sitio'=>$request->id_ubicacion]));
+        $equipos->update(array_merge($request->only('id_ubicacion','id_sitio','id_tecnologia','id_slotec','numero'),[
+            'id_ubicacion'=>$ubicacion->id,
+            'id_sitio'=>$request->id_ubicacion,
+            'id_tecnologia'=>$request->id_tecnologia,
+            'id_slotec'=>$request->id_slotec
+        ]));
         return redirect()->route('equiposmsan.index')->with('success', 'Equipo actualizado correctamente.');
     }
 

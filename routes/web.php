@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    //return view('welcome');
+	return redirect()->route('home');
 });
 Auth::routes();
 
@@ -59,6 +60,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('equiposmsan', App\Http\Controllers\EquiposMSANController::class);
 	Route::resource('equiposmsan.slots', App\Http\Controllers\SlotController::class);
 	Route::resource('equiposmsan.slots.olt', App\Http\Controllers\SlotMSANController::class);
-	Route::resource('equiposmsan.slots.olt.cable', App\Http\Controllers\CableController::class);
+	Route::resource('cable', App\Http\Controllers\CableController::class);
+	Route::get('slots/{olt}/olt', [App\Http\Controllers\SlotMSANController::class, 'generarolts'])->name('generarolts.olt');
+	Route::resource('equiposmsan.slots.olt.cables', App\Http\Controllers\CableUnicoController::class);
 });
 

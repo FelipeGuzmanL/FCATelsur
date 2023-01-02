@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'cable', 'titlePage' => 'Lista de Cables de Fribra'])
+@extends('layouts.app', ['activePage' => 'equiposmsan', 'titlePage' => 'Lista de Cables de Fribra'])
 @section('content')
     <div class="content">
         <div class="container-fuid">
@@ -8,10 +8,10 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header card-header-primary">
-                                    <h4 class="card-tittle">Lista de Cables de Fibra Óptica</h4>
+                                    <h4 class="card-tittle">Cable {{$cables->nombre_cable}} de Fibra Óptica</h4>
                                     <div class="row">
                                         <div class="col-7 text-right d-felx">
-                                            <form action="{{route('cable.index')}}" method="get">
+                                            <form action="{{route('equiposmsan.slots.olt.cables.index', [$equipo,$slot,$olt,$cables])}}" method="get">
                                                 <div class="form-row">
                                                     <div class="col-sm-4 align-self-center" style="text-align: right">
                                                         <input type="text" class="form-control float-right" name="texto" value="{{$texto ?? ''}}" placeholder="Buscar...">
@@ -33,8 +33,7 @@
                                     @endif
                                     <div class="row">
                                         <div class="col-12 text-right">
-                                            <a href="{{ route('cable.create') }}" class="btn btn-primary">Añadir Cable</a>
-                                            <a href="{{ route('cable.index') }}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>
+                                            <a href="{{ route('equiposmsan.slots.olt.index', [$equipo,$slot])}}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>
                                         </div>
                                     </div>
                                     <div class="table-responsive">
@@ -47,25 +46,18 @@
                                                 <th class="text-right">Acciones</th>
                                             </thead>
                                             <tbody>
-                                            @if (count($cables)<=0)
-                                                <div class="alert alert-danger" style="text-align:center" role="alert">
-                                                    <h4>No se han encontrado cables</h4>
-                                                </div>
-                                            @endif
-                                            @foreach ($cables as $cable)
-                                            @if ($cable->id > "1")
                                                 <tr>
-                                                    <td>{{ $cable->nombre_cable }}</td>
-                                                    <td>{{ $cable->sitio->nombre}}</td>
-                                                    <td>{{ $cable->cant_filam}}</td>
-                                                    <td>{{ $cable->cant_minitubos}}</td>
+                                                    <td>{{ $cables->nombre_cable }}</td>
+                                                    <td>{{ $cables->sitio->nombre}}</td>
+                                                    <td>{{ $cables->cant_filam}}</td>
+                                                    <td>{{ $cables->cant_minitubos}}</td>
                                                     <td class="td-actions text-right">
-                                                        @if ( $cable->sitio->url == NULL)
-                                                            @elseif ( $cable->sitio->url != NULL)
-                                                                <a href="{{ $cable->sitio->url }}" target="_blank" class="btn btn-success"><i class="material-icons">location_on</i></a>
+                                                        @if ( $cables->sitio->url == NULL)
+                                                            @elseif ( $cables->sitio->url != NULL)
+                                                                <a href="{{ $cables->sitio->url }}" target="_blank" class="btn btn-success"><i class="material-icons">location_on</i></a>
                                                             @endif
-                                                        <a href="{{ route('cable.edit', $cable->id) }}" class="btn btn-warning"><i class="material-icons">edit</i></a>
-                                                        <form action="{{route('cable.destroy', $cable->id)}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Estás seguro?')">
+                                                        <a href="{{ route('cable.edit', $cables->id) }}" class="btn btn-warning"><i class="material-icons">edit</i></a>
+                                                        <form action="{{route('cable.destroy', $cables->id)}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Estás seguro?')">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="btn btn-danger" type="submit" rel="tooltip">
@@ -74,8 +66,6 @@
                                                         </form>
                                                     </td>
                                                 </tr>
-                                            @endif
-                                            @endforeach
                                             </tbody>
                                         </table>
                                     </div>

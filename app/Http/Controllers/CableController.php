@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Cable;
 use App\Models\EquiposMSAN;
+use App\Models\Sitio;
 use App\Models\Slot;
 use App\Models\SlotMSAN;
+use App\Models\Ubicacion;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 
 class CableController extends Controller
 {
@@ -15,10 +18,30 @@ class CableController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(EquiposMSAN $equipo, Slot $slot, SlotMSAN $olt, Cable $cables)
+    public function index(EquiposMSAN $equipo, Slot $slot, SlotMSAN $olt, Cable $cables, Request $request)
     {
+        if ($request) {
+            $texto = trim($request->get('texto'));
+            $cables = Cable::WhereRaw('UPPER(nombre_cable) LIKE ?', ['%' . strtoupper($texto) . '%'])
+            ->orWhere('cant_filam','LIKE','%'.$texto.'%')
+            ->orWhere('cant_minitubos','LIKE','%'.$texto.'%')
+            ->orWhereHas('sitio', function (Builder $query) use ($texto){
+                $query->whereRaw('UPPER(nombre) LIKE ?', ['%' . strtoupper($texto) . '%']);
+            })
+            ->orderBy('id','asc')
+            ->get();
+
+            return view('cable.index', compact('cables'), ['olts' => $cables, 'texto' => $texto]);
+        }
+
         $cables = Cable::all();
-        return view('cable.index', compact('equipo','slot','olt','cables'));
+        return view('cable.index', compact('cables'));
+    }
+
+    public function index_cable(EquiposMSAN $equipo, Slot $slot, SlotMSAN $olt, Cable $cables, Request $request)
+    {
+        dd($equipo);
+        return view('cable.index_cable', compact('cables'));
     }
 
     /**
@@ -28,7 +51,7 @@ class CableController extends Controller
      */
     public function create()
     {
-        //
+        return view('cable.create',['cables'=>Cable::all(),'ubicacion'=>Ubicacion::all(),'sitio'=>Sitio::all()]);
     }
 
     /**
@@ -39,7 +62,8 @@ class CableController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cable = Cable::create(array_merge($request->only('id_sitio','nombre_cable','cant_filam','cant_minitubos'),['id_sitio'=>$request->id_sitio]));
+        return redirect()->route('cable.index')->with('success','Cable creado correctamente.');
     }
 
     /**
@@ -59,9 +83,9 @@ class CableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Cable $cable)
     {
-        //
+        return view('cable.edit', compact('cable'),['sitios'=>Sitio::all()]);
     }
 
     /**
@@ -71,9 +95,10 @@ class CableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Cable $cable)
     {
-        //
+        $cable->update(array_merge($request->only('id_sitio','nombre_cable','cant_filam','cant_minitubos'),['id_sitio'=>$request->id_sitio]));
+        return redirect()->route('cable.index')->with('success','Cable '.$cable->nombre_cable.' actualizado correctamente.');
     }
 
     /**
@@ -82,8 +107,9 @@ class CableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Cable $cable)
     {
-        //
+        $cable->delete();
+        return redirect()->route('cable.index')->with('succes','Cable'.$cable->nombre_cable.'se ha eliminado correctamente.');
     }
 }

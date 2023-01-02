@@ -31,9 +31,14 @@
                                             {{ session('success') }}
                                         </div>
                                     @endif
+                                    @if (session('failure'))
+                                        <div class="alert alert-danger" role="failure">
+                                            {{ session('failure') }}
+                                        </div>
+                                    @endif
                                     <div class="row">
                                         <div class="col-12 text-right">
-                                            <a href="{{ route('equiposmsan.slots.olt.create', [$equipo,$slot]) }}" class="btn btn-primary">Añadir OLT</a>
+                                            <a href="{{ route('equiposmsan.slots.olt.create', [$equipo,$slot]) }}" class="btn btn-primary">Generar OLTs</a>
                                             <a href="{{ route('equiposmsan.slots.index', $equipo->id) }}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>
                                         </div>
                                     </div>
@@ -62,10 +67,15 @@
                                                     <td>{{ $olt->sitio_fca}}</td>
                                                     <td>{{ $olt->spl}}</td>
                                                     <td>{{ $olt->descripcion_fca}}</td>
-                                                    @php
-                                                        $cable = $olt->cable
-                                                    @endphp
-                                                    <td><a href="{{ route('equiposmsan.slots.olt.cable.index', [$equipo,$slot,$olt])}}">{{ $olt->cable->nombre_cable}}</a></td>
+                                                    @if ($olt->cable->id > "1")
+                                                        @php
+                                                            $cables = $olt->cable
+                                                        @endphp
+                                                        <td><a href="{{ route('equiposmsan.slots.olt.cables.index', [$equipo,$slot,$olt,$cables])}}">{{ $olt->cable->nombre_cable}}</a></td>
+                                                    @endif
+                                                    @if ($olt->cable->id == "1")
+                                                        <td></td>
+                                                    @endif
                                                     <td>{{ $olt->filam}}</td>
                                                     @if ($olt->estad->id == "1")
                                                         <td class="text-success">{{ $olt->estad->estado}}</td>

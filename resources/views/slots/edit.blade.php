@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'sitios', 'titlePage' => 'Actualizar Sitio'])
+@extends('layouts.app', ['activePage' => 'sitios', 'titlePage' => 'Actualizar Slot'])
 @section('content')
 <div class="content">
     <div class="container-fluid">
@@ -9,8 +9,8 @@
                     @method('PUT')
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-tittle">Actualizar Sitio</h4>
-                            <p class="card-category">Ingresar datos</p>
+                            <h4 class="card-tittle">Slot {{ $slot->slot_msan}}</h4>
+                            <p class="card-category">Actualizar datos</p>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -21,7 +21,7 @@
                             <div class="row">
                                 <label for="slot_msan" class="col-sm-2 col-form-label">Slot MSAN</label>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" name="slot_msan" placeholder="Slot MSAN" value="{{old('slot_msan',$slot->slot_msan)}}" autofocus required oninvalid="this.setCustomValidity('Ingrese ID de licitación')" oninput="this.setCustomValidity('')"/>
+                                        <input type="text" class="form-control" name="slot_msan" placeholder="Slot MSAN" value="{{old('slot_msan',$slot->slot_msan)}}" autofocus required oninvalid="this.setCustomValidity('Ingrese Slot MSAN')" oninput="this.setCustomValidity('')"/>
                                         @if ($errors->has('slot_msan'))
                                             <span class="error text-danger" for="input-slot_msan">{{$errors -> first('slot_msan')}}</span>
                                         @endif

@@ -18,7 +18,7 @@ class CreateSlotMsanTable extends Migration
             $table->timestamps();
             $table->UnsignedBigInteger('id_slot');
             $table->foreign('id_slot')->references('id')->on('slot');
-            $table->UnsignedBigInteger('id_cable');
+            $table->UnsignedBigInteger('id_cable')->nullable();
             $table->foreign('id_cable')->references('id')->on('cable');
             $table->UnsignedBigInteger('id_estado');
             $table->foreign('id_estado')->references('id')->on('estado');

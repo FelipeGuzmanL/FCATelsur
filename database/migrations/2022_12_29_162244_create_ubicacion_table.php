@@ -24,6 +24,19 @@ class CreateUbicacionTable extends Migration
             $table->string('sitio_fca')->nullable();
             $table->text('descripcion_sitio')->nullable();
         });
+        Schema::create('tecnologia', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->string('nombre_tec');
+        });
+        Schema::create('slots_tec', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->integer('slots');
+            $table->UnsignedBigInteger('id_tecnologia');
+            $table->foreign('id_tecnologia')->references('id')->on('tecnologia');
+
+        });
     }
 
     /**
@@ -35,6 +48,9 @@ class CreateUbicacionTable extends Migration
     {
         Schema::table('ubicacion', function (Blueprint $table) {
             $table->dropColumn('id_ciudad');
+        });
+        Schema::table('slots_tec', function (Blueprint $table) {
+            $table->dropColumn('id_tecnologia');
         });
         Schema::dropIfExists('ubicacion');
     }

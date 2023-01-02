@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'equiposmsan', 'titlePage' => 'Guardar Equipo MSAN'])
+@extends('layouts.app', ['activePage' => 'equiposmsan', 'titlePage' => 'Editar Equipo MSAN'])
 @section('content')
 <div class="content">
     <div class="container-fluid">
@@ -9,8 +9,8 @@
                     @method('PUT')
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-tittle">Guardar MSAN</h4>
-                            <p class="card-category">Ingresar datos</p>
+                            <h4 class="card-tittle">MSAN {{$equipos->numero}}</h4>
+                            <p class="card-category">Actualizar datos</p>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -21,26 +21,43 @@
                             <div class="row">
                             <label for="numero" class="col-sm-2 col-form-label">Numero MSAN</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="numero" placeholder="Numero MSAN" value="{{old('numero', $equipos->numero)}}" autofocus required oninvalid="this.setCustomValidity('Ingrese ID de licitación')" oninput="this.setCustomValidity('')"/>
+                                    <input type="text" class="form-control" name="numero" placeholder="Numero MSAN" value="{{old('numero', $equipos->numero)}}" autofocus required oninvalid="this.setCustomValidity('Ingrese Numero del MSAN')" oninput="this.setCustomValidity('')"/>
                                     @if ($errors->has('numero'))
                                         <span class="error text-danger" for="input-numero">{{$errors -> first('numero')}}</span>
                                     @endif
                                 </div>
                             </div>
                             <div class="row">
-                                <label for="tecnologia" class="col-sm-2 col-form-label">Tecnología</label>
+                                <label for="id_tecnologia" class="col-sm-2 col-form-label">Tecnología</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="tecnologia" placeholder="Ingrese tecnología" value="{{old('tecnologia', $equipos->tecnologia)}}">
-                                    @if ($errors->has('tecnologia'))
-                                        <span class="error text-danger" for="input-tecnologia">{{$errors -> first('tecnologia')}}</span>
-                                    @endif
+                                    <div class="form-group">
+                                        <select class="form-control" data-style="btn btn-link" id="exampleFormControlSelect1" name="id_tecnologia" required oninvalid="this.setCustomValidity('Seleccione tecnología')" oninput="this.setCustomValidity('')"/>
+                                            <option disabled selected value="">Seleccione Tecnología</option>
+                                        @foreach ( $tecnologias as $tecnologia )
+                                            <option value="{{ $tecnologia->id }}" {{$equipos->tecnologia->id == $tecnologia->id ? 'selected' : ''}}>{{ $tecnologia->nombre_tec }}</option>
+                                        @endforeach
+                                        </select>
+                                      </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label for="id_slotec" class="col-sm-2 col-form-label">Slots de Tecnología</label>
+                                <div class="col-sm-7">
+                                    <div class="form-group">
+                                        <select class="form-control" data-style="btn btn-link" id="exampleFormControlSelect1" name="id_slotec" required oninvalid="this.setCustomValidity('Seleccione tecnología')" oninput="this.setCustomValidity('')"/>
+                                            <option disabled selected value="">Seleccione Tecnología</option>
+                                        @foreach ( $slotstec as $slotec )
+                                            <option value="{{ $slotec->id }}" {{$equipos->slotec->id == $slotec->id ? 'selected' : ''}}>{{ $slotec->slots }} - {{ $slotec->tecnologia->nombre_tec}}</option>
+                                        @endforeach
+                                        </select>
+                                      </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <label for="id_ubicacion" class="col-sm-2 col-form-label">Sitio</label>
                                 <div class="col-sm-7">
                                     <div class="form-group">
-                                        <select class="form-control selectpicker" data-style="btn btn-link" id="exampleFormControlSelect1" name="id_ubicacion">
+                                        <select class="form-control" data-style="btn btn-link" id="exampleFormControlSelect1" name="id_ubicacion">
                                         @foreach ( $sitio as $sitio )
                                             <option value="{{ $sitio->id }}" {{$equipos->Ubicacion->ciudad->id == $sitio->id ? 'selected' : ''}}>{{ $sitio->nombre }} - {{ $sitio->abreviacion}}</option>
                                         @endforeach

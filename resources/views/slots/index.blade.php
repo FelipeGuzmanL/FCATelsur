@@ -23,7 +23,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <p class="card-category">Datos de Slots MSAN </p>
+                                    <p class="card-category">Datos de Slots MSAN {{ $equipo->numero}}</p>
                                 </div>
                                 <div class="card-body">
                                     <div class="col-12 text-right">
@@ -42,7 +42,7 @@
                                                 <div class="row">
                                                 <label for="slot_msan" class="col-sm-2 col-form-label">Slot MSAN</label>
                                                     <div class="col-sm-7">
-                                                        <input type="text" class="form-control" name="slot_msan" placeholder="Slot MSAN  ejemplo: (1-1, 1-2, ...)" value="{{old('slot_msan')}}" autofocus required oninvalid="this.setCustomValidity('Ingrese ID de licitación')" oninput="this.setCustomValidity('')"/>
+                                                        <input type="text" class="form-control" name="slot_msan" placeholder="Slot MSAN  ejemplo: (1-1, 1-2, ...)" value="{{old('slot_msan')}}" autofocus required oninvalid="this.setCustomValidity('Ingrese Slot del MSAN')" oninput="this.setCustomValidity('')"/>
                                                         @if ($errors->has('slot_msan'))
                                                             <span class="error text-danger" for="input-slot_msan">{{$errors -> first('slot_msan')}}</span>
                                                         @endif
@@ -71,7 +71,7 @@
                                             <thead class="text-primary">
                                                 <th>Slot</th>
                                                 <th>Estado</th>
-                                                <th>Ver Tarjeta</th>
+                                                <th>Tarjeta</th>
                                                 <th>Acciones</th>
                                             </thead>
                                             <tbody>
@@ -79,8 +79,13 @@
                                             @if ($slot->id_msan == $equipo->id)
                                             <tr>
                                                 <td>{{ $slot->slot_msan }}</td>
-                                                <td>{{ $slot->estado->estado}}</td>
-                                                <td><h5><a href="{{route('equiposmsan.slots.olt.index', [$equipo,$slot])}}">Ver</a></h5></td>
+                                                @if ($slot->estado->id == "1")
+                                                    <td class="text-success">{{ $slot->estado->estado}}</td>
+                                                @endif
+                                                @if ($slot->estado->id == "2")
+                                                    <td class="text-danger">{{ $slot->estado->estado}}</td>
+                                                @endif
+                                                <td><h5><a href="{{route('equiposmsan.slots.olt.index', [$equipo,$slot])}}">Ver Tarjeta</a></h5></td>
                                                 <td class="td-actions text-center">
                                                     <a href="{{ route('equiposmsan.slots.edit', [$equipo,$slot]) }}" class="btn btn-warning"><i class="material-icons">edit</i></a>
                                                     <form action="{{route('equiposmsan.slots.destroy', [$equipo,$slot])}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Estás seguro?')">

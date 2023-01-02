@@ -6,6 +6,7 @@ use App\Models\EquiposMSAN;
 use App\Models\Slot;
 use App\Models\Estado;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 
 class SlotController extends Controller
 {
@@ -14,8 +15,20 @@ class SlotController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(EquiposMSAN $equipo, Slot $slots, Estado $estado)
+    public function index(EquiposMSAN $equipo, Slot $slots, Estado $estado, Request $request)
     {
+        if ($request) {
+            $texto = trim($request->get('texto'));
+            $slots = Slot::Where('slot_msan','LIKE','%'.$texto.'%')
+            ->orWhereHas('estado', function (Builder $query) use ($texto){
+                $query->whereRaw('UPPER(estado) LIKE ?', ['%' . strtoupper($texto) . '%']);
+            })
+            ->orderBy('id','asc')
+            ->get();
+            $estado = Estado::all();
+
+            return view('slots.index', compact('slots','equipo','estado'), ['slots' => $slots, 'texto' => $texto]);
+        }
         $slots = Slot::all();
         $estado = Estado::all();
         return view('slots.index', compact('slots','equipo','estado'));
@@ -87,6 +100,10 @@ class SlotController extends Controller
      */
     public function destroy(EquiposMSAN $equipo, Slot $slot, Request $request)
     {
+        $contador = $slot->slotmsan;
+        for ($i=1; $i <= count($contador) ; $i++) { 
+            $slot->slotmsan[$i-1]->delete();
+        }
         $slot->delete();
         return redirect()->route('equiposmsan.slots.index', $equipo->id);
     }

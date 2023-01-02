@@ -19,6 +19,8 @@ class CreateCableTable extends Migration
             $table->string('nombre_cable');
             $table->integer('cant_filam')->nullable();
             $table->integer('cant_minitubos')->nullable();
+            $table->UnsignedBigInteger('id_sitio');
+            $table->foreign('id_sitio')->references('id')->on('ciudad');
         });
     }
 
@@ -29,6 +31,9 @@ class CreateCableTable extends Migration
      */
     public function down()
     {
+        Schema::table('cable', function (Blueprint $table) {
+            $table->dropColumn('id_ubicacion');
+        });
         Schema::dropIfExists('cable');
     }
 }

@@ -28,4 +28,8 @@ class Ubicacion extends Model
     {
         return $this->hasMany(EquiposMSAN::class, 'id_ubicacion');
     }
+    public function cable()
+    {
+        return $this->hasMany(Cable::class, 'id_ubicacion');
+    }
 }

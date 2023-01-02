@@ -12,11 +12,16 @@ class Cable extends Model
     protected $table = 'cable';
 
     protected $fillable = [
+        'id_sitio',
         'nombre_cable',
         'cant_filam',
         'cant_minitubos',
     ];
 
+    public function sitio()
+    {
+        return $this->belongsTo(Sitio::class, 'id_sitio');
+    }
     public function slotmsan()
     {
         return $this->hasMany(SlotMSAN::class, 'id_cable');

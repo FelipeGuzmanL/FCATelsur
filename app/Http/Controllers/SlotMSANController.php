@@ -9,6 +9,7 @@ use App\Models\Estado;
 use App\Models\Slot;
 use App\Models\SlotMSAN;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 
 class SlotMSANController extends Controller
 {
@@ -17,8 +18,26 @@ class SlotMSANController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(EquiposMSAN $equipo, Slot $slot, SlotMSAN $olt)
+    public function index(EquiposMSAN $equipo, Slot $slot, SlotMSAN $olt, Request $request)
     {
+        if ($request) {
+            $texto = trim($request->get('texto'));
+            $olts = SlotMSAN::WhereRaw('UPPER(sitio_fca) LIKE ?', ['%' . strtoupper($texto) . '%'])
+            ->orWhere('olt','LIKE','%'.$texto.'%')
+            ->orWhere('spl','LIKE','%'.$texto.'%')
+            ->orWhere('filam','LIKE','%'.$texto.'%')
+            ->orWhereRaw('UPPER(descripcion_fca) LIKE ?', ['%' . strtoupper($texto) . '%'])
+            ->orWhereHas('estad', function (Builder $query) use ($texto){
+                $query->whereRaw('UPPER(estado) LIKE ?', ['%' . strtoupper($texto) . '%']);
+            })
+            ->orWhereHas('cable', function (Builder $query) use ($texto){
+                $query->whereRaw('UPPER(nombre_cable) LIKE ?', ['%' . strtoupper($texto) . '%']);
+            })
+            ->orderBy('id','asc')
+            ->get();
+
+            return view('olt.index', compact('equipo','slot','olts'), ['olts' => $olts, 'texto' => $texto]);
+        }
         $olts = SlotMSAN::all();
         return view('olt.index', compact('equipo','slot','olts'));
     }
@@ -28,9 +47,10 @@ class SlotMSANController extends Controller
      * @return \Illuminate\Http\Response
      *
      */
-    public function create(EquiposMSAN $equipo, Slot $slot)
+    public function create(EquiposMSAN $equipo, Slot $slot, Cable $cables)
     {
-        return view('olt.create', compact('equipo','slot'),['estado'=>Estado::all()]);
+        return view('olt.create', compact('equipo','slot'),['estado'=>Estado::all(),'cables'=>Cable::all()]);
+        //return redirect()->route('equiposmsan.slots.olt.store', [$equipo,$slot]);
     }
 
     /**
@@ -39,16 +59,37 @@ class SlotMSANController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, EquiposMSAN $equipo, Slot $slot, CableSlot $cableslot)
+    public function store(Request $request, EquiposMSAN $equipo, Slot $slot, SlotMSAN $olt)
     {
-        $nombre_cable = $request->nombre_cable;
-        $cable = Cable::create(array_merge($request->only('nombre_cable')));
-        $olt = SlotMSAN::create(array_merge($request->only('id_slot','id_cable','id_estado','sitio_fca','descripcion_fca','olt','spl','filam'),[
-            'id_slot'=>$slot->id,
-            'id_cable'=>$cable->id,
-            'id_estado'=>$request->id_estado
-        ]));
-        $cableslot = CableSlot::create(array_merge($request->only('id_slot','id_cable'),['id_slot'=>$olt->id,'id_cable'=>$cable->id]));
+        $contador = $slot->slotmsan;
+        
+        if (count($contador)==0){
+            for ($i=1; $i <= $equipo->slotec->slots ; $i++) { 
+                $olt = SlotMSAN::create(array_merge($request->only('id_slot','id_cable','id_estado','olt'),[
+                    'olt'=>$i,
+                    'id_slot'=>$slot->id,
+                    'id_cable'=>$request->id_cable,
+                    'id_estado'=>$request->id_estado
+                ]));
+            }
+            return redirect()->route('equiposmsan.slots.olt.index', [$equipo,$slot])->with('success','OLT Guardada correctamente.');
+        }
+        else{
+            return redirect()->route('equiposmsan.slots.olt.index', [$equipo,$slot])->with('failure','OLTs ya creadas.');
+        }
+        
+    }
+    public function generarolts(Request $request, EquiposMSAN $equipo, Slot $slot, CableSlot $cableslot)
+    {
+        dd($equipo);
+        for ($i=1; $i <= $equipo->slotec->slots ; $i++) { 
+            $olt = SlotMSAN::create(array_merge($request->only('id_slot','id_cable','id_estado','olt'),[
+                'olt'=>$i,
+                'id_slot'=>$slot->id,
+                'id_cable'=>$request->id_cable,
+                'id_estado'=>$request->id_estado
+            ]));
+        }
         return redirect()->route('equiposmsan.slots.olt.index', [$equipo,$slot])->with('success','OLT Guardada correctamente.');
     }
 
@@ -69,9 +110,9 @@ class SlotMSANController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(EquiposMSAN $equipo, Slot $slot, SlotMSAN $olt)
     {
-        //
+        return view('olt.edit', compact('equipo','slot','olt'),['cables'=>Cable::all(),'estados'=>Estado::all()]);
     }
 
     /**
@@ -81,9 +122,13 @@ class SlotMSANController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, EquiposMSAN $equipo, Slot $slot, SlotMSAN $olt)
     {
-        //
+        $olt->update(array_merge($request->only('id_cable','id_estado','sitio_fca','descripcion_fca','olt','spl','filam'),[
+            'id_cable'=>$request->id_cable,
+            'id_estado'=>$request->id_estado
+        ]));
+        return redirect()->route('equiposmsan.slots.olt.index', [$equipo,$slot,$olt])->with('success','OLT actualizada correctamente.');
     }
 
     /**

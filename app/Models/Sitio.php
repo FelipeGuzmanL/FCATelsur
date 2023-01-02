@@ -26,4 +26,8 @@ class Sitio extends Model
     {
         return $this->hasMany(EquiposMSAN::class, 'id_sitio');
     }
+    public function cable()
+    {
+        return $this->hasMany(Cable::class, 'id_sitio');
+    }
 }

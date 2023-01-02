@@ -20,7 +20,7 @@
                             <div class="row">
                             <label for="nombre" class="col-sm-2 col-form-label">Nombre Sitio</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="nombre" placeholder="Nombre" value="{{old('nombre')}}" autofocus required oninvalid="this.setCustomValidity('Ingrese ID de licitación')" oninput="this.setCustomValidity('')"/>
+                                    <input type="text" class="form-control" name="nombre" placeholder="Nombre" value="{{old('nombre')}}" autofocus required oninvalid="this.setCustomValidity('Ingrese nombre del Sitio')" oninput="this.setCustomValidity('')"/>
                                     @if ($errors->has('nombre'))
                                         <span class="error text-danger" for="input-nombre">{{$errors -> first('nombre')}}</span>
                                     @endif
@@ -29,7 +29,7 @@
                             <div class="row">
                                 <label for="abreviacion" class="col-sm-2 col-form-label">Abreviación</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="abreviacion" placeholder="Ingrese nombre abreviacion" value="{{old('abreviacion')}}">
+                                    <input type="text" class="form-control" name="abreviacion" placeholder="Ingrese nombre abreviacion" value="{{old('abreviacion')}}" required oninvalid="this.setCustomValidity('Ingrese nemotécnico')" oninput="this.setCustomValidity('')"/>
                                     @if ($errors->has('abreviacion'))
                                         <span class="error text-danger" for="input-abreviacion">{{$errors -> first('abreviacion')}}</span>
                                     @endif

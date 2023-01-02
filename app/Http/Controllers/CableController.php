@@ -29,13 +29,13 @@ class CableController extends Controller
                 $query->whereRaw('UPPER(nombre) LIKE ?', ['%' . strtoupper($texto) . '%']);
             })
             ->orderBy('id','asc')
-            ->get();
+            ->paginate(10);
 
             return view('cable.index', compact('cables'), ['olts' => $cables, 'texto' => $texto]);
         }
 
         $cables = Cable::all();
-        return view('cable.index', compact('cables'));
+        return view('cable.index', ['cables'=> $cables->paginate(5)]);
     }
 
     public function index_cable(EquiposMSAN $equipo, Slot $slot, SlotMSAN $olt, Cable $cables, Request $request)

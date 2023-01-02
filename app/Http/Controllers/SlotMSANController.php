@@ -21,22 +21,24 @@ class SlotMSANController extends Controller
     public function index(EquiposMSAN $equipo, Slot $slot, SlotMSAN $olt, Request $request)
     {
         if ($request) {
-            $texto = trim($request->get('texto'));
-            $olts = SlotMSAN::WhereRaw('UPPER(sitio_fca) LIKE ?', ['%' . strtoupper($texto) . '%'])
-            ->orWhere('olt','LIKE','%'.$texto.'%')
-            ->orWhere('spl','LIKE','%'.$texto.'%')
-            ->orWhere('filam','LIKE','%'.$texto.'%')
-            ->orWhereRaw('UPPER(descripcion_fca) LIKE ?', ['%' . strtoupper($texto) . '%'])
-            ->orWhereHas('estad', function (Builder $query) use ($texto){
-                $query->whereRaw('UPPER(estado) LIKE ?', ['%' . strtoupper($texto) . '%']);
-            })
-            ->orWhereHas('cable', function (Builder $query) use ($texto){
-                $query->whereRaw('UPPER(nombre_cable) LIKE ?', ['%' . strtoupper($texto) . '%']);
-            })
-            ->orderBy('id','asc')
-            ->get();
+            if ($slot->id_msan == $equipo->id){
+                $texto = trim($request->get('texto'));
+                $olts = SlotMSAN::WhereRaw('UPPER(sitio_fca) LIKE ?', ['%' . strtoupper($texto) . '%'])
+                ->orWhere('olt','LIKE','%'.$texto.'%')
+                ->orWhere('spl','LIKE','%'.$texto.'%')
+                ->orWhere('filam','LIKE','%'.$texto.'%')
+                ->orWhereRaw('UPPER(descripcion_fca) LIKE ?', ['%' . strtoupper($texto) . '%'])
+                ->orWhereHas('estad', function (Builder $query) use ($texto){
+                    $query->whereRaw('UPPER(estado) LIKE ?', ['%' . strtoupper($texto) . '%']);
+                })
+                ->orWhereHas('cable', function (Builder $query) use ($texto){
+                    $query->whereRaw('UPPER(nombre_cable) LIKE ?', ['%' . strtoupper($texto) . '%']);
+                })
+                ->orderBy('id','asc')
+                ->get();
 
-            return view('olt.index', compact('equipo','slot','olts'), ['olts' => $olts, 'texto' => $texto]);
+                return view('olt.index', compact('equipo','slot','olts'), ['olts' => $olts, 'texto' => $texto]);
+            }
         }
         $olts = SlotMSAN::all();
         return view('olt.index', compact('equipo','slot','olts'));

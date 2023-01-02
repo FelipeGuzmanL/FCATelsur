@@ -31,7 +31,7 @@ class EquiposMSANController extends Controller
                 $query->whereRaw('UPPER(nombre) LIKE ?', ['%' . strtoupper($texto) . '%']);
             })
             ->orderBy('id','asc')
-            ->get();
+            ->paginate(10);
 
             return view('equiposmsan.index', ['equipos' => $equipos, 'texto' => $texto]);
         }

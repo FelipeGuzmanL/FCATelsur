@@ -63,5 +63,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('cable', App\Http\Controllers\CableController::class);
 	Route::get('slots/{olt}/olt', [App\Http\Controllers\SlotMSANController::class, 'generarolts'])->name('generarolts.olt');
 	Route::resource('equiposmsan.slots.olt.cables', App\Http\Controllers\CableUnicoController::class);
+    Route::get('/equipos', [App\Http\Controllers\SitiosController::class, 'index_equipo'])->name('sitios.index_equipo');
 });
 

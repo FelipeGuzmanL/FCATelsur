@@ -39,6 +39,11 @@ class EquiposMSANController extends Controller
         return view('equiposmsan.index', compact('equipos'));
     }
 
+    public function index_equipo(Sitio $sitio)
+    {
+        dd($sitio);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

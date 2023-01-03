@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Sitio;
+use App\Models\EquiposMSAN;
 
 class SitiosController extends Controller
 {
@@ -29,6 +30,12 @@ class SitiosController extends Controller
         }
         $sitios = Sitio::all();
         return view('sitios.index', compact('sitios'));
+    }
+    public function index_equipo(EquiposMSAN $equipo, Sitio $sitio)
+    {
+        dd($sitio);
+        $equipo = EquiposMSAN::all();
+        return view('sitios.index_equipo', compact('sitio','equipo'));
     }
 
     /**

@@ -101,7 +101,7 @@ class SlotController extends Controller
     public function destroy(EquiposMSAN $equipo, Slot $slot, Request $request)
     {
         $contador = $slot->slotmsan;
-        for ($i=1; $i <= count($contador) ; $i++) { 
+        for ($i=1; $i <= count($contador) ; $i++) {
             $slot->slotmsan[$i-1]->delete();
         }
         $slot->delete();

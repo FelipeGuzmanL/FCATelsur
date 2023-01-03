@@ -79,6 +79,15 @@
                                             @if ($slot->id_msan == $equipo->id)
                                             <tr>
                                                 <td>{{ $slot->slot_msan }}</td>
+                                                @php
+                                                    $contador = $slot->slotmsan;
+                                                    $ocupado = count($slot->slotmsan);
+                                                    for ($i=1;$i<=count($contador);$i++)
+                                                    {
+                                                        if ($slot->slotmsan[$i-1]->estad->id == "1")
+                                                            $ocupado -= 1;
+                                                    }
+                                                @endphp
                                                 @if ($slot->estado->id == "1")
                                                     <td class="text-success">{{ $slot->estado->estado}}</td>
                                                 @endif

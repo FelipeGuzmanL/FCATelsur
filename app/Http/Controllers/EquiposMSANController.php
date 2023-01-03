@@ -30,7 +30,7 @@ class EquiposMSANController extends Controller
             ->orWhereHas('sitio', function (Builder $query) use ($texto){
                 $query->whereRaw('UPPER(nombre) LIKE ?', ['%' . strtoupper($texto) . '%']);
             })
-            ->orderBy('id','asc')
+            ->orderBy('numero','asc')
             ->paginate(10);
 
             return view('equiposmsan.index', ['equipos' => $equipos, 'texto' => $texto]);
@@ -85,7 +85,7 @@ class EquiposMSANController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(EquiposMSAN $equipos)
-    {   
+    {
         return view('equiposmsan.edit', compact('equipos'),['ubicacion'=>Ubicacion::all(),'sitio'=>Sitio::all(),'tecnologias'=>Tecnologia::all(),'slotstec'=>SlotTecnologia::all()]);
     }
 
@@ -118,9 +118,9 @@ class EquiposMSANController extends Controller
     public function destroy(EquiposMSAN $equipo, Request $request)
     {
         $contador = $equipo->slot;
-        for ($i=1; $i <= count($contador) ; $i++) { 
+        for ($i=1; $i <= count($contador) ; $i++) {
             $contador2 = $equipo->slot[$i-1]->slotmsan;
-            for ($i=1; $i <= count($contador2) ; $i++) { 
+            for ($i=1; $i <= count($contador2) ; $i++) {
                 $contador2[$i-1]->delete();
             }
             $contador[$i-1]->delete();

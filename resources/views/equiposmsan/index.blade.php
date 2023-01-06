@@ -38,11 +38,12 @@
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table">
-                                            <thead class="text-primary">
+                                            <thead class="text-primary text-center">
                                                 <th>Sitio</th>
                                                 <th>Nombre</th>
-                                                <th>Coordenadas</th>
                                                 <th>Slots</th>
+                                                <th>Última Actualización</th>
+                                                <th>Mantenciones</th>
                                                 <th class="text-right">Acciones</th>
                                             </thead>
                                             <tbody>
@@ -52,11 +53,12 @@
                                                 </div>
                                             @endif
                                             @foreach ($equipos as $equipo)
-                                                <tr>
+                                                <tr class="text-center">
                                                     <td>{{ $equipo->Ubicacion->ciudad->nombre }}</td>
-                                                    <td>MSAN {{ $equipo->numero }}</td>
-                                                    <td>{{ $equipo->Ubicacion->coordenadas }}</td>
-                                                    <td><h5><a href="{{ route('equiposmsan.slots.index', $equipo->id)}}">Slots MSAN {{ $equipo->numero }}</a></h5></td>
+                                                    <td>{{ $equipo->Ubicacion->ciudad->abreviacion }} {{ $equipo->numero }}</td>
+                                                    <td><a href="{{ route('equiposmsan.slots.index', $equipo->id)}}">Slots {{ $equipo->Ubicacion->ciudad->abreviacion }} {{ $equipo->numero }}</a></td>
+                                                    <td>{{ $equipo->updated_at}}</td>
+                                                    <td><a href="#">Ver Mantenciones</a></td>
                                                     <td class="td-actions text-right">
                                                         @if ( $equipo->Ubicacion->link_gmaps == NULL)
                                                         @elseif ( $equipo->Ubicacion->link_gmaps != NULL)

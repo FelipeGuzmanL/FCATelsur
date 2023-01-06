@@ -78,7 +78,7 @@
                                             @foreach ($slots as $slot)
                                             @if ($slot->id_msan == $equipo->id)
                                             <tr>
-                                                <td>{{ $slot->slot_msan }}</td>
+                                                <td>{{ $slot->equiposmsan->Ubicacion->ciudad->abreviacion}} {{ $slot->slot_msan }}</td>
                                                 @php
                                                     $contador = $slot->slotmsan;
                                                     $ocupado = count($slot->slotmsan);

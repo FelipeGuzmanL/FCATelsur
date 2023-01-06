@@ -7,6 +7,7 @@ use App\Models\EquiposMSAN;
 use App\Models\Sitio;
 use App\Models\Slot;
 use App\Models\SlotMSAN;
+use App\Models\TipoCable;
 use App\Models\Ubicacion;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
@@ -24,9 +25,11 @@ class CableController extends Controller
             $texto = trim($request->get('texto'));
             $cables = Cable::WhereRaw('UPPER(nombre_cable) LIKE ?', ['%' . strtoupper($texto) . '%'])
             ->orWhere('cant_filam','LIKE','%'.$texto.'%')
-            ->orWhere('cant_minitubos','LIKE','%'.$texto.'%')
             ->orWhereHas('sitio', function (Builder $query) use ($texto){
                 $query->whereRaw('UPPER(nombre) LIKE ?', ['%' . strtoupper($texto) . '%']);
+            })
+            ->orWhereHas('tipocable', function (Builder $query) use ($texto){
+                $query->whereRaw('UPPER(tipo) LIKE ?', ['%' . strtoupper($texto) . '%']);
             })
             ->orderBy('id','asc')
             ->paginate(10);
@@ -51,7 +54,7 @@ class CableController extends Controller
      */
     public function create()
     {
-        return view('cable.create',['cables'=>Cable::all(),'ubicacion'=>Ubicacion::all(),'sitio'=>Sitio::all()]);
+        return view('cable.create',['cables'=>Cable::all(),'ubicacion'=>Ubicacion::all(),'sitio'=>Sitio::all(),'tipocable'=>TipoCable::all()]);
     }
 
     /**
@@ -62,7 +65,7 @@ class CableController extends Controller
      */
     public function store(Request $request)
     {
-        $cable = Cable::create(array_merge($request->only('id_sitio','nombre_cable','cant_filam','cant_minitubos'),['id_sitio'=>$request->id_sitio]));
+        $cable = Cable::create(array_merge($request->only('id_sitio','id_tipo_cable','nombre_cable','cant_filam'),['id_sitio'=>$request->id_sitio,'id_tipo_cable'=>$request->id_tipo_cable]));
         return redirect()->route('cable.index')->with('success','Cable creado correctamente.');
     }
 
@@ -97,7 +100,7 @@ class CableController extends Controller
      */
     public function update(Request $request, Cable $cable)
     {
-        $cable->update(array_merge($request->only('id_sitio','nombre_cable','cant_filam','cant_minitubos'),['id_sitio'=>$request->id_sitio]));
+        $cable->update(array_merge($request->only('id_sitio','id_tipo_cable','nombre_cable','cant_filam'),['id_sitio'=>$request->id_sitio,'id_tipo_cable'=>$request->id_tipo_cable]));
         return redirect()->route('cable.index')->with('success','Cable '.$cable->nombre_cable.' actualizado correctamente.');
     }
 

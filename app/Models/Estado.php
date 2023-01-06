@@ -19,4 +19,8 @@ class Estado extends Model
     {
         return $this->hasMany(SlotMSAN::class, 'id_estado');
     }
+    public function detallecable()
+    {
+        return $this->hasMany(DetalleCable::class, 'id_estado');
+    }
 }

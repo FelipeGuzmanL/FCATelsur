@@ -8,7 +8,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header card-header-primary">
-                                    <h4 class="card-tittle">Lista de OLT MSAN {{ $slot->slot_msan}}</h4>
+                                    <h4 class="card-tittle">Lista de OLT {{$slot->equiposmsan->Ubicacion->ciudad->abreviacion}} {{ $slot->slot_msan}}</h4>
                                     <div class="row">
                                         <div class="col-7 text-right d-felx">
                                             <form action="{{route('equiposmsan.slots.olt.index', [$equipo,$slot])}}" method="get">
@@ -23,7 +23,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <p class="card-category">Datos de OLT MSAN {{$slot->slot_msan}}</p>
+                                    <p class="card-category">Datos de OLT {{$slot->equiposmsan->Ubicacion->ciudad->abreviacion}} {{$slot->slot_msan}}</p>
                                 </div>
                                 <div class="card-body">
                                     @if (session('success'))
@@ -84,6 +84,10 @@
                                                         <td class="text-danger">{{ $olt->estad->estado}}</td>
                                                     @endif
                                                     <td class="td-actions text-right">
+                                                        @if ( $olt->link_sitio_fca == NULL)
+                                                        @elseif ( $olt->link_sitio_fca != NULL)
+                                                            <a href="{{ $olt->link_sitio_fca }}" target="_blank" class="btn btn-success"><i class="material-icons">location_on</i></a>
+                                                        @endif
                                                         <a href="{{ route('equiposmsan.slots.olt.edit', [$equipo,$slot,$olt]) }}" class="btn btn-warning"><i class="material-icons">edit</i></a>
                                                         <form action="{{route('equiposmsan.slots.olt.destroy', [$equipo,$slot,$olt])}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Estás seguro?')">
                                                         @csrf

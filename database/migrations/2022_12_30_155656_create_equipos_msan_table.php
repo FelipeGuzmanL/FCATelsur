@@ -31,6 +31,11 @@ class CreateEquiposMsanTable extends Migration
             $table->timestamps();
             $table->string('estado');
         });
+        Schema::create('tipo_cable', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->string('tipo');
+        });
     }
 
     /**

@@ -23,6 +23,7 @@ class SitiosController extends Controller
             $texto = trim($request->get('texto'));
             $sitios = Sitio::whereRaw('UPPER(nombre) LIKE ?', ['%' . strtoupper($texto) . '%'])
             ->orWhereRaw('UPPER(abreviacion) LIKE ?', ['%' . strtoupper($texto) . '%'])
+            ->orWhereRaw('UPPER(direccion) LIKE ?', ['%' . strtoupper($texto) . '%'])
             ->orderBy('id','asc')
             ->paginate(5);
 
@@ -56,7 +57,7 @@ class SitiosController extends Controller
      */
     public function store(Request $request)
     {
-        $sitios = Sitio::create($request->only('nombre', 'abreviacion','descripcion','url'));
+        $sitios = Sitio::create($request->only('nombre', 'abreviacion','direccion','descripcion','url'));
         return redirect()->route('sitios.index')->with('success', 'Sitio creado correctamente.');
     }
 
@@ -91,7 +92,7 @@ class SitiosController extends Controller
      */
     public function update(Request $request, Sitio $sitio)
     {
-        $sitio->update($request->only('nombre','abreviacion','descripcion','url'));
+        $sitio->update($request->only('nombre','abreviacion','direccion','descripcion','url'));
         return redirect()->route('sitios.index', $sitio->id)->with('success', 'Sitio actualizado correctamente.');
     }
 

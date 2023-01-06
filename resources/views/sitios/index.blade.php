@@ -40,8 +40,11 @@
                                         <table class="table">
                                             <thead class="text-primary">
                                                 <th>Nombre</th>
-                                                <th>Abreviación</th>
-                                                <th>Descripcion</th>
+                                                <th>Nemotécnico</th>
+                                                <th>Dirección</th>
+                                                <th>Descripción</th>
+                                                <th>Cables</th>
+                                                <th>MSAN</th>
                                                 <th class="text-right">Acciones</th>
                                             </thead>
                                             <tbody>
@@ -54,7 +57,10 @@
                                                 <tr>
                                                     <td>{{ $sitio->nombre }}</td>
                                                     <td>{{ $sitio->abreviacion }}</td>
+                                                    <td>{{ $sitio->direccion }}</td>
                                                     <td>{{ $sitio->descripcion }}</td>
+                                                    <td><a href="#">Ver Cables</a></td>
+                                                    <td><a href="#">Ver MSANs</a></td>
                                                     <td class="td-actions text-right">
                                                         @if ( $sitio->url == NULL)
                                                         @elseif ( $sitio->url != NULL)

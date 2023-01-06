@@ -13,9 +13,9 @@ class Cable extends Model
 
     protected $fillable = [
         'id_sitio',
+        'id_tipo_cable',
         'nombre_cable',
         'cant_filam',
-        'cant_minitubos',
     ];
 
     public function sitio()
@@ -29,5 +29,13 @@ class Cable extends Model
     public function cableslot()
     {
         return $this->hasMany(CableSlot::class, 'id_cable');
+    }
+    public function detallecable()
+    {
+        return $this->hasMany(DetalleCable::class, 'id_cable');
+    }
+    public function tipocable()
+    {
+        return $this->belongsTo(TipoCable::class, 'id_tipo_cable');
     }
 }

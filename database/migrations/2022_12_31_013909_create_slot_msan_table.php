@@ -23,6 +23,7 @@ class CreateSlotMsanTable extends Migration
             $table->UnsignedBigInteger('id_estado');
             $table->foreign('id_estado')->references('id')->on('estado');
             $table->string('sitio_fca')->nullable();
+            $table->text('link_sitio_fca')->nullable();
             $table->text('descripcion_fca')->nullable();
             $table->integer('olt')->nullable();
             $table->integer('spl')->nullable();

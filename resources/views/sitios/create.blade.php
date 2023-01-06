@@ -36,6 +36,15 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <label for="direccion" class="col-sm-2 col-form-label">Dirección</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" name="direccion" placeholder="Ingrese nombre direccion" value="{{old('direccion')}}" required oninvalid="this.setCustomValidity('Ingrese nemotécnico')" oninput="this.setCustomValidity('')"/>
+                                    @if ($errors->has('direccion'))
+                                        <span class="error text-danger" for="input-direccion">{{$errors -> first('direccion')}}</span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row">
                                 <label for="descripcion" class="col-sm-2 col-form-label">Descripcion</label>
                                 <div class="col-sm-7">
                                     <textarea class="form-control" name="descripcion" rows="3" placeholder="Ingrese nombre descripcion" value="{{old('descripcion')}}"></textarea>

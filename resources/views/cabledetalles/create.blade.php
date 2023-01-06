@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <form action="{{route('cable.store')}}" method="post" class="form-horizontal" enctype="multipart/form-data">
+                <form action="{{route('cable.detallecable.store', $cable->id)}}" method="post" class="form-horizontal" enctype="multipart/form-data">
                     @csrf
                     <div class="card">
                         <div class="card-header card-header-primary">
@@ -31,8 +31,8 @@
                                 <div class="col-sm-7">
                                     <div class="form-group">
                                         <select class="form-control sitios" data-style="btn btn-link" id="sitios" name="id_sitio">
-                                        @foreach ( $sitio as $sitio )
-                                            <option value="{{ $sitio->id }}">{{ $sitio->nombre }} - {{ $sitio->abreviacion}}</option>
+                                        @foreach ( $estado as $est )
+                                            <option value="{{ $est->id }}">{{ $est->estado }}</option>
                                         @endforeach
                                         </select>
                                       </div>
@@ -45,18 +45,6 @@
                                     @if ($errors->has('cant_filam'))
                                         <span class="error text-danger" for="input-cant_filam">{{$errors -> first('cant_filam')}}</span>
                                     @endif
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label for="id_tipo_cable" class="col-sm-2 col-form-label">Sitio</label>
-                                <div class="col-sm-7">
-                                    <div class="form-group">
-                                        <select class="form-control tipocables" data-style="btn btn-link" id="tipocables" name="id_tipo_cable">
-                                        @foreach ( $tipocable as $tipo )
-                                            <option value="{{ $tipo->id }}">{{ $tipo->tipo }}</option>
-                                        @endforeach
-                                        </select>
-                                      </div>
                                 </div>
                             </div>
                         <div class="card-footer ml-auto mr-auto">

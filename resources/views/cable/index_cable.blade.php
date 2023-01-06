@@ -36,21 +36,23 @@
                                             <a href="{{ route('equiposmsan.slots.olt.index', [$equipo,$slot])}}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>
                                         </div>
                                     </div>
-                                    <div class="table-responsive">
+                                    <div class="table-responsive text-center">
                                         <table class="table">
                                             <thead class="text-primary">
                                                 <th>Nombre</th>
                                                 <th>Sitio</th>
                                                 <th>Cantidad Filamentos</th>
-                                                <th>Cantidad Mini Tubos</th>
+                                                <th>Tipo de Cable</th>
+                                                <th>Detalles</th>
                                                 <th class="text-right">Acciones</th>
                                             </thead>
                                             <tbody>
-                                                <tr>
+                                                <tr class="text-center">
                                                     <td>{{ $cables->nombre_cable }}</td>
                                                     <td>{{ $cables->sitio->nombre}}</td>
                                                     <td>{{ $cables->cant_filam}}</td>
-                                                    <td>{{ $cables->cant_minitubos}}</td>
+                                                    <td>{{ $cables->tipocable->tipo}}</td>
+                                                    <td><a href="#">Ver Cable</a></td>
                                                     <td class="td-actions text-right">
                                                         @if ( $cables->sitio->url == NULL)
                                                             @elseif ( $cables->sitio->url != NULL)

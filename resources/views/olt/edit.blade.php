@@ -71,6 +71,15 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <label for="link_sitio_fca" class="col-sm-2 col-form-label">Link GMaps</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" name="link_sitio_fca" placeholder="Link GMaps del Sitio FCA" value="{{old('link_sitio_fca', $olt->link_sitio_fca)}}">
+                                        @if ($errors->has('link_sitio_fca'))
+                                            <span class="error text-danger" for="input-link_sitio_fca">{{$errors -> first('link_sitio_fca')}}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            <div class="row">
                                 <label for="descripcion_fca" class="col-sm-2 col-form-label">Descripción Sitio</label>
                                 <div class="col-sm-7">
                                     <input type="text" class="form-control" name="descripcion_fca" placeholder="Descripción sitio FCA" value="{{old('descripcion_fca', $olt->descripcion_fca)}}">

@@ -126,7 +126,7 @@ class SlotMSANController extends Controller
      */
     public function update(Request $request, EquiposMSAN $equipo, Slot $slot, SlotMSAN $olt)
     {
-        $olt->update(array_merge($request->only('id_cable','id_estado','sitio_fca','descripcion_fca','olt','spl','filam'),[
+        $olt->update(array_merge($request->only('id_cable','id_estado','sitio_fca','link_sitio_fca','descripcion_fca','olt','spl','filam'),[
             'id_cable'=>$request->id_cable,
             'id_estado'=>'2'
         ]));
@@ -144,7 +144,7 @@ class SlotMSANController extends Controller
         $cable = $olt->cable->id;
         $estado = $olt->estad->id;
         $null = NULL;
-        $olt->update(array_merge($request->only('id_cable','id_estado','sitio_fca','descripcion_fca','olt','spl','filam'),[
+        $olt->update(array_merge($request->only('id_cable','id_estado','sitio_fca','link_sitio_fca','descripcion_fca','olt','spl','filam'),[
             'id_cable'=>'1',
             'id_estado'=>'1',
             'sitio_fca'=>$null,

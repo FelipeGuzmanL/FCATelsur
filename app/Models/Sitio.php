@@ -14,6 +14,7 @@ class Sitio extends Model
     protected $fillable = [
         'nombre',
         'abreviacion',
+        'direccion',
         'descripcion',
         'url',
     ];

@@ -18,6 +18,7 @@ class CreateCiudadTable extends Migration
             $table->timestamps();
             $table->string('nombre');
             $table->string('abreviacion');
+            $table->string('direccion')->nullable();
             $table->text('descripcion')->nullable();
             $table->text('url')->nullable();
         });

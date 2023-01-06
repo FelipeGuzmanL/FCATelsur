@@ -49,12 +49,25 @@ class UsersTableSeeder extends Seeder
         DB::table('ciudad')->insert([
             'nombre' => 'Osorno',
             'abreviacion' => 'OSRN',
-            'descripcion' => 'Baquedano 955',
+            'direccion' => 'Baquedano 955',
+            'descripcion'=>'Central Baquedano',
             'url' => 'https://goo.gl/maps/5zGknPAqnR9MffqLA',
         ]);
         DB::table('cable')->insert([
             'nombre_cable' => 'Sin cable',
             'id_sitio' => '1'
+        ]);
+        DB::table('tipo_cable')->insert([
+            'tipo' => 'Enlace',
+        ]);
+        DB::table('tipo_cable')->insert([
+            'tipo' => 'Troncal',
+        ]);
+        DB::table('tipo_cable')->insert([
+            'tipo' => 'Anillo',
+        ]);
+        DB::table('tipo_cable')->insert([
+            'tipo' => 'PEXT',
         ]);
     }
 }

@@ -16,6 +16,7 @@ class SlotMSAN extends Model
         'id_cable',
         'id_estado',
         'sitio_fca',
+        'link_sitio_fca',
         'descripcion_fca',
         'olt',
         'spl',

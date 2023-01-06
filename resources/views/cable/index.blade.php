@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'cable', 'titlePage' => 'Lista de Cables de Fribra'])
+@extends('layouts.app', ['activePage' => 'cable', 'titlePage' => 'Lista de Cables de Fibra'])
 @section('content')
     <div class="content">
         <div class="container-fuid">
@@ -39,11 +39,12 @@
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table">
-                                            <thead class="text-primary">
+                                            <thead class="text-primary text-center">
                                                 <th>Nombre</th>
                                                 <th>Sitio</th>
-                                                <th>Cantidad Filamentos</th>
-                                                <th>Cantidad Mini Tubos</th>
+                                                <th>Cant. Filam</th>
+                                                <th>Tipo de Cable</th>
+                                                <th>Detalles</th>
                                                 <th class="text-right">Acciones</th>
                                             </thead>
                                             <tbody>
@@ -54,11 +55,12 @@
                                             @endif
                                             @foreach ($cables as $cable)
                                             @if ($cable->id > "1")
-                                                <tr>
+                                                <tr class="text-center">
                                                     <td>{{ $cable->nombre_cable }}</td>
-                                                    <td>{{ $cable->sitio->nombre}}</td>
+                                                    <td>{{ $cable->sitio->abreviacion}}</td>
                                                     <td>{{ $cable->cant_filam}}</td>
-                                                    <td>{{ $cable->cant_minitubos}}</td>
+                                                    <td>{{ $cable->tipocable->tipo}}</td>
+                                                    <td><a href="{{ route('cable.detallecable.index', $cable->id)}}">Ver Cable</a></td>
                                                     <td class="td-actions text-right">
                                                         @if ( $cable->sitio->url == NULL)
                                                             @elseif ( $cable->sitio->url != NULL)

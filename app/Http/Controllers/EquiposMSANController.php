@@ -62,12 +62,14 @@ class EquiposMSANController extends Controller
      */
     public function store(Request $request)
     {
+        $id_usuario = auth()->user();
         $ubicacion = Ubicacion::create(array_merge($request->only('id_ciudad','direccion','coordenadas','link_gmaps','sitio_fca','descripcion_sitio'),['id_ciudad'=>$request->id_ubicacion]));
-        $msan = EquiposMSAN::create(array_merge($request->only('id_ubicacion','id_sitio','id_tecnologia','id_slotec','numero'),[
+        $msan = EquiposMSAN::create(array_merge($request->only('id_ubicacion','id_usuario','id_sitio','id_tecnologia','id_slotec','numero'),[
             'id_ubicacion'=>$ubicacion->id,
             'id_sitio'=>$request->id_ubicacion,
             'id_tecnologia'=>$request->id_tecnologia,
-            'id_slotec'=>$request->id_slotec
+            'id_slotec'=>$request->id_slotec,
+            'id_usuario'=>$id_usuario->id,
         ]));
         return redirect()->route('equiposmsan.index')->with('success','Equipo MSAN guardado correctamente.');
     }
@@ -104,12 +106,14 @@ class EquiposMSANController extends Controller
     public function update(Request $request, EquiposMSAN $equipos)
     {
         $ubicacion = $equipos->Ubicacion;
+        $id_usuario = auth()->user();
         $ubicacion->update(array_merge($request->only('id_ciudad','direccion','coordenadas','link_gmaps','sitio_fca','descripcion_sitio'),['id_ciudad'=>$request->id_ubicacion]));
-        $equipos->update(array_merge($request->only('id_ubicacion','id_sitio','id_tecnologia','id_slotec','numero'),[
+        $equipos->update(array_merge($request->only('id_ubicacion','id_usuario','id_sitio','id_tecnologia','id_slotec','numero'),[
             'id_ubicacion'=>$ubicacion->id,
             'id_sitio'=>$request->id_ubicacion,
             'id_tecnologia'=>$request->id_tecnologia,
-            'id_slotec'=>$request->id_slotec
+            'id_slotec'=>$request->id_slotec,
+            'id_usuario'=>$id_usuario->id,
         ]));
         return redirect()->route('equiposmsan.index')->with('success', 'Equipo actualizado correctamente.');
     }

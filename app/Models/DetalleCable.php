@@ -19,6 +19,7 @@ class DetalleCable extends Model
         'servicio',
         'cruzada',
         'longitud',
+        'gmaps',
         'observaciones',
     ];
     public function cable()

@@ -35,6 +35,7 @@ class CreateCableTable extends Migration
             $table->text('servicio')->nullable();
             $table->text('cruzada')->nullable();
             $table->integer('longitud')->nullable();
+            $table->text('gmaps')->nullable();
             $table->text('observaciones')->nullable();
         });
     }

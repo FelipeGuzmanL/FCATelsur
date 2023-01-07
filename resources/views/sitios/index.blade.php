@@ -59,8 +59,8 @@
                                                     <td>{{ $sitio->abreviacion }}</td>
                                                     <td>{{ $sitio->direccion }}</td>
                                                     <td>{{ $sitio->descripcion }}</td>
-                                                    <td><a href="#">Ver Cables</a></td>
-                                                    <td><a href="#">Ver MSANs</a></td>
+                                                    <td><a href="{{ route('sitios.index_cable', $sitio->id)}}">Ver Cables</a></td>
+                                                    <td><a href="{{ route('sitios.index_equipo', $sitio->id)}}">Ver MSANs</a></td>
                                                     <td class="td-actions text-right">
                                                         @if ( $sitio->url == NULL)
                                                         @elseif ( $sitio->url != NULL)

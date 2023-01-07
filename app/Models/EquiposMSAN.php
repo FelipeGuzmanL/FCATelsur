@@ -13,6 +13,7 @@ class EquiposMSAN extends Model
 
     protected $fillable = [
         'id_ubicacion',
+        'id_usuario',
         'id_sitio',
         'id_tecnologia',
         'id_slotec',
@@ -43,5 +44,9 @@ class EquiposMSAN extends Model
     public function slotec()
     {
         return $this->belongsTo(SlotTecnologia::class, 'id_slotec');
+    }
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'id_usuario');
     }
 }

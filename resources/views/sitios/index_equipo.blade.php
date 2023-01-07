@@ -8,12 +8,11 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header card-header-primary">
-                                    <h4 class="card-tittle">Lista de Equipos MSAN</h4>
+                                    <h4 class="card-tittle">Lista de Equipos MSAN de {{ $sitio->nombre}}</h4>
                                     <div class="row">
                                         <div class="col-7 text-right d-felx">
                                             <form action="{{route('sitios.index_equipo', $sitio->id)}}" method="get">
                                                 <div class="form-row">
-                                                    {{dd($sitio->id)}}
                                                     <div class="col-sm-4 align-self-center" style="text-align: right">
                                                         <input type="text" class="form-control float-right" name="texto" value="{{$texto ?? ''}}" placeholder="Buscar...">
                                                     </div>
@@ -34,7 +33,7 @@
                                     @endif
                                     <div class="row">
                                         <div class="col-12 text-right">
-                                            <a href="{{ route('equiposmsan.create') }}" class="btn btn-primary">Añadir MSAN</a>
+                                            <a href="{{ url()->previous() }}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>
                                         </div>
                                     </div>
                                     <div class="table-responsive">
@@ -48,6 +47,7 @@
                                             </thead>
                                             <tbody>
                                             @foreach ($equipo as $equipo)
+                                            @if ($sitio->id == $equipo->sitio->id)
                                                 <tr>
                                                     <td>{{ $equipo->Ubicacion->ciudad->nombre }}</td>
                                                     <td>MSAN {{ $equipo->numero }}</td>
@@ -69,6 +69,7 @@
                                                         </form>
                                                     </td>
                                                 </tr>
+                                                @endif
                                                 @endforeach
                                             </tbody>
                                         </table>

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cable;
+use App\Models\DetalleCable;
 use App\Models\Estado;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 
 class DetalleCableController extends Controller
 {
@@ -13,9 +15,25 @@ class DetalleCableController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Cable $cable)
+    public function index(Cable $cable, DetalleCable $detalles ,Request $request    )
     {
-        return view('cabledetalles.index', compact('cable'));
+        if ($request) {
+                $texto = trim($request->get('texto'));
+                $detalles = DetalleCable::WhereRaw('UPPER(direccion) LIKE ?', ['%' . strtoupper($texto) . '%'])
+                ->orWhere('filamento','LIKE','%'.$texto.'%')
+                ->orWhere('longitud','LIKE','%'.$texto.'%')
+                ->orWhereRaw('UPPER(servicio) LIKE ?', ['%' . strtoupper($texto) . '%'])
+                ->orWhereRaw('UPPER(cruzada) LIKE ?', ['%' . strtoupper($texto) . '%'])
+                ->orWhereHas('estado', function (Builder $query) use ($texto){
+                    $query->whereRaw('UPPER(estado) LIKE ?', ['%' . strtoupper($texto) . '%']);
+                })
+                ->orderBy('filamento','asc')
+                ->get();
+
+                return view('cabledetalles.index', compact('cable','detalles'), ['detalles' => $detalles, 'texto' => $texto]);
+        }
+        $detalles = DetalleCable::all();
+        return view('cabledetalles.index', compact('cable','detalles'));
     }
 
     /**
@@ -34,9 +52,12 @@ class DetalleCableController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,Cable $cable, DetalleCable $detalle)
     {
-        //
+        $detalle = DetalleCable::create(array_merge($request->only('id_cable','id_estado','filamento','direccion','servicio','cruzada','longitud','observaciones','gmaps'),[
+            'id_cable'=>$cable->id,
+            'id_estado'=>$request->id_estado]));
+        return redirect()->route('cable.detallecable.index', $cable->id)->with('success','Detalles agregado correctamente.');
     }
 
     /**
@@ -56,9 +77,9 @@ class DetalleCableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Cable $cable, DetalleCable $detalles)
     {
-        //
+        return view('cabledetalles.edit', compact('cable','detalles'),['estado'=>Estado::all()]);
     }
 
     /**
@@ -68,9 +89,12 @@ class DetalleCableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Cable $cable, DetalleCable $detalle)
     {
-        //
+        $detalle->update(array_merge($request->only('id_estado','filamento','direccion','servicio','cruzada','longitud','observaciones','gmaps'),[
+            'id_estado'=>$request->id_estado
+        ]));
+        return redirect()->route('cable.detallecable.index', $cable->id)->with('success','Filamento '.$detalle->filamento.' actualizado correctamente.');
     }
 
     /**
@@ -79,8 +103,9 @@ class DetalleCableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Cable $cable, DetalleCable $detalle)
     {
-        //
+        $detalle->delete();
+        return redirect()->route('cable.detallecable.index', $cable->id)->with('warning','Filamento '.$detalle->filamento.' eliminado correctamente.');
     }
 }

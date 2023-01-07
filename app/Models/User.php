@@ -43,8 +43,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function vehiculo()
+    public function equipomsan()
     {
-        return $this->hasOne(Vehiculo::class,'id_usuario');
+        return $this->hasMany(EquipoMSAN::class,'id_usuario');
     }
 }

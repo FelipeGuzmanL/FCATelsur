@@ -49,7 +49,9 @@ class RouteServiceProvider extends ServiceProvider
         });
         Route::model('equiposmsan', \App\Models\EquiposMSAN::class);
         Route::model('slots', \App\Models\Slot::class);
-        Route::model('sitio', \App\Models\Sitio::class);
+        Route::model('sitios', \App\Models\Sitio::class);
+        Route::model('cable', \App\Models\Cable::class);
+        Route::model('detallecable', \App\Models\DetalleCable::class);
     }
 
     /**

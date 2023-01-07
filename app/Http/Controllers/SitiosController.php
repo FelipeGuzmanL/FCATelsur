@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Sitio;
+use App\Models\Cable;
 use App\Models\EquiposMSAN;
 
 class SitiosController extends Controller
@@ -32,12 +33,33 @@ class SitiosController extends Controller
         $sitios = Sitio::all();
         return view('sitios.index', compact('sitios'));
     }
-    public function index_equipo(EquiposMSAN $equipo, Sitio $sitio)
+    public function index_equipo(Sitio $sitio, EquiposMSAN $equipo)
     {
-        dd($sitio);
         $equipo = EquiposMSAN::all();
         return view('sitios.index_equipo', compact('sitio','equipo'));
     }
+    public function index_cable(Sitio $sitio, Cable $cables, Request $request)
+    {
+        if ($request) {
+            $texto = trim($request->get('texto'));
+            $cables = Cable::WhereRaw('UPPER(nombre_cable) LIKE ?', ['%' . strtoupper($texto) . '%'])
+            ->orWhere('cant_filam','LIKE','%'.$texto.'%')
+            ->orWhereHas('sitio', function (Builder $query) use ($texto){
+                $query->whereRaw('UPPER(nombre) LIKE ?', ['%' . strtoupper($texto) . '%']);
+            })
+            ->orWhereHas('tipocable', function (Builder $query) use ($texto){
+                $query->whereRaw('UPPER(tipo) LIKE ?', ['%' . strtoupper($texto) . '%']);
+            })
+            ->orderBy('id','asc')
+            ->paginate(10);
+
+            $cables = Cable::all();
+            return view('sitios.index_cable' ,compact('sitio'), ['cables' => $cables, 'texto' => $texto]);
+        }
+        $cables = Cable::all();
+        return view('sitios.index_cable', compact('sitio','cables'));
+    }
+
 
     /**
      * Show the form for creating a new resource.

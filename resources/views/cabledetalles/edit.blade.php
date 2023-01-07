@@ -4,11 +4,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <form action="{{route('cable.detallecable.store', $cable->id)}}" method="post" class="form-horizontal" enctype="multipart/form-data">
+                <form action="{{route('cable.detallecable.update', [$cable,$detalles])}}" method="post" class="form-horizontal" enctype="multipart/form-data">
                     @csrf
+                    @method('PUT')
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-tittle">Guardar Datos del Cable {{ $cable->sitio->abreviacion}} {{ $cable->nombre_cable}}</h4>
+                            <h4 class="card-tittle">Actualizar Datos del Cable {{ $cable->sitio->abreviacion}} {{ $cable->nombre_cable}}</h4>
                             <p class="card-category">Ingresar datos del Cable {{ $cable->sitio->abreviacion }} {{ $cable->nombre_cable}}</p>
                         </div>
                         <div class="card-body">
@@ -20,7 +21,7 @@
                             <div class="row">
                                 <label for="filamento" class="col-sm-2 col-form-label">Filamento</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="filamento" placeholder="Número del filamento" value="{{old('filamento')}}" required oninvalid="this.setCustomValidity('Ingrese numero del filamento')" oninput="this.setCustomValidity('')"/>
+                                    <input type="text" class="form-control" name="filamento" placeholder="Número del filamento" value="{{old('filamento', $detalles->filamento)}}" required oninvalid="this.setCustomValidity('Ingrese numero del filamento')" oninput="this.setCustomValidity('')"/>
                                     @if ($errors->has('filamento'))
                                         <span class="error text-danger" for="input-filamento">{{$errors -> first('filamento')}}</span>
                                     @endif
@@ -29,7 +30,7 @@
                             <div class="row">
                                 <label for="direccion" class="col-sm-2 col-form-label">Dirección</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="direccion" placeholder="Dirección del filamento" value="{{old('direccion')}}" required oninvalid="this.setCustomValidity('Ingrese direccion del filamento')" oninput="this.setCustomValidity('')"/>
+                                    <input type="text" class="form-control" name="direccion" placeholder="Dirección del filamento" value="{{old('direccion', $detalles->direccion)}}" required oninvalid="this.setCustomValidity('Ingrese direccion del filamento')" oninput="this.setCustomValidity('')"/>
                                     @if ($errors->has('direccion'))
                                         <span class="error text-danger" for="input-direccion">{{$errors -> first('direccion')}}</span>
                                     @endif
@@ -38,7 +39,7 @@
                             <div class="row">
                                 <label for="servicio" class="col-sm-2 col-form-label">Servicios</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="servicio" placeholder="Servicios" value="{{old('servicio')}}">
+                                    <input type="text" class="form-control" name="servicio" placeholder="Servicios" value="{{old('servicio', $detalles->servicio)}}">
                                     @if ($errors->has('servicio'))
                                         <span class="error text-danger" for="input-servicio">{{$errors -> first('servicio')}}</span>
                                     @endif
@@ -47,7 +48,7 @@
                             <div class="row">
                                 <label for="longitud" class="col-sm-2 col-form-label">Longitud filamento</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="longitud" placeholder="Longitud en Metros (ej: 8000, 5000, 200)" value="{{old('longitud')}}">
+                                    <input type="text" class="form-control" name="longitud" placeholder="Longitud en Metros (ej: 8000, 5000, 200)" value="{{old('longitud', $detalles->longitud)}}">
                                     @if ($errors->has('longitud'))
                                         <span class="error text-danger" for="input-longitud">{{$errors -> first('longitud')}}</span>
                                     @endif
@@ -56,7 +57,7 @@
                             <div class="row">
                                 <label for="cruzada" class="col-sm-2 col-form-label">Cruzada</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="cruzada" placeholder="Cruzada" value="{{old('cruzada')}}">
+                                    <input type="text" class="form-control" name="cruzada" placeholder="Cruzada" value="{{old('cruzada', $detalles->cruzada)}}">
                                     @if ($errors->has('cruzada'))
                                         <span class="error text-danger" for="input-cruzada">{{$errors -> first('cruzada')}}</span>
                                     @endif
@@ -65,7 +66,7 @@
                             <div class="row">
                                 <label for="observaciones" class="col-sm-2 col-form-label">Observaciones</label>
                                 <div class="col-sm-7">
-                                    <textarea class="form-control" name="observaciones" rows="3" placeholder="Observaciones" value="{{old('observaciones')}}"></textarea>
+                                    <textarea class="form-control" name="observaciones" rows="3" placeholder="Observaciones" value="{{old('observaciones', $detalles->observaciones)}}"></textarea>
                                     @if ($errors->has('observaciones'))
                                         <span class="error text-danger" for="input-observaciones">{{$errors -> first('observaciones')}}</span>
                                     @endif
@@ -74,7 +75,7 @@
                             <div class="row">
                                 <label for="gmaps" class="col-sm-2 col-form-label">Link GMaps</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="gmaps" placeholder="Link Ubicación en GMaps (opcional)" value="{{old('gmaps')}}">
+                                    <input type="text" class="form-control" name="gmaps" placeholder="Link Ubicación en GMaps (opcional)" value="{{old('gmaps', $detalles->gmaps)}}">
                                     @if ($errors->has('gmaps'))
                                         <span class="error text-danger" for="input-gmaps">{{$errors -> first('gmaps')}}</span>
                                     @endif
@@ -86,7 +87,7 @@
                                     <div class="form-group">
                                         <select class="form-control sitios" data-style="btn btn-link" id="sitios" name="id_estado">
                                         @foreach ( $estado as $est )
-                                            <option value="{{ $est->id }}">{{ $est->estado }}</option>
+                                            <option value="{{ $est->id }}" {{$detalles->id_estado == $est->id ? 'selected' : ''}}>{{ $est->estado }}</option>
                                         @endforeach
                                         </select>
                                       </div>

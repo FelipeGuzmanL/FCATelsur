@@ -43,6 +43,7 @@
                                                 <th>Nombre</th>
                                                 <th>Slots</th>
                                                 <th>Última Actualización</th>
+                                                <th>Modificado Por</th>
                                                 <th>Mantenciones</th>
                                                 <th class="text-right">Acciones</th>
                                             </thead>
@@ -58,6 +59,7 @@
                                                     <td>{{ $equipo->Ubicacion->ciudad->abreviacion }} {{ $equipo->numero }}</td>
                                                     <td><a href="{{ route('equiposmsan.slots.index', $equipo->id)}}">Slots {{ $equipo->Ubicacion->ciudad->abreviacion }} {{ $equipo->numero }}</a></td>
                                                     <td>{{ $equipo->updated_at}}</td>
+                                                    <td>{{ $equipo->usuario->name}}</td>
                                                     <td><a href="#">Ver Mantenciones</a></td>
                                                     <td class="td-actions text-right">
                                                         @if ( $equipo->Ubicacion->link_gmaps == NULL)

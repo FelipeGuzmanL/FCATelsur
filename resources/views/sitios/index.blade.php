@@ -38,7 +38,7 @@
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table">
-                                            <thead class="text-primary">
+                                            <thead class="text-primary text-center">
                                                 <th>Nombre</th>
                                                 <th>Nemotécnico</th>
                                                 <th>Dirección</th>
@@ -54,7 +54,7 @@
                                                 </div>
                                             @endif
                                             @foreach ($sitios as $sitio)
-                                                <tr>
+                                                <tr class="text-center">
                                                     <td>{{ $sitio->nombre }}</td>
                                                     <td>{{ $sitio->abreviacion }}</td>
                                                     <td>{{ $sitio->direccion }}</td>

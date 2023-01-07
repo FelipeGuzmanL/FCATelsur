@@ -24,9 +24,6 @@ class EquiposMSANController extends Controller
         if ($request) {
             $texto = trim($request->get('texto'));
             $equipos = EquiposMSAN::Where('numero','LIKE','%'.$texto.'%')
-            ->orWhereHas('ubicacion', function (Builder $query) use ($texto){
-                $query->whereRaw('UPPER(coordenadas) LIKE ?', ['%' . strtoupper($texto) . '%']);
-            })
             ->orWhereHas('sitio', function (Builder $query) use ($texto){
                 $query->whereRaw('UPPER(nombre) LIKE ?', ['%' . strtoupper($texto) . '%']);
             })
@@ -62,14 +59,14 @@ class EquiposMSANController extends Controller
      */
     public function store(Request $request)
     {
-        $id_usuario = auth()->user();
-        $ubicacion = Ubicacion::create(array_merge($request->only('id_ciudad','direccion','coordenadas','link_gmaps','sitio_fca','descripcion_sitio'),['id_ciudad'=>$request->id_ubicacion]));
+        $id_usuario = auth()->user()->id;
+        $ubicacion = Ubicacion::create(array_merge($request->only('id_ciudad','direccion','link_gmaps','sitio_fca','descripcion_sitio'),['id_ciudad'=>$request->id_ubicacion]));
         $msan = EquiposMSAN::create(array_merge($request->only('id_ubicacion','id_usuario','id_sitio','id_tecnologia','id_slotec','numero'),[
             'id_ubicacion'=>$ubicacion->id,
             'id_sitio'=>$request->id_ubicacion,
             'id_tecnologia'=>$request->id_tecnologia,
             'id_slotec'=>$request->id_slotec,
-            'id_usuario'=>$id_usuario->id,
+            'id_usuario'=>$id_usuario
         ]));
         return redirect()->route('equiposmsan.index')->with('success','Equipo MSAN guardado correctamente.');
     }
@@ -107,7 +104,7 @@ class EquiposMSANController extends Controller
     {
         $ubicacion = $equipos->Ubicacion;
         $id_usuario = auth()->user();
-        $ubicacion->update(array_merge($request->only('id_ciudad','direccion','coordenadas','link_gmaps','sitio_fca','descripcion_sitio'),['id_ciudad'=>$request->id_ubicacion]));
+        $ubicacion->update(array_merge($request->only('id_ciudad','direccion','link_gmaps','sitio_fca','descripcion_sitio'),['id_ciudad'=>$request->id_ubicacion]));
         $equipos->update(array_merge($request->only('id_ubicacion','id_usuario','id_sitio','id_tecnologia','id_slotec','numero'),[
             'id_ubicacion'=>$ubicacion->id,
             'id_sitio'=>$request->id_ubicacion,

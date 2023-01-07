@@ -44,7 +44,7 @@
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table">
-                                            <thead class="text-primary">
+                                            <thead class="text-primary text-center">
                                                 <th>OLT</th>
                                                 <th>Sitio FCA</th>
                                                 <th>SPL</th>
@@ -62,7 +62,7 @@
                                             @endif
                                             @foreach ($olts as $olt)
                                                 @if ($olt->id_slot == $slot->id)
-                                                <tr>
+                                                <tr class="text-center">
                                                     <td>{{ $olt->olt }}</td>
                                                     <td>{{ $olt->sitio_fca}}</td>
                                                     <td>{{ $olt->spl}}</td>

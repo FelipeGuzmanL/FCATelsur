@@ -22,7 +22,7 @@
                                 <div class="col-sm-7">
                                     <input type="text" class="form-control" name="filamento" placeholder="Número del filamento" value="{{old('filamento')}}" required oninvalid="this.setCustomValidity('Ingrese numero del filamento')" oninput="this.setCustomValidity('')"/>
                                     @if ($errors->has('filamento'))
-                                        <span class="error text-danger" for="input-filamento">{{$errors -> first('filamento')}}</span>
+                                        <span c lass="error text-danger" for="input-filamento">{{$errors -> first('filamento')}}</span>
                                     @endif
                                 </div>
                             </div>

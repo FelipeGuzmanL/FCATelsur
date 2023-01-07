@@ -74,15 +74,6 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label for="coordenadas" class="col-sm-2 col-form-label">Coordenadas</label>
-                                <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="coordenadas" placeholder="Ingrese coordenadas" value="{{old('coordenadas')}}">
-                                    @if ($errors->has('coordenadas'))
-                                        <span class="error text-danger" for="input-coordenadas">{{$errors -> first('coordenadas')}}</span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="row">
                                 <label for="link_gmaps" class="col-sm-2 col-form-label">Link GMaps</label>
                                 <div class="col-sm-7">
                                     <input type="text" class="form-control" name="link_gmaps" placeholder="Link a Google Maps" value="{{old('link_gmaps')}}">

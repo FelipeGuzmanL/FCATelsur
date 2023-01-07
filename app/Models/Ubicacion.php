@@ -14,7 +14,6 @@ class Ubicacion extends Model
     protected $fillable = [
         'id_ciudad',
         'direccion',
-        'coordenadas',
         'link_gmaps',
         'sitio_fca',
         'descripcion_sitio',

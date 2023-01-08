@@ -41,7 +41,7 @@
                             <div class="row">
                             <label for="cant_filam" class="col-sm-2 col-form-label">Cantidad Filamentos</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="cant_filam" placeholder="Cantidad" value="{{old('cant_filam')}}">
+                                    <input type="number" class="form-control" name="cant_filam" placeholder="Cantidad" value="{{old('cant_filam')}}">
                                     @if ($errors->has('cant_filam'))
                                         <span class="error text-danger" for="input-cant_filam">{{$errors -> first('cant_filam')}}</span>
                                     @endif

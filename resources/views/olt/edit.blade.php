@@ -46,7 +46,7 @@
                             <div class="row">
                                 <label for="filam" class="col-sm-2 col-form-label">Filam</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="filam" placeholder="Filamento" value="{{old('filam', $olt->filam)}}">
+                                    <input type="number" class="form-control" name="filam" placeholder="Filamento" value="{{old('filam', $olt->filam)}}">
                                     @if ($errors->has('filam'))
                                         <span class="error text-danger" for="input-filam">{{$errors -> first('filam')}}</span>
                                     @endif
@@ -55,7 +55,7 @@
                             <div class="row">
                                 <label for="spl" class="col-sm-2 col-form-label">SPL</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="spl" placeholder="Spliter" value="{{old('spl', $olt->spl)}}">
+                                    <input type="number" class="form-control" name="spl" placeholder="Spliter" value="{{old('spl', $olt->spl)}}">
                                     @if ($errors->has('spl'))
                                         <span class="error text-danger" for="input-spl">{{$errors -> first('spl')}}</span>
                                     @endif

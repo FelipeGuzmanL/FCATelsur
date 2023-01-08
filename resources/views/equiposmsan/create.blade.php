@@ -20,7 +20,7 @@
                             <div class="row">
                             <label for="numero" class="col-sm-2 col-form-label">Numero MSAN</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="numero" placeholder="Numero MSAN" value="{{old('numero')}}" autofocus required oninvalid="this.setCustomValidity('Ingrese numero del MSAN')" oninput="this.setCustomValidity('')"/>
+                                    <input type="number" class="form-control" name="numero" placeholder="Numero MSAN" value="{{old('numero')}}" autofocus required oninvalid="this.setCustomValidity('Ingrese numero del MSAN')" oninput="this.setCustomValidity('')"/>
                                     @if ($errors->has('numero'))
                                         <span class="error text-danger" for="input-numero">{{$errors -> first('numero')}}</span>
                                     @endif

@@ -48,7 +48,7 @@
                             <div class="row">
                                 <label for="longitud" class="col-sm-2 col-form-label">Longitud filamento</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="longitud" placeholder="Longitud en Metros (ej: 8000, 5000, 200)" value="{{old('longitud', $detalles->longitud)}}">
+                                    <input type="number" class="form-control" name="longitud" placeholder="Longitud en Metros (ej: 8000, 5000, 200)" value="{{old('longitud', $detalles->longitud)}}">
                                     @if ($errors->has('longitud'))
                                         <span class="error text-danger" for="input-longitud">{{$errors -> first('longitud')}}</span>
                                     @endif

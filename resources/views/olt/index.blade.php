@@ -52,6 +52,8 @@
                                                 <th>Cable</th>
                                                 <th>Filam</th>
                                                 <th>Estado</th>
+                                                <th>Fecha Modificación</th>
+                                                <th>Modificado por</th>
                                                 <th class="text-right">Acciones</th>
                                             </thead>
                                             <tbody>
@@ -83,6 +85,8 @@
                                                     @if ($olt->estad->id == "2")
                                                         <td class="text-danger">{{ $olt->estad->estado}}</td>
                                                     @endif
+                                                    <td>{{ $olt->updated_at}}</td>
+                                                    <td>{{ $olt->usuario->name}}</td>
                                                     <td class="td-actions text-right">
                                                         @if ( $olt->link_sitio_fca == NULL)
                                                         @elseif ( $olt->link_sitio_fca != NULL)

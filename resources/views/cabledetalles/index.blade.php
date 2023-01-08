@@ -48,9 +48,9 @@
                                                 <th>DIR</th>
                                                 <th>Servicio</th>
                                                 <th>Cruzada</th>
-                                                <th>Longitud</th>
                                                 <th>Observaciones</th>
                                                 <th>Estado</th>
+                                                <th>Longitud</th>
                                                 <th class="text-right">Acciones</th>
                                             </thead>
                                             <tbody>
@@ -61,13 +61,13 @@
                                                         <td>{{ $detalle->direccion}}</td>
                                                         <td>{{ $detalle->servicio}}</td>
                                                         <td>{{ $detalle->cruzada}}</td>
-                                                        <td>{{ $detalle->longitud}} mts</td>
                                                         <td>{{ $detalle->observaciones}}</td>
                                                         @if ($detalle->estado->id == "1")
                                                             <td class="text-success">{{ $detalle->estado->estado}}</td>
                                                         @elseif ($detalle->estado->id == "2")
                                                             <td class="text-danger">{{ $detalle->estado->estado}}</td>
                                                         @endif
+                                                        <td>{{ $detalle->longitud}} mts</td>
                                                         <td class="td-actions text-right">
                                                             @if ( $detalle->gmaps == NULL)
                                                             @elseif ( $detalle->gmaps != NULL)

@@ -64,14 +64,16 @@ class SlotMSANController extends Controller
     public function store(Request $request, EquiposMSAN $equipo, Slot $slot, SlotMSAN $olt)
     {
         $contador = $slot->slotmsan;
+        $id_usuario = auth()->user()->id;
 
         if (count($contador)==0){
             for ($i=1; $i <= $equipo->slotec->slots ; $i++) {
-                $olt = SlotMSAN::create(array_merge($request->only('id_slot','id_cable','id_estado','olt'),[
+                $olt = SlotMSAN::create(array_merge($request->only('id_slot','id_cable','id_estado','olt','id_usuario'),[
                     'olt'=>$i,
                     'id_slot'=>$slot->id,
                     'id_cable'=>$request->id_cable,
-                    'id_estado'=>$request->id_estado
+                    'id_estado'=>$request->id_estado,
+                    'id_usuario'=>$id_usuario
                 ]));
             }
             return redirect()->route('equiposmsan.slots.olt.index', [$equipo,$slot])->with('success','OLT Guardada correctamente.');
@@ -126,9 +128,11 @@ class SlotMSANController extends Controller
      */
     public function update(Request $request, EquiposMSAN $equipo, Slot $slot, SlotMSAN $olt)
     {
-        $olt->update(array_merge($request->only('id_cable','id_estado','sitio_fca','link_sitio_fca','descripcion_fca','olt','spl','filam'),[
+        $idusuario = auth()->user()->id;
+        $olt->update(array_merge($request->only('id_cable','id_usuario','id_estado','sitio_fca','link_sitio_fca','descripcion_fca','olt','spl','filam'),[
             'id_cable'=>$request->id_cable,
-            'id_estado'=>'2'
+            'id_estado'=>'2',
+            'id_usuario'=>$idusuario
         ]));
         return redirect()->route('equiposmsan.slots.olt.index', [$equipo,$slot,$olt])->with('success','OLT actualizada correctamente.');
     }

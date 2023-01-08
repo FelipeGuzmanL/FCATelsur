@@ -39,7 +39,7 @@
                             <div class="row">
                                 <label for="servicio" class="col-sm-2 col-form-label">Servicios</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="servicio" placeholder="Servicios" value="{{old('servicio', $detalles->servicio)}}"  required oninvalid="this.setCustomValidity('Ingrese servicio')" oninput="this.setCustomValidity('')"/>
+                                    <input type="text" class="form-control" name="servicio" placeholder="Servicios" value="{{old('servicio', $detalles->servicio)}}">
                                     @if ($errors->has('servicio'))
                                         <span class="error text-danger" for="input-servicio">{{$errors -> first('servicio')}}</span>
                                     @endif
@@ -81,7 +81,7 @@
                                     @endif
                                 </div>
                             </div-->
-                            <!--div class="row">
+                            <div class="row">
                                 <label for="id_estado" class="col-sm-2 col-form-label">Estado</label>
                                 <div class="col-sm-7">
                                     <div class="form-group">
@@ -92,7 +92,7 @@
                                         </select>
                                       </div>
                                 </div>
-                            </div-->
+                            </div>
                         <div class="card-footer ml-auto mr-auto">
                             <button type="submit" class="btn btn-primary">{{ __('Guardar') }}</button>
                         </div>

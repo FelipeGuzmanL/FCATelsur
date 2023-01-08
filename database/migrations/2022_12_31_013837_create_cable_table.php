@@ -22,6 +22,7 @@ class CreateCableTable extends Migration
             $table->foreign('id_tipo_cable')->references('id')->on('tipo_cable');
             $table->UnsignedBigInteger('id_sitio');
             $table->foreign('id_sitio')->references('id')->on('ciudad');
+            $table->text('descripcion')->nullable();
         });
         Schema::create('detallecable', function (Blueprint $table) {
             $table->id();

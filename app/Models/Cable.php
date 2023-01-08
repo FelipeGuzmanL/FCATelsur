@@ -16,6 +16,7 @@ class Cable extends Model
         'id_tipo_cable',
         'nombre_cable',
         'cant_filam',
+        'descripcion',
     ];
 
     public function sitio()

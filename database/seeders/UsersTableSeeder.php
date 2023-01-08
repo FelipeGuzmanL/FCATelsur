@@ -23,7 +23,7 @@ class UsersTableSeeder extends Seeder
             'updated_at' => now()
         ]);
         DB::table('estado')->insert([
-            'estado' => 'Disponible'
+            'estado' => 'Libre'
         ]);
         DB::table('estado')->insert([
             'estado' => 'Ocupado'

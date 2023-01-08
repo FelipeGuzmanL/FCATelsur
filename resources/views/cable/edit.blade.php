@@ -65,6 +65,15 @@
                                       </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <label for="descripcion" class="col-sm-2 col-form-label">Descripcion</label>
+                                <div class="col-sm-7">
+                                    <textarea class="form-control" name="descripcion" rows="3" placeholder="Ingrese nombre descripcion">{{old('descripcion', $cable->descripcion)}}</textarea>
+                                    @if ($errors->has('descripcion'))
+                                        <span class="error text-danger" for="input-descripcion">{{$errors -> first('descripcion')}}</span>
+                                    @endif
+                                </div>
+                            </div>
                         <div class="card-footer ml-auto mr-auto">
                             <button type="submit" class="btn btn-primary">{{ __('Guardar') }}</button>
                         </div>

@@ -22,6 +22,8 @@ class CreateSlotMsanTable extends Migration
             $table->foreign('id_cable')->references('id')->on('cable');
             $table->UnsignedBigInteger('id_estado');
             $table->foreign('id_estado')->references('id')->on('estado');
+            $table->UnsignedBigInteger('id_usuario')->nullable();
+            $table->foreign('id_usuario')->references('id')->on('users');
             $table->string('sitio_fca')->nullable();
             $table->text('link_sitio_fca')->nullable();
             $table->text('descripcion_fca')->nullable();
@@ -43,6 +45,7 @@ class CreateSlotMsanTable extends Migration
             $table->dropColumn('id_slot');
             $table->dropColumn('id_cable');
             $table->dropColumn('id_estado');
+            $table->dropColumn('id_usuario');
         });
         Schema::dropIfExists('slot_msan');
     }

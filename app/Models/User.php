@@ -47,4 +47,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(EquipoMSAN::class,'id_usuario');
     }
+    public function olt()
+    {
+        return $this->hasMany(SlotMSAN::class, 'id_usuario');
+    }
 }

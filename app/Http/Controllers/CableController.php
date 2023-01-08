@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cable;
+use App\Models\DetalleCable;
 use App\Models\EquiposMSAN;
 use App\Models\Sitio;
 use App\Models\Slot;
@@ -66,6 +67,9 @@ class CableController extends Controller
     public function store(Request $request)
     {
         $cable = Cable::create(array_merge($request->only('id_sitio','id_tipo_cable','nombre_cable','cant_filam'),['id_sitio'=>$request->id_sitio,'id_tipo_cable'=>$request->id_tipo_cable]));
+        for ($i=1; $i <= $request->cant_filam ; $i++) { 
+            $detalle = DetalleCable::create(array_merge($request->only('filamento','id_estado','id_cable'),['filamento'=>$i,'id_estado'=>"1",'id_cable'=>$cable->id]));
+        }
         return redirect()->route('cable.index')->with('success','Cable creado correctamente.');
     }
 
@@ -88,7 +92,7 @@ class CableController extends Controller
      */
     public function edit(Cable $cable)
     {
-        return view('cable.edit', compact('cable'),['sitios'=>Sitio::all()]);
+        return view('cable.edit', compact('cable'),['sitio'=>Sitio::all(),'tipocable'=>TipoCable::all()]);
     }
 
     /**
@@ -101,6 +105,26 @@ class CableController extends Controller
     public function update(Request $request, Cable $cable)
     {
         $cable->update(array_merge($request->only('id_sitio','id_tipo_cable','nombre_cable','cant_filam'),['id_sitio'=>$request->id_sitio,'id_tipo_cable'=>$request->id_tipo_cable]));
+        if(count($cable->detallecable)==0){ 
+            for ($i=1; $i <= $request->cant_filam ; $i++)
+            {
+                $detalle = DetalleCable::create(array_merge($request->only('filamento','id_estado','id_cable'),['filamento'=>$i,'id_estado'=>"1",'id_cable'=>$cable->id]));
+            }
+        }
+        if(count($cable->detallecable)>0 && count($cable->detallecable)!=$request->cant_filam)
+        {
+            $detalles = $cable->detallecable;
+            if (count($detalles)>0){
+                for ($i=0;$i<=count($detalles)-1;$i++)
+                {
+                    $detalles[$i]->delete();
+                }
+            }
+            for ($i=1; $i <= $request->cant_filam ; $i++)
+            {
+                $detalle = DetalleCable::create(array_merge($request->only('filamento','id_estado','id_cable'),['filamento'=>$i,'id_estado'=>"1",'id_cable'=>$cable->id]));
+            }
+        }
         return redirect()->route('cable.index')->with('success','Cable '.$cable->nombre_cable.' actualizado correctamente.');
     }
 
@@ -112,6 +136,13 @@ class CableController extends Controller
      */
     public function destroy(Cable $cable)
     {
+        $detalles = $cable->detallecable;
+        if (count($detalles)>0){
+            for ($i=0;$i<=count($detalles)-1;$i++)
+            {
+                $detalles[$i]->delete();
+            }
+        }
         $cable->delete();
         return redirect()->route('cable.index')->with('succes','Cable'.$cable->nombre_cable.'se ha eliminado correctamente.');
     }

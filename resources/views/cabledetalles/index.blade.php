@@ -38,7 +38,6 @@
                                     @endif
                                     <div class="row">
                                         <div class="col-12 text-right">
-                                            <a href="{{ route('cable.detallecable.create', $cable->id) }}" class="btn btn-primary">Añadir Detalle</a>
                                             <a href="{{ route('cable.index') }}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>
                                         </div>
                                     </div>
@@ -46,7 +45,7 @@
                                         <table class="table">
                                             <thead class="text-primary text-center">
                                                 <th>Filam</th>
-                                                <th>Dirección</th>
+                                                <th>DIR</th>
                                                 <th>Servicio</th>
                                                 <th>Cruzada</th>
                                                 <th>Longitud</th>
@@ -62,7 +61,7 @@
                                                         <td>{{ $detalle->direccion}}</td>
                                                         <td>{{ $detalle->servicio}}</td>
                                                         <td>{{ $detalle->cruzada}}</td>
-                                                        <td>{{ $detalle->longitud}} Metros</td>
+                                                        <td>{{ $detalle->longitud}} mts</td>
                                                         <td>{{ $detalle->observaciones}}</td>
                                                         @if ($detalle->estado->id == "1")
                                                             <td class="text-success">{{ $detalle->estado->estado}}</td>

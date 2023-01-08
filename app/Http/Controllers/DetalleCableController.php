@@ -92,7 +92,7 @@ class DetalleCableController extends Controller
     public function update(Request $request, Cable $cable, DetalleCable $detalle)
     {
         $detalle->update(array_merge($request->only('id_estado','filamento','direccion','servicio','cruzada','longitud','observaciones','gmaps'),[
-            'id_estado'=>$request->id_estado
+            'id_estado'=>'2'
         ]));
         return redirect()->route('cable.detallecable.index', $cable->id)->with('success','Filamento '.$detalle->filamento.' actualizado correctamente.');
     }
@@ -103,9 +103,18 @@ class DetalleCableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cable $cable, DetalleCable $detalle)
+    public function destroy(Request $request, Cable $cable, DetalleCable $detalle)
     {
-        $detalle->delete();
+        $null = NULL;
+        $detalle->update(array_merge($request->only('id_estado','direccion','servicio','cruzada','longitud','observaciones','gmaps'),[
+            'id_estado'=>'1',
+            'direccion'=>$null,
+            'servicio'=>$null,
+            'cruzada'=>$null,
+            'longitud'=>$null,
+            'observaciones'=>$null,
+            'gmaps'=>$null
+        ]));
         return redirect()->route('cable.detallecable.index', $cable->id)->with('warning','Filamento '.$detalle->filamento.' eliminado correctamente.');
     }
 }

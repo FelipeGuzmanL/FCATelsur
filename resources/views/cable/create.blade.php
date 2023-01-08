@@ -48,7 +48,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label for="id_tipo_cable" class="col-sm-2 col-form-label">Sitio</label>
+                                <label for="id_tipo_cable" class="col-sm-2 col-form-label">Tipo de Cable</label>
                                 <div class="col-sm-7">
                                     <div class="form-group">
                                         <select class="form-control tipocables" data-style="btn btn-link" id="tipocables" name="id_tipo_cable">

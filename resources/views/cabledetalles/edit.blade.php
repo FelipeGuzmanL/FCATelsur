@@ -18,7 +18,7 @@
                                     <a href="{{ url()->previous() }}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>
                                 </div>
                             </div>
-                            <div class="row">
+                            <!--div class="row">
                                 <label for="filamento" class="col-sm-2 col-form-label">Filamento</label>
                                 <div class="col-sm-7">
                                     <input type="text" class="form-control" name="filamento" placeholder="Número del filamento" value="{{old('filamento', $detalles->filamento)}}" required oninvalid="this.setCustomValidity('Ingrese numero del filamento')" oninput="this.setCustomValidity('')"/>
@@ -26,11 +26,11 @@
                                         <span class="error text-danger" for="input-filamento">{{$errors -> first('filamento')}}</span>
                                     @endif
                                 </div>
-                            </div>
+                            </div-->
                             <div class="row">
-                                <label for="direccion" class="col-sm-2 col-form-label">Dirección</label>
+                                <label for="direccion" class="col-sm-2 col-form-label">DIR</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="direccion" placeholder="Dirección del filamento" value="{{old('direccion', $detalles->direccion)}}" required oninvalid="this.setCustomValidity('Ingrese direccion del filamento')" oninput="this.setCustomValidity('')"/>
+                                    <input type="text" class="form-control" name="direccion" placeholder="DIR del filamento" value="{{old('direccion', $detalles->direccion)}}">
                                     @if ($errors->has('direccion'))
                                         <span class="error text-danger" for="input-direccion">{{$errors -> first('direccion')}}</span>
                                     @endif
@@ -39,7 +39,7 @@
                             <div class="row">
                                 <label for="servicio" class="col-sm-2 col-form-label">Servicios</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="servicio" placeholder="Servicios" value="{{old('servicio', $detalles->servicio)}}">
+                                    <input type="text" class="form-control" name="servicio" placeholder="Servicios" value="{{old('servicio', $detalles->servicio)}}"  required oninvalid="this.setCustomValidity('Ingrese servicio')" oninput="this.setCustomValidity('')"/>
                                     @if ($errors->has('servicio'))
                                         <span class="error text-danger" for="input-servicio">{{$errors -> first('servicio')}}</span>
                                     @endif
@@ -66,13 +66,13 @@
                             <div class="row">
                                 <label for="observaciones" class="col-sm-2 col-form-label">Observaciones</label>
                                 <div class="col-sm-7">
-                                    <textarea class="form-control" name="observaciones" rows="3" placeholder="Observaciones" value="{{old('observaciones', $detalles->observaciones)}}"></textarea>
+                                    <textarea class="form-control" name="observaciones" rows="3" placeholder="Observaciones">{{old('observaciones', $detalles->observaciones)}}</textarea>
                                     @if ($errors->has('observaciones'))
                                         <span class="error text-danger" for="input-observaciones">{{$errors -> first('observaciones')}}</span>
                                     @endif
                                 </div>
                             </div>
-                            <div class="row">
+                            <!--div class="row">
                                 <label for="gmaps" class="col-sm-2 col-form-label">Link GMaps</label>
                                 <div class="col-sm-7">
                                     <input type="text" class="form-control" name="gmaps" placeholder="Link Ubicación en GMaps (opcional)" value="{{old('gmaps', $detalles->gmaps)}}">
@@ -80,8 +80,8 @@
                                         <span class="error text-danger" for="input-gmaps">{{$errors -> first('gmaps')}}</span>
                                     @endif
                                 </div>
-                            </div>
-                            <div class="row">
+                            </div-->
+                            <!--div class="row">
                                 <label for="id_estado" class="col-sm-2 col-form-label">Estado</label>
                                 <div class="col-sm-7">
                                     <div class="form-group">
@@ -92,7 +92,7 @@
                                         </select>
                                       </div>
                                 </div>
-                            </div>
+                            </div-->
                         <div class="card-footer ml-auto mr-auto">
                             <button type="submit" class="btn btn-primary">{{ __('Guardar') }}</button>
                         </div>

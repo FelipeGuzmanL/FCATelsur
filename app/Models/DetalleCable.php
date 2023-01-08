@@ -16,6 +16,7 @@ class DetalleCable extends Model
         'direccion',
         'id_estado',
         'id_cable',
+        'id_usuario',
         'servicio',
         'cruzada',
         'longitud',
@@ -29,5 +30,9 @@ class DetalleCable extends Model
     public function estado()
     {
         return $this->belongsTo(Estado::class, 'id_estado');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_usuario');
     }
 }

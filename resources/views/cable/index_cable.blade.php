@@ -39,10 +39,11 @@
                                     <div class="table-responsive text-center">
                                         <table class="table">
                                             <thead class="text-primary">
-                                                <th>Nombre</th>
+                                                <th>N° Cable</th>
                                                 <th>Sitio</th>
                                                 <th>Cantidad Filamentos</th>
                                                 <th>Tipo de Cable</th>
+                                                <th>Descripción</th>
                                                 <th>Detalles</th>
                                                 <th class="text-right">Acciones</th>
                                             </thead>

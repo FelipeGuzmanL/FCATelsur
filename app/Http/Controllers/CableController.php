@@ -66,9 +66,15 @@ class CableController extends Controller
      */
     public function store(Request $request)
     {
+        $id_usuario = auth()->user()->id;
         $cable = Cable::create(array_merge($request->only('id_sitio','id_tipo_cable','nombre_cable','cant_filam','descripcion'),['id_sitio'=>$request->id_sitio,'id_tipo_cable'=>$request->id_tipo_cable]));
         for ($i=1; $i <= $request->cant_filam ; $i++) { 
-            $detalle = DetalleCable::create(array_merge($request->only('filamento','id_estado','id_cable'),['filamento'=>$i,'id_estado'=>"1",'id_cable'=>$cable->id]));
+            $detalle = DetalleCable::create(array_merge($request->only('filamento','id_estado','id_usuario','id_cable'),[
+                'filamento'=>$i,
+                'id_estado'=>"1",
+                'id_cable'=>$cable->id,
+                'id_usuario'=>$id_usuario
+            ]));
         }
         return redirect()->route('cable.index')->with('success','Cable creado correctamente.');
     }

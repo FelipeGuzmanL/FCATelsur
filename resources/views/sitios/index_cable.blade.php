@@ -39,10 +39,11 @@
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="text-primary text-center">
-                                                <th>Nombre</th>
+                                                <th>N° Cable</th>
                                                 <th>Sitio</th>
                                                 <th>Cant. Filam</th>
                                                 <th>Tipo de Cable</th>
+                                                <th>Descripción</th>
                                                 <th>Detalles</th>
                                                 <th class="text-right">Acciones</th>
                                             </thead>
@@ -60,6 +61,7 @@
                                                         <td>{{ $cable->sitio->abreviacion}}</td>
                                                         <td>{{ $cable->cant_filam}}</td>
                                                         <td>{{ $cable->tipocable->tipo}}</td>
+                                                        <td>{{ $cable->descripcion}}</td>
                                                         <td><a href="{{ route('cable.detallecable.index', $cable->id)}}">Ver Cable</a></td>
                                                         <td class="td-actions text-right">
                                                             @if ( $cable->sitio->url == NULL)

@@ -33,6 +33,8 @@ class CreateCableTable extends Migration
             $table->foreign('id_cable')->references('id')->on('cable');
             $table->UnsignedBigInteger('id_estado');
             $table->foreign('id_estado')->references('id')->on('estado');
+            $table->UnsignedBigInteger('id_usuario')->nullable();
+            $table->foreign('id_usuario')->references('id')->on('users');
             $table->text('servicio')->nullable();
             $table->text('cruzada')->nullable();
             $table->integer('longitud')->nullable();
@@ -55,6 +57,7 @@ class CreateCableTable extends Migration
         Schema::table('detallecable', function (Blueprint $table) {
             $table->dropColumn('id_estado');
             $table->dropColumn('id_cable');
+            $table->dropColumn('id_usuario');
         });
         Schema::dropIfExists('cable');
     }

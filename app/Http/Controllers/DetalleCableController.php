@@ -92,8 +92,10 @@ class DetalleCableController extends Controller
      */
     public function update(Request $request, Cable $cable, DetalleCable $detalle)
     {
-        $detalle->update(array_merge($request->only('id_estado','filamento','direccion','servicio','cruzada','longitud','observaciones','gmaps'),[
-            'id_estado'=>$request->id_estado
+        $id_usuario = auth()->user()->id;
+        $detalle->update(array_merge($request->only('id_estado','id_usuario','filamento','direccion','servicio','cruzada','longitud','observaciones','gmaps'),[
+            'id_estado'=>$request->id_estado,
+            'id_usuario'=>$id_usuario
         ]));
         return redirect()->route('cable.detallecable.index', $cable->id)->with('success','Filamento '.$detalle->filamento.' actualizado correctamente.');
     }

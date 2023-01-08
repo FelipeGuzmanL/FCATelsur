@@ -42,8 +42,6 @@
                                                 <th>Sitio</th>
                                                 <th>Nombre</th>
                                                 <th>Slots</th>
-                                                <th>Última Actualización</th>
-                                                <th>Modificado Por</th>
                                                 <th class="text-right">Acciones</th>
                                             </thead>
                                             <tbody>
@@ -53,8 +51,6 @@
                                                     <td>{{ $equipo->Ubicacion->ciudad->nombre }}</td>
                                                     <td>{{ $equipo->Ubicacion->ciudad->abreviacion }} {{ $equipo->numero }}</td>
                                                     <td><a href="{{ route('equiposmsan.slots.index', $equipo->id)}}">Slots {{ $equipo->Ubicacion->ciudad->abreviacion }} {{ $equipo->numero }}</a></td>
-                                                    <td>{{ $equipo->updated_at}}</td>
-                                                    <td>{{ $equipo->usuario->name}}</td>
                                                     <td class="td-actions text-right">
                                                         @if ( $equipo->Ubicacion->link_gmaps == NULL)
                                                         @elseif ( $equipo->Ubicacion->link_gmaps != NULL)

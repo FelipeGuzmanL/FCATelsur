@@ -51,6 +51,7 @@
                                                 <th>Observaciones</th>
                                                 <th>Estado</th>
                                                 <th>Longitud</th>
+                                                <th>Fecha Modificación</th>
                                                 <th class="text-right">Acciones</th>
                                             </thead>
                                             <tbody>
@@ -68,6 +69,7 @@
                                                             <td class="text-danger">{{ $detalle->estado->estado}}</td>
                                                         @endif
                                                         <td>{{ $detalle->longitud}} mts</td>
+                                                        <td>{{ $detalle->updated_at}} <br> por {{ $detalle->user->name}}</td>
                                                         <td class="td-actions text-right">
                                                             @if ( $detalle->gmaps == NULL)
                                                             @elseif ( $detalle->gmaps != NULL)

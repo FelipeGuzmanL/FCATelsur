@@ -51,4 +51,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(SlotMSAN::class, 'id_usuario');
     }
+    public function detallecable()
+    {
+        return $this->hasMany(DetalleCable::class, 'id_usuario');
+    }
 }

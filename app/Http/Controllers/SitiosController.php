@@ -25,6 +25,7 @@ class SitiosController extends Controller
             $sitios = Sitio::whereRaw('UPPER(nombre) LIKE ?', ['%' . strtoupper($texto) . '%'])
             ->orWhereRaw('UPPER(abreviacion) LIKE ?', ['%' . strtoupper($texto) . '%'])
             ->orWhereRaw('UPPER(direccion) LIKE ?', ['%' . strtoupper($texto) . '%'])
+            ->orWhereRaw('UPPER(descripcion) LIKE ?', ['%' . strtoupper($texto) . '%'])
             ->orderBy('id','asc')
             ->paginate(20);
 

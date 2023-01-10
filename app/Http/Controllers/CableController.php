@@ -25,6 +25,7 @@ class CableController extends Controller
         if ($request) {
             $texto = trim($request->get('texto'));
             $cables = Cable::WhereRaw('UPPER(nombre_cable) LIKE ?', ['%' . strtoupper($texto) . '%'])
+            ->orWhereRaw('UPPER(descripcion) LIKE ?', ['%' . strtoupper($texto) . '%'])
             ->orWhere('cant_filam','LIKE','%'.$texto.'%')
             ->orWhereHas('sitio', function (Builder $query) use ($texto){
                 $query->whereRaw('UPPER(nombre) LIKE ?', ['%' . strtoupper($texto) . '%']);

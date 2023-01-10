@@ -8,6 +8,7 @@ use App\Models\EquiposMSAN;
 use App\Models\Estado;
 use App\Models\Slot;
 use App\Models\SlotMSAN;
+use App\Models\Tecnologia;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -51,7 +52,8 @@ class SlotMSANController extends Controller
      */
     public function create(EquiposMSAN $equipo, Slot $slot, Cable $cables)
     {
-        return view('olt.create', compact('equipo','slot'),['estado'=>Estado::all(),'cables'=>Cable::all()]);
+        $slotstec = $equipo->tecnologia->slotstec;
+        return view('olt.create', compact('equipo','slot','slotstec'),['estado'=>Estado::all(),'cables'=>Cable::all()]);
         //return redirect()->route('equiposmsan.slots.olt.store', [$equipo,$slot]);
     }
 
@@ -67,7 +69,7 @@ class SlotMSANController extends Controller
         $id_usuario = auth()->user()->id;
 
         if (count($contador)==0){
-            for ($i=1; $i <= $equipo->slotec->slots ; $i++) {
+            for ($i=1; $i <= $request->id_slotec ; $i++) {
                 $olt = SlotMSAN::create(array_merge($request->only('id_slot','id_cable','id_estado','olt','id_usuario'),[
                     'olt'=>$i,
                     'id_slot'=>$slot->id,

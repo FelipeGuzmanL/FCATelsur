@@ -16,7 +16,6 @@ class EquiposMSAN extends Model
         'id_usuario',
         'id_sitio',
         'id_tecnologia',
-        'id_slotec',
         'numero',
         'tecnologia',
     ];
@@ -40,10 +39,6 @@ class EquiposMSAN extends Model
     public function tecnologia()
     {
         return $this->belongsTo(Tecnologia::class, 'id_tecnologia');
-    }
-    public function slotec()
-    {
-        return $this->belongsTo(SlotTecnologia::class, 'id_slotec');
     }
     public function usuario()
     {

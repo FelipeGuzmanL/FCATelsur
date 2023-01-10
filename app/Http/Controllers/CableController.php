@@ -33,7 +33,7 @@ class CableController extends Controller
                 $query->whereRaw('UPPER(tipo) LIKE ?', ['%' . strtoupper($texto) . '%']);
             })
             ->orderBy('id','asc')
-            ->paginate(10);
+            ->paginate(25);
 
             return view('cable.index', compact('cables'), ['olts' => $cables, 'texto' => $texto]);
         }
@@ -68,7 +68,7 @@ class CableController extends Controller
     {
         $id_usuario = auth()->user()->id;
         $cable = Cable::create(array_merge($request->only('id_sitio','id_tipo_cable','nombre_cable','cant_filam','descripcion'),['id_sitio'=>$request->id_sitio,'id_tipo_cable'=>$request->id_tipo_cable]));
-        for ($i=1; $i <= $request->cant_filam ; $i++) { 
+        for ($i=1; $i <= $request->cant_filam ; $i++) {
             $detalle = DetalleCable::create(array_merge($request->only('filamento','id_estado','id_usuario','id_cable'),[
                 'filamento'=>$i,
                 'id_estado'=>"1",
@@ -111,7 +111,7 @@ class CableController extends Controller
     public function update(Request $request, Cable $cable)
     {
         $cable->update(array_merge($request->only('id_sitio','id_tipo_cable','nombre_cable','cant_filam','descripcion'),['id_sitio'=>$request->id_sitio,'id_tipo_cable'=>$request->id_tipo_cable]));
-        if(count($cable->detallecable)==0){ 
+        if(count($cable->detallecable)==0){
             for ($i=1; $i <= $request->cant_filam ; $i++)
             {
                 $detalle = DetalleCable::create(array_merge($request->only('filamento','id_estado','id_cable'),['filamento'=>$i,'id_estado'=>"1",'id_cable'=>$cable->id]));

@@ -31,23 +31,10 @@
                                 <label for="id_tecnologia" class="col-sm-2 col-form-label">Tecnología</label>
                                 <div class="col-sm-7">
                                     <div class="form-group">
-                                        <select class="form-control" data-style="btn btn-link" id="exampleFormControlSelect1" name="id_tecnologia" required oninvalid="this.setCustomValidity('Seleccione tecnología')" oninput="this.setCustomValidity('')"/>
+                                        <select class="form-control" data-style="btn btn-link" id="micoso2" name="id_tecnologia" required oninvalid="this.setCustomValidity('Seleccione tecnología')" oninput="this.setCustomValidity('')"/>
                                             <option disabled selected value="">Seleccione Tecnología</option>
                                         @foreach ( $tecnologias as $tecnologia )
                                             <option value="{{ $tecnologia->id }}" {{$equipos->tecnologia->id == $tecnologia->id ? 'selected' : ''}}>{{ $tecnologia->nombre_tec }}</option>
-                                        @endforeach
-                                        </select>
-                                      </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label for="id_slotec" class="col-sm-2 col-form-label">Slots de Tecnología</label>
-                                <div class="col-sm-7">
-                                    <div class="form-group">
-                                        <select class="form-control" data-style="btn btn-link" id="exampleFormControlSelect1" name="id_slotec" required oninvalid="this.setCustomValidity('Seleccione tecnología')" oninput="this.setCustomValidity('')"/>
-                                            <option disabled selected value="">Seleccione Tecnología</option>
-                                        @foreach ( $slotstec as $slotec )
-                                            <option value="{{ $slotec->id }}" {{$equipos->slotec->id == $slotec->id ? 'selected' : ''}}>{{ $slotec->slots }} - {{ $slotec->tecnologia->nombre_tec}}</option>
                                         @endforeach
                                         </select>
                                       </div>
@@ -108,6 +95,10 @@
                 </form>
                 <script>
                     $("#micoso").select2({
+                    });
+                </script>
+                <script>
+                    $("#micoso2").select2({
                     });
                 </script>
                 <style>

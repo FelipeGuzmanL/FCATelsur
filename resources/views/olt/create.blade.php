@@ -79,10 +79,23 @@
                                 </div>
                             </div-->
                             <div class="row">
+                                <label for="id_slotec" class="col-sm-2 col-form-label">Slots de Tecnología</label>
+                                <div class="col-sm-7">
+                                    <div class="form-group">
+                                        <select class="form-control" data-style="btn btn-link" id="micoso2" name="id_slotec" required oninvalid="this.setCustomValidity('Seleccione tecnología')" oninput="this.setCustomValidity('')"/>
+                                            <option disabled selected value="">Seleccione Tecnología</option>
+                                        @foreach ( $slotstec as $slotec )
+                                            <option value="{{ $slotec->slots }}" >{{ $slotec->slots}} - {{ $slotec->tecnologia->nombre_tec}}</option>
+                                        @endforeach
+                                        </select>
+                                      </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <label for="id_estado" class="col-sm-2 col-form-label">Estado</label>
                                 <div class="col-sm-7">
                                     <div class="form-group">
-                                        <select class="form-control " data-style="btn btn-link" id="exampleFormControlSelect1" name="id_estado">
+                                        <select class="form-control " data-style="btn btn-link" id="micoso3" name="id_estado">
                                         @foreach ( $estado as $est )
                                             <option value="{{ $est->id }}">{{ $est->estado }}</option>
                                         @endforeach
@@ -97,6 +110,14 @@
                 </form>
                 <script>
                     $("#micoso").select2({
+                    });
+                </script>
+                <script>
+                    $("#micoso2").select2({
+                    });
+                </script>
+                <script>
+                    $("#micoso3").select2({
                     });
                 </script>
                 <style>

@@ -52,7 +52,7 @@
                                                     <label for="id_estado" class="col-sm-2 col-form-label">Estado</label>
                                                     <div class="col-sm-7">
                                                         <div class="form-group">
-                                                            <select class="form-control " data-style="btn btn-link" id="exampleFormControlSelect1" name="id_estado">
+                                                            <select class="form-control " data-style="btn btn-link" id="micoso3" name="id_estado">
                                                             @foreach ( $estado as $est )
                                                                 <option value="{{ $est->id }}">{{ $est->estado }}</option>
                                                             @endforeach
@@ -113,6 +113,15 @@
                                     </div>
                                 </div>
                         </div>
+                        <script>
+                    $("#micoso3").select2({
+                    });
+                </script>
+                <style>
+                    .select2 {
+                        width: 100% !important;
+                    }
+                </style>
                     </div>
                 </div>
             </div>

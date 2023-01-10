@@ -28,7 +28,7 @@
         &copy;
         <script>
             document.write(new Date().getFullYear())
-        </script>, hecho por
+        </script>, desarrollado por
         <a href="https://www.felipeguzman.cl" target="_blank">Felipe Guzmán</a>
         </div>
     </div>

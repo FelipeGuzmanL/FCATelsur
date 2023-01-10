@@ -65,7 +65,6 @@ class EquiposMSANController extends Controller
             'id_ubicacion'=>$ubicacion->id,
             'id_sitio'=>$request->id_ubicacion,
             'id_tecnologia'=>$request->id_tecnologia,
-            'id_slotec'=>$request->id_slotec,
             'id_usuario'=>$id_usuario
         ]));
         return redirect()->route('equiposmsan.index')->with('success','Equipo MSAN guardado correctamente.');
@@ -109,7 +108,6 @@ class EquiposMSANController extends Controller
             'id_ubicacion'=>$ubicacion->id,
             'id_sitio'=>$request->id_ubicacion,
             'id_tecnologia'=>$request->id_tecnologia,
-            'id_slotec'=>$request->id_slotec,
             'id_usuario'=>$id_usuario->id,
         ]));
         return redirect()->route('equiposmsan.index')->with('success', 'Equipo actualizado correctamente.');

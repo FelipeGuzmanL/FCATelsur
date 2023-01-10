@@ -26,7 +26,7 @@ class SitiosController extends Controller
             ->orWhereRaw('UPPER(abreviacion) LIKE ?', ['%' . strtoupper($texto) . '%'])
             ->orWhereRaw('UPPER(direccion) LIKE ?', ['%' . strtoupper($texto) . '%'])
             ->orderBy('id','asc')
-            ->paginate(5);
+            ->paginate(20);
 
             return view('sitios.index', ['sitios' => $sitios, 'texto' => $texto]);
         }

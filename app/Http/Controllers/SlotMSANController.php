@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cable;
 use App\Models\CableSlot;
+use App\Models\DetalleCable;
 use App\Models\EquiposMSAN;
 use App\Models\Estado;
 use App\Models\Slot;
@@ -131,11 +132,15 @@ class SlotMSANController extends Controller
     public function update(Request $request, EquiposMSAN $equipo, Slot $slot, SlotMSAN $olt)
     {
         $idusuario = auth()->user()->id;
+        $olts = $request->olt->olt;
         $olt->update(array_merge($request->only('id_cable','id_usuario','id_estado','sitio_fca','link_sitio_fca','descripcion_fca','olt','spl','filam'),[
             'id_cable'=>$request->id_cable,
             'id_estado'=>'2',
             'id_usuario'=>$idusuario
         ]));
+        $detalle = $olt->cable->detallecable[$olts-1];
+        $slotolt = $slot->slot_msan.'-'.$olts;
+        $detalle->update(array_merge($request->only('ocupacion'),['ocupacion'=>$slotolt]));
         return redirect()->route('equiposmsan.slots.olt.index', [$equipo,$slot,$olt])->with('success','OLT actualizada correctamente.');
     }
 

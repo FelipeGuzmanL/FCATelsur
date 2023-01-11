@@ -44,7 +44,7 @@
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table">
-                                            <thead class="text-primary text-center">
+                                            <thead class="text-primary">
                                                 <th>OLT</th>
                                                 <th>Sitio FCA</th>
                                                 <th>SPL</th>
@@ -53,7 +53,6 @@
                                                 <th>Filam</th>
                                                 <th>Estado</th>
                                                 <th>Fecha Modificación</th>
-                                                <th>Modificado por</th>
                                                 <th class="text-right">Acciones</th>
                                             </thead>
                                             <tbody>
@@ -64,7 +63,7 @@
                                             @endif
                                             @foreach ($olts as $olt)
                                                 @if ($olt->id_slot == $slot->id)
-                                                <tr class="text-center">
+                                                <tr>
                                                     <td>{{ $olt->olt }}</td>
                                                     <td>{{ $olt->sitio_fca}}</td>
                                                     <td>{{ $olt->spl}}</td>
@@ -85,8 +84,7 @@
                                                     @if ($olt->estad->id == "2")
                                                         <td class="text-danger">{{ $olt->estad->estado}}</td>
                                                     @endif
-                                                    <td>{{ $olt->updated_at}}</td>
-                                                    <td>{{ $olt->usuario->name}}</td>
+                                                    <td>{{ $olt->updated_at}} <br> por {{ $olt->usuario->name}}</td>
                                                     <td class="td-actions text-right">
                                                         @if ( $olt->link_sitio_fca == NULL)
                                                         @elseif ( $olt->link_sitio_fca != NULL)

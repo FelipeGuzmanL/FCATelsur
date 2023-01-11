@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Cable;
 use App\Models\DetalleCable;
 use App\Models\Estado;
+use App\Models\Slot;
+use App\Models\SlotMSAN;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -15,8 +17,27 @@ class DetalleCableController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Cable $cable, DetalleCable $detalles ,Request $request    )
+    public function index(Cable $cable, DetalleCable $detalles,Slot $slot,Request $request    )
     {
+        /*$contador = count($cable->slotmsan);
+        $slot = Slot::all();
+        $contador2 = count($slot);
+        if ($contador > 0)
+        {
+            for ($i=0;$i<$contador2;$i++)
+            {
+                for ($j=0; $j<count($slot[$i]->slotmsan);$j++)
+                {
+                    $id_slots[$i][$j] = $slot[$i]->slotmsan[$j]->id_slot;
+                    if ($slot[$i]->id == $id_slots[$i][$j])
+                    {
+                        echo($slot[$i]->slot_msan.'-'.$slot[$i]->slotmsan[$j]->olt.' ');
+                    }
+                    $slots[$j] = $id_slots;
+                }
+            }
+        }
+        dd($cable->slotmsan);*/
         if ($request) {
                 $texto = trim($request->get('texto'));
                 $detalles = DetalleCable::WhereRaw('UPPER(direccion) LIKE ?', ['%' . strtoupper($texto) . '%'])

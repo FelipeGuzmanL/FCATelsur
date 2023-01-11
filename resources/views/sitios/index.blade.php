@@ -38,9 +38,9 @@
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table">
-                                            <thead class="text-primary text-center">
-                                                <th>Nombre</th>
+                                            <thead class="text-primary">
                                                 <th>Nemotécnico</th>
+                                                <th>Nombre</th>
                                                 <th>Dirección</th>
                                                 <th>Descripción</th>
                                                 <th>Cables</th>
@@ -54,9 +54,9 @@
                                                 </div>
                                             @endif
                                             @foreach ($sitios as $sitio)
-                                                <tr class="text-center">
-                                                    <td>{{ $sitio->nombre }}</td>
+                                                <tr>
                                                     <td>{{ $sitio->abreviacion }}</td>
+                                                    <td>{{ $sitio->nombre }}</td>
                                                     <td>{{ $sitio->direccion }}</td>
                                                     <td>{{ $sitio->descripcion }}</td>
                                                     <td><a href="{{ route('sitios.index_cable', $sitio->id)}}">Ver Cables</a></td>

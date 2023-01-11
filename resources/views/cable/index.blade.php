@@ -38,7 +38,7 @@
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table">
-                                            <thead class="text-primary text-center">
+                                            <thead class="text-primary">
                                                 <th>N° Cable</th>
                                                 <th>Sitio</th>
                                                 <th>Cant. Filam</th>
@@ -55,7 +55,7 @@
                                             @endif
                                             @foreach ($cables as $cable)
                                             @if ($cable->id > "1")
-                                                <tr class="text-center">
+                                                <tr>
                                                     <td>{{ $cable->nombre_cable }}</td>
                                                     <td>{{ $cable->sitio->abreviacion}}</td>
                                                     <td>{{ $cable->cant_filam}}</td>

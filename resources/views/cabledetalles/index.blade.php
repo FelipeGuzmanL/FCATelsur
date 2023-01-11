@@ -43,10 +43,11 @@
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table">
-                                            <thead class="text-primary text-center">
+                                            <thead class="text-primary">
                                                 <th>Filam</th>
                                                 <th>DIR</th>
                                                 <th>Servicio</th>
+                                                <th>Ocupación</th>
                                                 <th>Cruzada</th>
                                                 <th>Observaciones</th>
                                                 <th>Estado</th>
@@ -57,10 +58,11 @@
                                             <tbody>
                                             @foreach ($detalles as $detalle)
                                                 @if ($detalle->cable->id == $cable->id)
-                                                    <tr class="text-center">
+                                                    <tr>
                                                         <td>{{ $detalle->filamento}}</td>
                                                         <td>{{ $detalle->direccion}}</td>
                                                         <td>{{ $detalle->servicio}}</td>
+                                                        <td><a href="#">{{ $detalle->ocupacion}}</a></td>
                                                         <td>{{ $detalle->cruzada}}</td>
                                                         <td>{{ $detalle->observaciones}}</td>
                                                         @if ($detalle->estado->id == "1")

@@ -22,6 +22,7 @@ class DetalleCable extends Model
         'longitud',
         'gmaps',
         'observaciones',
+        'ocupacion',
     ];
     public function cable()
     {

@@ -38,9 +38,10 @@
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table">
-                                            <thead class="text-primary text-center">
+                                            <thead class="text-primary">
                                                 <th>Sitio</th>
                                                 <th>Nombre</th>
+                                                <th>Descripción Sitio FCA</th>
                                                 <th>Slots</th>
                                                 <th class="text-right">Acciones</th>
                                             </thead>
@@ -51,9 +52,10 @@
                                                 </div>
                                             @endif
                                             @foreach ($equipos as $equipo)
-                                                <tr class="text-center">
+                                                <tr>
                                                     <td>{{ $equipo->Ubicacion->ciudad->nombre }}</td>
                                                     <td>{{ $equipo->Ubicacion->ciudad->abreviacion }} {{ $equipo->numero }}</td>
+                                                    <td>{{ $equipo->Ubicacion->descripcion_sitio}}</td>
                                                     <td><a href="{{ route('equiposmsan.slots.index', $equipo->id)}}">Slots {{ $equipo->Ubicacion->ciudad->abreviacion }} {{ $equipo->numero }}</a></td>
                                                     <td class="td-actions text-right">
                                                         @if ( $equipo->Ubicacion->link_gmaps == NULL)

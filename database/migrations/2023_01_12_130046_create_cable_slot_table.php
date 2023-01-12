@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCableslotTable extends Migration
+class CreateCableSlotTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateCableslotTable extends Migration
      */
     public function up()
     {
-        Schema::create('cableslot', function (Blueprint $table) {
+        Schema::create('cable_slot', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->UnsignedBigInteger('id_slot');
-            $table->foreign('id_slot')->references('id')->on('slot_msan');
-            $table->UnsignedBigInteger('id_cable');
-            $table->foreign('id_cable')->references('id')->on('cable');
+            $table->unsignedBigInteger('slot_id');
+            $table->foreign('slot_id')->references('id')->on('slot')->onDelete('cascade');
+            $table->unsignedBigInteger('cable_id');
+            $table->foreign('cable_id')->references('id')->on('cable')->onDelete('cascade');
         });
     }
 
@@ -30,10 +30,10 @@ class CreateCableslotTable extends Migration
      */
     public function down()
     {
-        Schema::table('cableslot', function (Blueprint $table) {
+        Schema::table('cable_slot', function (Blueprint $table) {
             $table->dropColumn('id_slot');
             $table->dropColumn('id_cable');
         });
-        Schema::dropIfExists('cableslot');
+        Schema::dropIfExists('cable_slot');
     }
 }

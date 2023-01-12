@@ -46,6 +46,7 @@ class DetalleCableController extends Controller
                 ->orWhereRaw('UPPER(servicio) LIKE ?', ['%' . strtoupper($texto) . '%'])
                 ->orWhereRaw('UPPER(cruzada) LIKE ?', ['%' . strtoupper($texto) . '%'])
                 ->orWhereRaw('UPPER(observaciones) LIKE ?', ['%' . strtoupper($texto) . '%'])
+                ->orWhereRaw('UPPER(ocupacion) LIKE ?', ['%' . strtoupper($texto) . '%'])
                 ->orWhereHas('estado', function (Builder $query) use ($texto){
                     $query->whereRaw('UPPER(estado) LIKE ?', ['%' . strtoupper($texto) . '%']);
                 })

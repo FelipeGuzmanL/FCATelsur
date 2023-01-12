@@ -30,4 +30,8 @@ class Slot extends Model
     {
         return $this->belongsTo(Estado::class, 'id_estado');
     }
+    public function cable()
+    {
+        return $this->belongsToMany(Cable::class);
+    }
 }

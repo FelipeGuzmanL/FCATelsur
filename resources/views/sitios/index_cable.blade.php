@@ -33,6 +33,7 @@
                                     @endif
                                     <div class="row">
                                         <div class="col-12 text-right">
+                                            <a href="{{ route('cable.create')}}" class="btn btn-primary">Añadir Cable</a>
                                             <a href="{{ url()->previous() }}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>
                                         </div>
                                     </div>

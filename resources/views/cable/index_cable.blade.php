@@ -53,6 +53,7 @@
                                                     <td>{{ $cables->sitio->nombre}}</td>
                                                     <td>{{ $cables->cant_filam}}</td>
                                                     <td>{{ $cables->tipocable->tipo}}</td>
+                                                    <td>{{ $cables->descripcion}}</td>
                                                     <td><a href="{{ route('cable.detallecable.index', $cables->id)}}">Ver Cable</a></td>
                                                     <td class="td-actions text-right">
                                                         @if ( $cables->sitio->url == NULL)

@@ -43,7 +43,7 @@
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table">
-                                            <thead class="text-primary">
+                                            <thead class="text-primary text-center">
                                                 <th>Filam</th>
                                                 <th>DIR</th>
                                                 <th>Servicio</th>
@@ -58,11 +58,16 @@
                                             <tbody>
                                             @foreach ($detalles as $detalle)
                                                 @if ($detalle->cable->id == $cable->id)
-                                                    <tr>
+                                                    <tr class="text-center">
                                                         <td>{{ $detalle->filamento}}</td>
                                                         <td>{{ $detalle->direccion}}</td>
                                                         <td>{{ $detalle->servicio}}</td>
-                                                        <td><a href="#">{{ $detalle->ocupacion}}</a></td>
+                                                        @if($detalle->ocupacion == NULL)
+                                                            <td></td>
+                                                        @endif
+                                                        @if($detalle->ocupacion != NULL)
+                                                            <td>{{ $detalle->ocupacion}}</td>
+                                                        @endif
                                                         <td>{{ $detalle->cruzada}}</td>
                                                         <td>{{ $detalle->observaciones}}</td>
                                                         @if ($detalle->estado->id == "1")
@@ -71,7 +76,7 @@
                                                             <td class="text-danger">{{ $detalle->estado->estado}}</td>
                                                         @endif
                                                         <td>{{ $detalle->longitud}} mts</td>
-                                                        <td>{{ $detalle->updated_at}} <br> por {{ $detalle->user->name}}</td>
+                                                        <td>{{ $detalle->updated_at}}</td>
                                                         <td class="td-actions text-right">
                                                             @if ( $detalle->gmaps == NULL)
                                                             @elseif ( $detalle->gmaps != NULL)

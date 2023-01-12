@@ -39,4 +39,8 @@ class Cable extends Model
     {
         return $this->belongsTo(TipoCable::class, 'id_tipo_cable');
     }
+    public function slotstarjeta()
+    {
+        return $this->belongsToMany(Slot::class);
+    }
 }

@@ -44,4 +44,8 @@ class SlotMSAN extends Model
     {
         return $this->belongsTo(User::class, 'id_usuario');
     }
+    public function detallecable()
+    {
+        return $this->hasOne(DetalleCable::class, 'id_olt');
+    }
 }

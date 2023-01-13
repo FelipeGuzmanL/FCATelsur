@@ -66,7 +66,11 @@
                                                             <td></td>
                                                         @endif
                                                         @if($detalle->ocupacion != NULL)
-                                                            <td>{{ $detalle->ocupacion}}</td>
+                                                        @php
+                                                            $equipo = $detalle->olt->msan->equiposmsan;
+                                                            $slot = $detalle->olt->msan;
+                                                        @endphp
+                                                            <td><a href="{{ route('equiposmsan.slots.olt.index', [$equipo,$slot])}}">{{ $detalle->ocupacion}}</a></td>
                                                         @endif
                                                         <td>{{ $detalle->cruzada}}</td>
                                                         <td>{{ $detalle->observaciones}}</td>

@@ -137,70 +137,95 @@ class SlotMSANController extends Controller
         $filamento = $request->filam;
         $sin_filam = $olt->filam;
 
-        //dd($sin_filam);
-        if ($filamento != NULL && $sin_filam == NULL){
-            $existe = DB::table('slot_msan')->where('id_cable',$request->id_cable)
-            ->where('filam',$filamento)
-            ->exists();
-            if($existe == false)
-            {
-                $olt->update(array_merge($request->only('id_cable','id_usuario','id_estado','sitio_fca','link_sitio_fca','descripcion_fca','olt','spl','filam'),[
-                    'id_cable'=>$request->id_cable,
-                    'id_estado'=>'2',
-                    'id_usuario'=>$idusuario
-                ]));
-                $detalle = $olt->cable->detallecable[$filamento-1];
-                $slotolt = $slot->slot_msan.'-'.$olts;
-                $detalle->update(array_merge($request->only('ocupacion','id_estado'),['ocupacion'=>$slotolt,'id_estado'=>'2']));
-            }
-            if($existe==true)
-            {
-                return redirect()->route('equiposmsan.slots.olt.index', [$equipo,$slot,$olt])->with('failure','Filamento ya ocupado.');
-            }
-        }
-        if($filamento == NULL && $sin_filam != NULL){
-            $olt->update(array_merge($request->only('id_cable','id_usuario','id_estado','sitio_fca','link_sitio_fca','descripcion_fca','olt','spl','filam'),[
-                'id_cable'=>$request->id_cable,
-                'id_estado'=>'1',
-                'id_usuario'=>$idusuario
-            ]));
-            $detalle = $olt->cable->detallecable[$sin_filam-1];
-            $slotolt = $slot->slot_msan.'-'.$olts;
-            $detalle->update(array_merge($request->only('ocupacion','id_estado'),['ocupacion'=>'','id_estado'=>'1']));
-        }
-        if($filamento != NULL && $sin_filam != NULL && $filamento != $sin_filam)
+        $existe_detalle = DB::table('detallecable')->where('id_cable',$request->id_cable)->exists();
+
+        $cablee = Cable::find($request->id_cable);
+        //dd($cablee->cant_filam);
+        if ($existe_detalle == true || $filamento == NULL)
         {
-            $existe = DB::table('slot_msan')->where('id_cable',$request->id_cable)
-            ->where('filam',$filamento)
-            ->exists();
-            if ($existe==false)
+            if($request->filam <= $cablee->cant_filam)
             {
-                $detalle = $olt->cable->detallecable[$sin_filam-1];
-                $detalle->update(array_merge($request->only('ocupacion','id_estado'),['ocupacion'=>'','id_estado'=>'1']));
-                $olt->update(array_merge($request->only('id_cable','id_usuario','id_estado','sitio_fca','link_sitio_fca','descripcion_fca','olt','spl','filam'),[
-                    'id_cable'=>$request->id_cable,
-                    'id_estado'=>'2',
-                    'id_usuario'=>$idusuario
-                ]));
-                $detalle = $olt->cable->detallecable[$filamento-1];
-                $slotolt = $slot->slot_msan.'-'.$olts;
-                $detalle->update(array_merge($request->only('ocupacion','id_estado'),['ocupacion'=>$slotolt,'id_estado'=>'2']));
+                if ($filamento != NULL && $sin_filam == NULL){
+                    $existe = DB::table('slot_msan')->where('id_cable',$request->id_cable)
+                    ->where('filam',$filamento)
+                    ->exists();
+                    if($existe == false)
+                    {
+                        $olt->update(array_merge($request->only('id_cable','id_usuario','id_estado','sitio_fca','link_sitio_fca','descripcion_fca','olt','spl','filam'),[
+                            'id_cable'=>$request->id_cable,
+                            'id_estado'=>'2',
+                            'id_usuario'=>$idusuario
+                        ]));
+                        $detalle = $olt->cable->detallecable[$filamento-1];
+                        $slotolt = $slot->slot_msan.'-'.$olts;
+                        $detalle->update(array_merge($request->only('ocupacion','id_estado','id_olt'),['ocupacion'=>$slotolt,'id_estado'=>'2','id_olt'=>$olt->id]));
+                    }
+                    if($existe==true)
+                    {
+                        return redirect()->route('equiposmsan.slots.olt.index', [$equipo,$slot,$olt])->with('failure','Filamento: '.$filamento.', ya ocupado.');
+                    }
+                }
+                if($filamento == NULL && $sin_filam != NULL){
+                    $olt->update(array_merge($request->only('id_cable','id_usuario','id_estado','sitio_fca','link_sitio_fca','descripcion_fca','olt','spl','filam'),[
+                        'id_cable'=>$request->id_cable,
+                        'id_estado'=>'1',
+                        'id_usuario'=>$idusuario
+                    ]));
+                    $detalle = $olt->cable->detallecable[$sin_filam-1];
+                    $slotolt = $slot->slot_msan.'-'.$olts;
+                    $detalle->update(array_merge($request->only('ocupacion','id_estado','id_olt'),['ocupacion'=>'','id_estado'=>'1','id_olt'=>$olt->id]));
+                }
+                if($filamento != NULL && $sin_filam != NULL && $filamento != $sin_filam)
+                {
+                    $existe = DB::table('slot_msan')->where('id_cable',$request->id_cable)
+                    ->where('filam',$filamento)
+                    ->exists();
+                    if ($existe==false)
+                    {
+                        $detalle = $olt->cable->detallecable[$sin_filam-1];
+                        $detalle->update(array_merge($request->only('ocupacion','id_estado','id_olt'),['ocupacion'=>'','id_estado'=>'1','id_olt'=>$olt->id]));
+                        $olt->update(array_merge($request->only('id_cable','id_usuario','id_estado','sitio_fca','link_sitio_fca','descripcion_fca','olt','spl','filam'),[
+                            'id_cable'=>$request->id_cable,
+                            'id_estado'=>'2',
+                            'id_usuario'=>$idusuario
+                        ]));
+                        $detalle = $olt->cable->detallecable[$filamento-1];
+                        $slotolt = $slot->slot_msan.'-'.$olts;
+                        $detalle->update(array_merge($request->only('ocupacion','id_estado','id_olt'),['ocupacion'=>$slotolt,'id_estado'=>'2','id_olt'=>$olt->id]));
+                    }
+                    if($existe==true)
+                    {
+                        return redirect()->route('equiposmsan.slots.olt.index', [$equipo,$slot,$olt])->with('failure','Filamento ya ocupado.');
+                    }
+                }
+                if ($filamento == $sin_filam && $filamento != NULL && $sin_filam != NULL)
+                {
+                    $olt->update(array_merge($request->only('id_cable','id_usuario','id_estado','sitio_fca','link_sitio_fca','descripcion_fca','olt','spl','filam'),[
+                        'id_cable'=>$request->id_cable,
+                        'id_estado'=>'2',
+                        'id_usuario'=>$idusuario
+                    ]));
+                }
+                if ($filamento == $sin_filam && $filamento == NULL && $sin_filam == NULL)
+                {
+                    $olt->update(array_merge($request->only('id_cable','id_usuario','id_estado','sitio_fca','link_sitio_fca','descripcion_fca','olt','spl','filam'),[
+                        'id_cable'=>$request->id_cable,
+                        'id_estado'=>'1',
+                        'id_usuario'=>$idusuario
+                    ]));
+                }
+                
+                return redirect()->route('equiposmsan.slots.olt.index', [$equipo,$slot,$olt])->with('success','OLT actualizada correctamente.');
             }
-            if($existe==true)
+            else
             {
-                return redirect()->route('equiposmsan.slots.olt.index', [$equipo,$slot,$olt])->with('failure','Filamento ya ocupado.');
+                return redirect()->route('equiposmsan.slots.olt.index', [$equipo,$slot,$olt])->with('failure','Excede máximo de filamentos.');
             }
         }
-        if ($filamento == $sin_filam)
+        if($existe_detalle == false)
         {
-            $olt->update(array_merge($request->only('id_cable','id_usuario','id_estado','sitio_fca','link_sitio_fca','descripcion_fca','olt','spl','filam'),[
-                'id_cable'=>$request->id_cable,
-                'id_estado'=>'2',
-                'id_usuario'=>$idusuario
-            ]));
+            return redirect()->route('equiposmsan.slots.olt.index', [$equipo,$slot,$olt])->with('failure','Cable no tiene filamentos creados.');
         }
-        
-        return redirect()->route('equiposmsan.slots.olt.index', [$equipo,$slot,$olt])->with('success','OLT actualizada correctamente.');
     }
 
     /**
@@ -214,8 +239,12 @@ class SlotMSANController extends Controller
         $cable = $olt->cable->id;
         $estado = $olt->estad->id;
         $filamento = $olt->filam;
-        $detalle = $olt->cable->detallecable[$filamento-1];
-        $detalle->update(array_merge($request->only('ocupacion','id_estado'),['ocupacion'=>'','id_estado'=>'1']));
+        $existe_detalle = DB::table('detallecable')->where('id_cable',$olt->id_cable)->exists();
+        if($existe_detalle == true)
+        {
+            $detalle = $olt->cable->detallecable[$filamento-1];
+            $detalle->update(array_merge($request->only('ocupacion','id_estado'),['ocupacion'=>'','id_estado'=>'1']));
+        }
         $null = NULL;
         $olt->update(array_merge($request->only('id_cable','id_estado','sitio_fca','link_sitio_fca','descripcion_fca','olt','spl','filam'),[
             'id_cable'=>'1',

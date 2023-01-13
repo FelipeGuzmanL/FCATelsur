@@ -17,6 +17,7 @@ class DetalleCable extends Model
         'id_estado',
         'id_cable',
         'id_usuario',
+        'id_olt',
         'servicio',
         'cruzada',
         'longitud',
@@ -35,5 +36,9 @@ class DetalleCable extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'id_usuario');
+    }
+    public function olt()
+    {
+        return $this->belongsTo(SlotMSAN::class, 'id_olt');
     }
 }

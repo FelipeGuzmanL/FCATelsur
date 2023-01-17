@@ -69,5 +69,14 @@ class UsersTableSeeder extends Seeder
         DB::table('tipo_cable')->insert([
             'tipo' => 'PEXT',
         ]);
+        DB::table('tipo_cable')->insert([
+            'tipo' => 'Empresa',
+        ]);
+        DB::table('comprobar')->insert([
+            'comprobar' => 'OK',
+        ]);
+        DB::table('comprobar')->insert([
+            'comprobar' => 'No OK',
+        ]);
     }
 }

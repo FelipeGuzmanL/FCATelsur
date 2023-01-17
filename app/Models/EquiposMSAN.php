@@ -44,4 +44,8 @@ class EquiposMSAN extends Model
     {
         return $this->belongsTo(User::class, 'id_usuario');
     }
+    public function mantencionmsan()
+    {
+        return $this->hasMany(MantencionMsan::class, 'id_msan');
+    }
 }

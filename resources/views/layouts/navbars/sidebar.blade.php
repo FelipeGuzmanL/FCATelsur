@@ -59,6 +59,12 @@
             <p>{{ __('Equipos MSAN') }}</p>
         </a>
       </li>
+      <li class="nav-item{{ $activePage == 'mantenciones' ? ' active' : '' }}">
+        <a class="nav-link" href="{{ route('mantenciones.index')}}">
+          <i class="material-icons">engineering</i>
+            <p>{{ __('Mantenciones') }}</p>
+        </a>
+      </li>
       <!--li class="nav-item{{ $activePage == 'table' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('table') }}">
           <i class="material-icons">content_paste</i>

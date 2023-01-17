@@ -55,4 +55,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(DetalleCable::class, 'id_usuario');
     }
+    public function mantencionmsan()
+    {
+        return $this->hasMany(MantencionMsan::class, 'id_usuario');
+    }
 }

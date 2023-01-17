@@ -52,6 +52,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('sitios', \App\Models\Sitio::class);
         Route::model('cable', \App\Models\Cable::class);
         Route::model('detallecable', \App\Models\DetalleCable::class);
+        Route::model('mantenciones', \App\Models\MantencionMsan::class);
     }
 
     /**

@@ -66,6 +66,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('cable.detallecable', App\Http\Controllers\DetalleCableController::class);
     Route::get('sitios/{sitios}/cables', [App\Http\Controllers\SitiosController::class, 'index_cable'])->name('sitios.index_cable');
     Route::get('sitios/{sitios}/equiposmsan', [App\Http\Controllers\SitiosController::class, 'index_equipo'])->name('sitios.index_equipo');
-
+	Route::resource('mantenciones', \App\Http\Controllers\MantencionesController::class);
+	//Route::get('mantencionesmsan',[App\Http\Controllers\MantencionesController::class, 'index_msan'])->name('mantenciones.index_msan');
+	Route::get('mantencionesmsan', ['as' => 'index_msan.index', 'uses' => 'App\Http\Controllers\MantencionesController@index_msan']);
+	Route::get('mantencionesmsan/{equipo}/msan', [App\Http\Controllers\MantencionesController::class, 'index_msan_mantencion'])->name('mantenciones.index_msan_mantencion');
+	Route::resource('equiposmsan.mantencionesmsan', \App\Http\Controllers\MantencionesMSANController::class);
 });
 

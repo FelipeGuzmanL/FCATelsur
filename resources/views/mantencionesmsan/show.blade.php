@@ -32,13 +32,16 @@
                                                 @for ($i = 0; $i < 11; $i++)
                                                     <tr>
                                                         <td>{{$comprobacion[$i]}}</td>
-                                                        @if ( $comp[$i] == 'OK')
-                                                            <td class="text-success"><strong>{{ $comp[$i]}}</strong></td> 
-                                                        @endif
-                                                        @if ($comp[$i] == 'No OK')
-                                                            <td class="text-danger"><strong>{{ $comp[$i]}}</strong></td> 
-                                                        @endif
-                                                        
+                                                        @if ($comp[$i] != NULL)
+                                                            @if ( $comp[$i] == 'OK')
+                                                                <td class="text-success"><strong>{{ $comp[$i]}}</strong></td> 
+                                                            @endif
+                                                            @if ($comp[$i] == 'No OK')
+                                                                <td class="text-danger"><strong>{{ $comp[$i]}}</strong></td> 
+                                                            @endif
+                                                        @else
+                                                            <td></td>
+                                                        @endif                                                        
                                                     </tr>
                                                 @endfor
                                             </tbody>

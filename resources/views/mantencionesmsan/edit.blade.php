@@ -4,8 +4,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <form action="{{route('equiposmsan.mantencionesmsan.store', [$equipo])}}" method="post" class="form-horizontal" enctype="multipart/form-data">
+                <form action="{{route('equiposmsan.mantencionesmsan.update', [$equipo,$mantencion])}}" method="post" class="form-horizontal" enctype="multipart/form-data">
                     @csrf
+                    @method('PUT')
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h5 class="card-tittle">Crear mantención del MSAN {{ $equipo->Ubicacion->ciudad->abreviacion }} {{ $equipo->numero }}</h5>
@@ -20,7 +21,7 @@
                             <div class="row">
                                 <label for="numero_ticket" class="col-sm-2 col-form-label">Numero Ticket</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" name="numero_ticket" placeholder="Numero ticket de mantención" value="{{old('numero_ticket')}}" autofocus required oninvalid="this.setCustomValidity('Ingrese ticket de la mantención')" oninput="this.setCustomValidity('')"/>
+                                        <input type="text" class="form-control" name="numero_ticket" placeholder="Numero ticket de mantención" value="{{old('numero_ticket', $mantencion->numero_ticket)}}" autofocus required oninvalid="this.setCustomValidity('Ingrese ticket de la mantención')" oninput="this.setCustomValidity('')"/>
                                         @if ($errors->has('numero_ticket'))
                                             <span class="error text-danger" for="input-numero_ticket">{{$errors -> first('numero_ticket')}}</span>
                                         @endif
@@ -29,7 +30,7 @@
                             <div class="row">
                                 <label for="fecha_mantencion" class="col-sm-2 col-form-label">Fecha de la Mantención</label>
                                 <div class="col-sm-8">
-                                    <input type="date" class="form-control" name="fecha_mantencion">
+                                    <input type="date" class="form-control" name="fecha_mantencion" value="{{old('fecha_mantencion', $mantencion->fecha_mantencion)}}">
                                 </div>
                             </div>
                             <br>
@@ -40,7 +41,7 @@
                                         <select class="form-control" data-style="btn btn-link" id="micoso2" name="comprobacion_1">
                                         <option disabled selected value="">Seleccione comprobación</option>
                                         @foreach ( $comprobacion as $comprobar )
-                                            <option value="{{ $comprobar->comprobar }}" >{{ $comprobar->comprobar }}</option>
+                                            <option value="{{ $comprobar->comprobar }}" {{$mantencion->comprobacion_1 == $comprobar->comprobar ? 'selected' : ''}}>{{ $comprobar->comprobar }}</option>
                                         @endforeach
                                         </select>
                                     </div>  
@@ -53,7 +54,7 @@
                                         <select class="form-control" data-style="btn btn-link" id="micoso" name="comprobacion_2">
                                         <option disabled selected value="">Seleccione comprobación</option>
                                         @foreach ( $comprobacion as $comprobar )
-                                            <option value="{{ $comprobar->comprobar }}" >{{ $comprobar->comprobar }}</option>
+                                            <option value="{{ $comprobar->comprobar }}" {{$mantencion->comprobacion_2 == $comprobar->comprobar ? 'selected' : ''}}>{{ $comprobar->comprobar }}</option>
                                         @endforeach
                                         </select>
                                     </div>
@@ -66,7 +67,7 @@
                                         <select class="form-control" data-style="btn btn-link" id="micoso3" name="comprobacion_3">
                                         <option disabled selected value="">Seleccione comprobación</option>
                                         @foreach ( $comprobacion as $comprobar )
-                                            <option value="{{ $comprobar->comprobar }}" >{{ $comprobar->comprobar }}</option>
+                                            <option value="{{ $comprobar->comprobar }}" {{$mantencion->comprobacion_3 == $comprobar->comprobar ? 'selected' : ''}}>{{ $comprobar->comprobar }}</option>
                                         @endforeach
                                         </select>
                                     </div>
@@ -79,7 +80,7 @@
                                         <select class="form-control" data-style="btn btn-link" id="micoso4" name="comprobacion_4">
                                         <option disabled selected value="">Seleccione comprobación</option>
                                         @foreach ( $comprobacion as $comprobar )
-                                            <option value="{{ $comprobar->comprobar }}" >{{ $comprobar->comprobar }}</option>
+                                            <option value="{{ $comprobar->comprobar }}" {{$mantencion->comprobacion_4 == $comprobar->comprobar ? 'selected' : ''}}>{{ $comprobar->comprobar }}</option>
                                         @endforeach
                                         </select>
                                     </div>
@@ -92,7 +93,7 @@
                                         <select class="form-control" data-style="btn btn-link" id="micoso5" name="comprobacion_5">
                                         <option disabled selected value="">Seleccione comprobación</option>
                                         @foreach ( $comprobacion as $comprobar )
-                                            <option value="{{ $comprobar->comprobar }}" >{{ $comprobar->comprobar }}</option>
+                                            <option value="{{ $comprobar->comprobar }}" {{$mantencion->comprobacion_5 == $comprobar->comprobar ? 'selected' : ''}}>{{ $comprobar->comprobar }}</option>
                                         @endforeach
                                         </select>
                                     </div>
@@ -105,7 +106,7 @@
                                         <select class="form-control" data-style="btn btn-link" id="micoso6" name="comprobacion_6">
                                         <option disabled selected value="">Seleccione comprobación</option>
                                         @foreach ( $comprobacion as $comprobar )
-                                            <option value="{{ $comprobar->comprobar }}" >{{ $comprobar->comprobar }}</option>
+                                            <option value="{{ $comprobar->comprobar }}" {{$mantencion->comprobacion_6 == $comprobar->comprobar ? 'selected' : ''}}>{{ $comprobar->comprobar }}</option>
                                         @endforeach
                                         </select>
                                     </div>
@@ -118,7 +119,7 @@
                                         <select class="form-control" data-style="btn btn-link" id="micoso7" name="comprobacion_7">
                                         <option disabled selected value="">Seleccione comprobación</option>
                                         @foreach ( $comprobacion as $comprobar )
-                                            <option value="{{ $comprobar->comprobar }}" >{{ $comprobar->comprobar }}</option>
+                                            <option value="{{ $comprobar->comprobar }}" {{$mantencion->comprobacion_7 == $comprobar->comprobar ? 'selected' : ''}}>{{ $comprobar->comprobar }}</option>
                                         @endforeach
                                         </select>
                                     </div>
@@ -131,7 +132,7 @@
                                         <select class="form-control" data-style="btn btn-link" id="micoso8" name="comprobacion_8">
                                         <option disabled selected value="">Seleccione comprobación</option>
                                         @foreach ( $comprobacion as $comprobar )
-                                            <option value="{{ $comprobar->comprobar }}" >{{ $comprobar->comprobar }}</option>
+                                            <option value="{{ $comprobar->comprobar }}" {{$mantencion->comprobacion_8 == $comprobar->comprobar ? 'selected' : ''}}>{{ $comprobar->comprobar }}</option>
                                         @endforeach
                                         </select>
                                     </div>
@@ -144,7 +145,7 @@
                                         <select class="form-control" data-style="btn btn-link" id="micoso9" name="comprobacion_9">
                                         <option disabled selected value="">Seleccione comprobación</option>
                                         @foreach ( $comprobacion as $comprobar )
-                                            <option value="{{ $comprobar->comprobar }}" >{{ $comprobar->comprobar }}</option>
+                                            <option value="{{ $comprobar->comprobar }}" {{$mantencion->comprobacion_9 == $comprobar->comprobar ? 'selected' : ''}}>{{ $comprobar->comprobar }}</option>
                                         @endforeach
                                         </select>
                                     </div>
@@ -157,7 +158,7 @@
                                         <select class="form-control" data-style="btn btn-link" id="micoso10" name="comprobacion_10">
                                         <option disabled selected value="">Seleccione comprobación</option>
                                         @foreach ( $comprobacion as $comprobar )
-                                            <option value="{{ $comprobar->comprobar }}" >{{ $comprobar->comprobar }}</option>
+                                            <option value="{{ $comprobar->comprobar }}" {{$mantencion->comprobacion_10 == $comprobar->comprobar ? 'selected' : ''}}>{{ $comprobar->comprobar }}</option>
                                         @endforeach
                                         </select>
                                     </div>
@@ -170,7 +171,7 @@
                                         <select class="form-control" data-style="btn btn-link" id="micoso11" name="comprobacion_11">
                                         <option disabled selected value="">Seleccione comprobación</option>
                                         @foreach ( $comprobacion as $comprobar )
-                                            <option value="{{ $comprobar->comprobar }}" >{{ $comprobar->comprobar }}</option>
+                                            <option value="{{ $comprobar->comprobar }}" {{$mantencion->comprobacion_11 == $comprobar->comprobar ? 'selected' : ''}}>{{ $comprobar->comprobar }}</option>
                                         @endforeach
                                         </select>
                                     </div>
@@ -179,7 +180,7 @@
                             <div class="row">
                                 <label for="observaciones" class="col-sm-2 col-form-label">Observaciones</label>
                                 <div class="col-sm-8">
-                                    <textarea class="form-control" name="observaciones" rows="3" placeholder="Observaciones de la mantención" value="{{old('observaciones')}}"></textarea>
+                                    <textarea class="form-control" name="observaciones" rows="3" placeholder="Observaciones de la mantención">{{old('observaciones',$mantencion->observaciones)}}</textarea>
                                     @if ($errors->has('observaciones'))
                                         <span class="error text-danger" for="input-observaciones">{{$errors -> first('observaciones')}}</span>
                                     @endif

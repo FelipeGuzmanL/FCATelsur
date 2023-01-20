@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comprobar;
 use App\Models\EquiposMSAN;
 use App\Models\MantencionMsan;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class MantencionesMSANController extends Controller
@@ -14,8 +15,23 @@ class MantencionesMSANController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(EquiposMSAN $equipo)
+    public function index(EquiposMSAN $equipo, Request $request)
     {
+        if ($request) {
+            $texto = trim($request->get('texto'));
+            $mantenciones = MantencionMsan::WhereRaw('UPPER(fecha_mantencion) LIKE ?', ['%' . strtoupper($texto) . '%'])
+            ->orWhereHas('msan', function (Builder $query) use ($texto){
+                $query->where('numero','LIKE','%'.$texto.'%');
+            })
+            ->orWhereHas('user', function (Builder $query) use ($texto){
+                $query->whereRaw('UPPER(name) LIKE ?', ['%' . strtoupper($texto) . '%']);
+            })
+            ->orderBy('id','asc')
+            ->get();
+
+            return view('mantencionesmsan.index', ['equipo' => $equipo, 'texto' => $texto, 'mantenciones' =>$mantenciones]);
+        }
+        
         $mantenciones = MantencionMsan::all();
         return view('mantencionesmsan.index', compact('equipo','mantenciones'));
     }
@@ -87,9 +103,10 @@ class MantencionesMSANController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(EquiposMSAN $equipo, $id)
     {
-        //
+        $mantencion = MantencionMsan::find($id);
+        return view('mantencionesmsan.edit', compact('equipo','mantencion'),['comprobacion'=>Comprobar::all()]);
     }
 
     /**
@@ -99,9 +116,14 @@ class MantencionesMSANController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, EquiposMSAN $equipo, $id)
     {
-        //
+        $id_usuario = auth()->user()->id;
+        $mantencion = MantencionMsan::find($id);
+        $mantencion->update(array_merge($request->only('id_msan',
+        'id_usuario','comprobacion_1','comprobacion_2','comprobacion_3','comprobacion_4','comprobacion_5','comprobacion_6','comprobacion_7','comprobacion_8','comprobacion_9','comprobacion_10','comprobacion_11','fecha_mantencion','observaciones','numero_ticket',
+        'coordenadas',),['id_usuario'=>$id_usuario,'id_msan'=>$equipo->id]));
+        return redirect()->route('equiposmsan.mantencionesmsan.index', $equipo)->with('success','Mantención creada correctamente.');
     }
 
     /**
@@ -110,8 +132,10 @@ class MantencionesMSANController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(EquiposMSAN $equipo, $id)
     {
-        //
+        $mantencion = MantencionMsan::find($id);
+        $mantencion->delete();
+        return redirect()->route('equiposmsan.mantencionesmsan.index', $equipo)->with('success','Mantención eliminada correctamente.');
     }
 }

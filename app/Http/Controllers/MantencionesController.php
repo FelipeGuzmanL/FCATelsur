@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EquiposMSAN;
 use App\Models\MantencionMsan;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class MantencionesController extends Controller
@@ -18,8 +19,22 @@ class MantencionesController extends Controller
         return view('mantenciones.index');
     }
 
-    public function index_msan()
+    public function index_msan(Request $request)
     {
+        if ($request) {
+            $texto = trim($request->get('texto'));
+            $equipos = EquiposMSAN::Where('numero','LIKE','%'.$texto.'%')
+            ->orWhereHas('sitio', function (Builder $query) use ($texto){
+                $query->whereRaw('UPPER(abreviacion) LIKE ?', ['%' . strtoupper($texto) . '%']);
+            })
+            ->orWhereHas('sitio', function (Builder $query) use ($texto){
+                $query->whereRaw('UPPER(nombre) LIKE ?', ['%' . strtoupper($texto) . '%']);
+            })
+            ->orderBy('numero','asc')
+            ->paginate(15);
+
+            return view('mantenciones.index_msan', ['equipos' => $equipos, 'texto' => $texto]);
+        }
         $equipos = EquiposMSAN::all();
         return view('mantenciones.index_msan', compact('equipos'));
     }

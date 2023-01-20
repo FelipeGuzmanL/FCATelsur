@@ -41,8 +41,8 @@
                                         <table class="table">
                                             <thead class="text-primary">
                                                 <th>Nombre</th>
+                                                <th>Numero Ticket</th>
                                                 <th>Fecha Mantención</th>
-                                                <th>Observaciones</th>
                                                 <th>Mantencion realizada por</th>
                                                 <th class="text-right">Acciones</th>
                                             </thead>
@@ -56,13 +56,13 @@
                                                     @if ($equipo->id == $mantencion->msan->id)
                                                         <tr>
                                                             <td>{{ $equipo->Ubicacion->ciudad->abreviacion }} {{ $equipo->numero }}</td>
+                                                            <td>{{ $mantencion->numero_ticket}}</td>
                                                             <td>{{ $mantencion->fecha_mantencion}}</td>
-                                                            <td>{{ $mantencion->observaciones}}</td>
-                                                            <td>{{ $mantencion->user->name}}</td>
+                                                            <td >{{ $mantencion->user->name}}</td>
                                                             <td class="td-actions text-right">
                                                                 <a href="{{ route('equiposmsan.mantencionesmsan.show', [$equipo,$mantencion->id])}}" class="btn btn-info"><i class="material-icons">library_books</i></a>
-                                                                <a href="#" class="btn btn-warning"><i class="material-icons">edit</i></a>
-                                                                <form action="#" method="post" style="display: inline-block" onsubmit="return confirm('¿Estás seguro?')">
+                                                                <a href="{{ route('equiposmsan.mantencionesmsan.edit', [$equipo,$mantencion->id])}}" class="btn btn-warning"><i class="material-icons">edit</i></a>
+                                                                <form action="{{ route('equiposmsan.mantencionesmsan.destroy', [$equipo,$mantencion->id])}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Estás seguro?')">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button class="btn btn-danger" type="submit" rel="tooltip">

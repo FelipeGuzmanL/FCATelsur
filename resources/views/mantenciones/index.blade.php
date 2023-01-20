@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'mantenciones', 'titlePage' => 'Lista de Equipos MSAN'])
+@extends('layouts.app', ['activePage' => 'mantenciones', 'titlePage' => 'Lista de Equipamiento para Mantención'])
 @section('content')
     <div class="content">
         <div class="container-fuid">
@@ -8,7 +8,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header card-header-primary">
-                                    <h4 class="card-tittle">Lista de Equipos MSAN</h4>
+                                    <h4 class="card-tittle">Lista de Equipamiento para Mantención</h4>
                                     <div class="row">
                                         <div class="col-7 text-right d-felx">
                                             <form action="{{route('mantenciones.index')}}" method="get">
@@ -23,7 +23,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <p class="card-category">Datos de Equipos MSAN</p>
+                                    <p class="card-category">Datos de Equipamiento</p>
                                 </div>
                                 <div class="card-body">
                                     @if (session('success'))

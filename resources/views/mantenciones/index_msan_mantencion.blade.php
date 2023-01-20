@@ -70,6 +70,9 @@
                                                 @endforeach
                                         </tbody>
                                     </table>
+                                    <div class="d-flex justify-content-center">
+                                        {!! $mantenciones->links("pagination::bootstrap-4") !!}
+                                    </div>
                                 </div>
                             </div>
                         </div>

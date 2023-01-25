@@ -67,7 +67,7 @@
                                                             @elseif ( $cable->sitio->url != NULL)
                                                                 <a href="{{ $cable->sitio->url }}" target="_blank" class="btn btn-success"><i class="material-icons">location_on</i></a>
                                                             @endif
-                                                        <a href="{{ route('cable.edit', $cable->id) }}" class="btn btn-warning"><i class="material-icons">edit</i></a>
+                                                        <a href="{{ route('cable.edit', $cable->id) }}" class="btn btn-primary"><i class="material-icons">edit</i></a>
                                                         <form action="{{route('cable.destroy', $cable->id)}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Estás seguro?')">
                                                         @csrf
                                                         @method('DELETE')

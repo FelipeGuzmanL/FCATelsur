@@ -41,4 +41,8 @@ class DetalleCable extends Model
     {
         return $this->belongsTo(SlotMSAN::class, 'id_olt');
     }
+    public function alerta()
+    {
+        return $this->hasOne(Alerta::class, 'id_detallecable');
+    }
 }

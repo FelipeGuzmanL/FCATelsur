@@ -67,7 +67,7 @@
                                                             <a href="{{ $sitio->url }}" target="_blank" class="btn btn-success"><i class="material-icons">location_on</i></a>
                                                         @endif
                                                         <!--a href="{{ route('sitios.show', $sitio->id) }}" class="btn btn-info"><i class="material-icons">library_books</i></a-->
-                                                        <a href="{{ route('sitios.edit', $sitio->id) }}" class="btn btn-warning"><i class="material-icons">edit</i></a>
+                                                        <a href="{{ route('sitios.edit', $sitio->id) }}" class="btn btn-primary"><i class="material-icons">edit</i></a>
                                                         <form action="{{route('sitios.destroy', $sitio->id)}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Estás seguro?')">
                                                         @csrf
                                                         @method('DELETE')

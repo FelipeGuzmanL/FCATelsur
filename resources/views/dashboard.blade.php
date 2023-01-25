@@ -72,7 +72,7 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      <!--div class="row">
         <div class="col-md-4">
           <div class="card card-chart">
             <div class="card-header card-header-success">
@@ -122,8 +122,8 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="row">
+      </div-->
+      <!--div class="row">
         <div class="col-lg-6 col-md-12">
           <div class="card">
             <div class="card-header card-header-tabs card-header-primary">
@@ -368,48 +368,47 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-lg-6 col-md-12">
+        </div-->
+        <div class="col-auto col-md-12">
           <div class="card">
-            <div class="card-header card-header-warning">
-              <h4 class="card-title">Employees Stats</h4>
-              <p class="card-category">New employees on 15th September, 2016</p>
+            <div class="card-header card-header-primary">
+              <h4 class="card-title">Alertas en Cables</h4>
+              <p class="card-category">Alertas</p>
             </div>
             <div class="card-body table-responsive">
               <table class="table table-hover">
-                <thead class="text-warning">
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Salary</th>
-                  <th>Country</th>
+                <thead class="text-primary">
+                  <th>Cable</th>
+                  <th>Tipo de Cable</th>
+                  <th>Filamento</th>
+                  <th>Observacion</th>
+                  <th>Severidad</th>
+                  <th>Link</th>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Dakota Rice</td>
-                    <td>$36,738</td>
-                    <td>Niger</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Minerva Hooper</td>
-                    <td>$23,789</td>
-                    <td>Curaçao</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>Sage Rodriguez</td>
-                    <td>$56,142</td>
-                    <td>Netherlands</td>
-                  </tr>
-                  <tr>
-                    <td>4</td>
-                    <td>Philip Chaney</td>
-                    <td>$38,735</td>
-                    <td>Korea, South</td>
-                  </tr>
+                    @foreach ($alertas as $alerta)
+                    <tr>
+                      @if ($alerta->id_detallecable != NULL)
+                        <td>{{ $alerta->detallecable->cable->sitio->abreviacion}} {{ $alerta->detallecable->cable->nombre_cable}}</td>
+                        <td>{{ $alerta->detallecable->cable->tipocable->tipo}}</td>
+                        <td>{{ $alerta->detallecable->filamento}}</td>
+                        <td>{{ $alerta->observacion}}</td>
+                        @if ($alerta->gravedad->id == '1')
+                          <td class="text-success"><strong>{{ $alerta->gravedad->gravedad}}</strong></td>
+                        @elseif($alerta->gravedad->id == '2')
+                          <td class="text-warning"><strong>{{ $alerta->gravedad->gravedad}}</strong></td>
+                          @elseif($alerta->gravedad->id == '3')
+                          <td class="text-danger"><strong>{{ $alerta->gravedad->gravedad}}</strong></td>
+                        @endif
+                        <td><a href="{{ route('cable.detallecable.index', [$alerta->detallecable->cable,$alerta->detallecable])}}">Ver</a></td>
+                      </tr>
+                      @endif
+                    @endforeach
                 </tbody>
               </table>
+              <div class="d-flex justify-content-center">
+                {!! $alertas->links("pagination::bootstrap-4") !!}
+            </div>
             </div>
           </div>
         </div>

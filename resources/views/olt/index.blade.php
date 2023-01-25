@@ -31,6 +31,11 @@
                                             {{ session('success') }}
                                         </div>
                                     @endif
+                                    @if (session('warning'))
+                                        <div class="alert alert-warning" role="warning">
+                                            {{ session('warning') }}
+                                        </div>
+                                    @endif
                                     @if (session('failure'))
                                         <div class="alert alert-danger" role="failure">
                                             {{ session('failure') }}
@@ -90,7 +95,18 @@
                                                         @elseif ( $olt->link_sitio_fca != NULL)
                                                             <a href="{{ $olt->link_sitio_fca }}" target="_blank" class="btn btn-success"><i class="material-icons">location_on</i></a>
                                                         @endif
-                                                        <a href="{{ route('equiposmsan.slots.olt.edit', [$equipo,$slot,$olt]) }}" class="btn btn-warning"><i class="material-icons">edit</i></a>
+                                                        @if ( $olt->alerta == NULL)
+                                                        @elseif ( $olt->alerta != NULL)
+                                                            <a href="{{ route('equiposmsan.slots.olt.alertas.show', [$equipo,$slot,$olt,$olt->alerta]) }}" class="btn btn-warning"><i class="material-icons">warning</i></a>
+                                                            <form action="{{route('equiposmsan.slots.olt.alertas.destroy', [$equipo,$slot,$olt,$olt->alerta])}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Está seguro de eliminar esta alerta?')">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button class="btn btn-warning" type="submit" rel="tooltip">
+                                                                    <i class="material-icons">close</i>
+                                                                </button>
+                                                            </form>
+                                                        @endif
+                                                        <a href="{{ route('equiposmsan.slots.olt.edit', [$equipo,$slot,$olt]) }}" class="btn btn-primary"><i class="material-icons">edit</i></a>
                                                         <form action="{{route('equiposmsan.slots.olt.destroy', [$equipo,$slot,$olt])}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Estás seguro?')">
                                                         @csrf
                                                         @method('DELETE')

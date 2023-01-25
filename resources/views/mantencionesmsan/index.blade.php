@@ -61,7 +61,6 @@
                                                             <td >{{ $mantencion->user->name}}</td>
                                                             <td class="td-actions text-right">
                                                                 <a href="{{ route('equiposmsan.mantencionesmsan.show', [$equipo,$mantencion->id])}}" class="btn btn-info"><i class="material-icons">library_books</i></a>
-                                                                <a href="{{ route('equiposmsan.mantencionesmsan.edit', [$equipo,$mantencion->id])}}" class="btn btn-warning"><i class="material-icons">edit</i></a>
                                                                 <form action="{{ route('equiposmsan.mantencionesmsan.destroy', [$equipo,$mantencion->id])}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Estás seguro?')">
                                                                 @csrf
                                                                 @method('DELETE')

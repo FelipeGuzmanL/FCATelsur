@@ -78,5 +78,14 @@ class UsersTableSeeder extends Seeder
         DB::table('comprobar')->insert([
             'comprobar' => 'No OK',
         ]);
+        DB::table('gravedad_alerta')->insert([
+            'gravedad' => 'Baja',
+        ]);
+        DB::table('gravedad_alerta')->insert([
+            'gravedad' => 'Media',
+        ]);
+        DB::table('gravedad_alerta')->insert([
+            'gravedad' => 'Alta',
+        ]);
     }
 }

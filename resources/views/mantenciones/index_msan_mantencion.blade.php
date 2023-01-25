@@ -57,7 +57,7 @@
                                                         <td></td>
                                                         <td class="td-actions text-right">
                                                             <!--a href="#" class="btn btn-info"><i class="material-icons">library_books</i></a-->
-                                                            <a href="#" class="btn btn-warning"><i class="material-icons">edit</i></a>
+                                                            <a href="#" class="btn btn-primary"><i class="material-icons">edit</i></a>
                                                             <form action="#" method="post" style="display: inline-block" onsubmit="return confirm('¿Estás seguro?')">
                                                             @csrf
                                                             @method('DELETE')

@@ -19,6 +19,7 @@
                                     @endif
                                     <div class="row">
                                         <div class="col-12 text-right">
+                                            <a href="{{ route('equiposmsan.mantencionesmsan.edit', [$equipo,$mantencion->id])}}" class="btn btn-primary">Editar</a>
                                             <a href="{{ route('equiposmsan.mantencionesmsan.index', [$equipo])}}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>
                                         </div>
                                     </div>

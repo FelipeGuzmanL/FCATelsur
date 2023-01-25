@@ -50,7 +50,7 @@ class CreateMantencionesmsanTable extends Migration
      */
     public function down()
     {
-        Schema::table('detallecable', function (Blueprint $table) {
+        Schema::table('mantencionesmsan', function (Blueprint $table) {
             $table->dropColumn('id_msan');
             $table->dropColumn('id_comprobar');
             $table->dropColumn('id_usuario');

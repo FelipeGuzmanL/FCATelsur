@@ -47,7 +47,6 @@
                                                 <th>Filam</th>
                                                 <th>DIR</th>
                                                 <th>Servicio</th>
-                                                <th>Ocupación</th>
                                                 <th>Cruzada</th>
                                                 <th>Observaciones</th>
                                                 <th>Estado</th>
@@ -61,11 +60,13 @@
                                                     <tr class="text-center">
                                                         <td>{{ $detalle->filamento}}</td>
                                                         <td>{{ $detalle->direccion}}</td>
-                                                        <td>{{ $detalle->servicio}}</td>
-                                                        @if($detalle->ocupacion == NULL)
+                                                        @if ($detalle->ocupacion == NULL && $detalle->servicio == NULL)
                                                             <td></td>
                                                         @endif
-                                                        @if($detalle->ocupacion != NULL)
+                                                        @if($detalle->ocupacion == NULL && $detalle->servicio != NULL)
+                                                            <td>{{ $detalle->servicio}}</td>
+                                                        @endif
+                                                        @if($detalle->ocupacion != NULL && $detalle->servicio == NULL)
                                                         @php
                                                             $equipo = $detalle->olt->msan->equiposmsan;
                                                             $slot = $detalle->olt->msan;
@@ -83,10 +84,21 @@
                                                         <td>{{ $detalle->updated_at}}</td>
                                                         <td class="td-actions text-right">
                                                             @if ( $detalle->gmaps == NULL)
+                                                            @if ( $detalle->alerta == NULL)
+                                                            @elseif ( $detalle->alerta != NULL)
+                                                                <a href="{{ route('cables.show_cable', $detalle->alerta)}}" class="btn btn-warning"><i class="material-icons">warning</i></a>
+                                                                <form action="{{ route('cables.destroy_cable', $detalle)}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Está seguro de eliminar esta alerta?')">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button class="btn btn-warning" type="submit" rel="tooltip">
+                                                                        <i class="material-icons">close</i>
+                                                                    </button>
+                                                                </form>
+                                                            @endif
                                                             @elseif ( $detalle->gmaps != NULL)
                                                                 <a href="{{ $detalle->gmaps }}" target="_blank" class="btn btn-success"><i class="material-icons">location_on</i></a>
                                                             @endif
-                                                            <a href="{{ route('cable.detallecable.edit', [$cable,$detalle]) }}" class="btn btn-warning"><i class="material-icons">edit</i></a>
+                                                            <a href="{{ route('cable.detallecable.edit', [$cable,$detalle]) }}" class="btn btn-primary"><i class="material-icons">edit</i></a>
                                                             <form action="{{route('cable.detallecable.destroy', [$cable,$detalle])}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Estás seguro?')">
                                                             @csrf
                                                             @method('DELETE')

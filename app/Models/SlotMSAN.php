@@ -48,4 +48,8 @@ class SlotMSAN extends Model
     {
         return $this->hasOne(DetalleCable::class, 'id_olt');
     }
+    public function alerta()
+    {
+        return $this->hasOne(Alerta::class, 'id_olt');
+    }
 }

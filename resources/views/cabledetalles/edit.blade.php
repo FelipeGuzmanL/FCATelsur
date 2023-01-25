@@ -15,6 +15,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 text-right">
+                                    <a href="{{ route('cables.index_cable', $detalles)}}" class="btn btn-warning">Generar Alerta</a>
                                     <a href="{{ url()->previous() }}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>
                                 </div>
                             </div>
@@ -39,7 +40,12 @@
                             <div class="row">
                                 <label for="servicio" class="col-sm-2 col-form-label">Servicios</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="servicio" placeholder="Servicios" value="{{old('servicio', $detalles->servicio)}}">
+                                    @if ($detalles->ocupacion == NULL)
+                                        <input type="text" class="form-control" name="servicio" placeholder="Servicios" value="{{old('servicio', $detalles->servicio)}}">
+                                    @endif
+                                    @if ($detalles->ocupacion != NULL)
+                                        <input type="text" class="form-control" name="servicio" placeholder="Servicios" value="{{old('servicio', $detalles->ocupacion)}}" readonly>
+                                    @endif
                                     @if ($errors->has('servicio'))
                                         <span class="error text-danger" for="input-servicio">{{$errors -> first('servicio')}}</span>
                                     @endif

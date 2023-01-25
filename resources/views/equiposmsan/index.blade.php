@@ -63,7 +63,7 @@
                                                             <a href="{{ $equipo->Ubicacion->link_gmaps }}" target="_blank" class="btn btn-success"><i class="material-icons">location_on</i></a>
                                                         @endif
                                                         <!--a href="{{ route('equiposmsan.show', $equipo->id) }}" class="btn btn-info"><i class="material-icons">library_books</i></a-->
-                                                        <a href="{{ route('equiposmsan.edit', $equipo->id) }}" class="btn btn-warning"><i class="material-icons">edit</i></a>
+                                                        <a href="{{ route('equiposmsan.edit', $equipo->id) }}" class="btn btn-primary"><i class="material-icons">edit</i></a>
                                                         <form action="{{route('equiposmsan.destroy', $equipo->id)}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Estás seguro?')">
                                                         @csrf
                                                         @method('DELETE')

@@ -20,6 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware('auth');
+Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index')->name('dashboard')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('table-list', function () {
@@ -71,5 +72,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('mantencionesmsan', ['as' => 'index_msan.index', 'uses' => 'App\Http\Controllers\MantencionesController@index_msan']);
 	Route::get('mantencionesmsan/{equipo}/msan', [App\Http\Controllers\MantencionesController::class, 'index_msan_mantencion'])->name('mantenciones.index_msan_mantencion');
 	Route::resource('equiposmsan.mantencionesmsan', \App\Http\Controllers\MantencionesMSANController::class);
+	Route::resource('equiposmsan.slots.olt.alertas', App\Http\Controllers\AlertaController::class);
+	Route::get('cable/{detallecables}/alertas', [App\Http\Controllers\AlertaController::class, 'index_cable'])->name('cables.index_cable');
+	Route::post('cable/{detalles}/alertas', [App\Http\Controllers\AlertaController::class, 'store_cable'])->name('cables.store_cable');
+	Route::get('cable/{detalles}/alertasedit', [App\Http\Controllers\AlertaController::class, 'edit_cable'])->name('cables.edit_cable');
+	Route::put('cable/{detalles}/alertasedit', [App\Http\Controllers\AlertaController::class, 'update_cable'])->name('cables.update_cable');
+	Route::delete('cable/{detalles}/alertasedit', [App\Http\Controllers\AlertaController::class, 'destroy_cable'])->name('cables.destroy_cable');
+	Route::get('cable/{detalles}/show', [App\Http\Controllers\AlertaController::class, 'show_cable'])->name('cables.show_cable');
+
 });
 

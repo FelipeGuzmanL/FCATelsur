@@ -393,14 +393,14 @@
                         <td>{{ $alerta->detallecable->cable->tipocable->tipo}}</td>
                         <td>{{ $alerta->detallecable->filamento}}</td>
                         <td>{{ $alerta->observacion}}</td>
-                        @if ($alerta->gravedad->id == '1')
+                        @if ($alerta->gravedad->gravedad == 'Baja')
                           <td class="text-success"><strong>{{ $alerta->gravedad->gravedad}}</strong></td>
-                        @elseif($alerta->gravedad->id == '2')
+                        @elseif($alerta->gravedad->gravedad == 'Media')
                           <td class="text-warning"><strong>{{ $alerta->gravedad->gravedad}}</strong></td>
-                          @elseif($alerta->gravedad->id == '3')
+                          @elseif($alerta->gravedad->gravedad == 'Alta')
                           <td class="text-danger"><strong>{{ $alerta->gravedad->gravedad}}</strong></td>
                         @endif
-                        <td><a href="{{ route('cable.detallecable.index', [$alerta->detallecable->cable,$alerta->detallecable])}}">Ver</a></td>
+                        <td><a href="{{ route('cables.show_cable',[$alerta])}}">Ver</a></td>
                       </tr>
                       @endif
                     @endforeach

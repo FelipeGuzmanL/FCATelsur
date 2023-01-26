@@ -33,8 +33,7 @@
                                     @endif
                                     <div class="row">
                                         <div class="col-12 text-right">
-                                            <a href="#" class="btn btn-primary">Añadir Cable</a>
-                                            <a href="#" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>
+                                            <a href="{{ route('dashboard')}}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>
                                         </div>
                                     </div>
                                     <div class="table-responsive">

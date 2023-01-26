@@ -8,17 +8,27 @@
           <div class="card card-stats">
             <div class="card-header card-header-warning card-header-icon">
               <div class="card-icon">
-                <i class="material-icons">content_copy</i>
+                <i class="material-icons">warning</i>
               </div>
-              <p class="card-category">Used Space</p>
-              <h3 class="card-title">49/50
-                <small>GB</small>
+              <p class="card-category">Total de Alertas</p>
+              <h3 class="card-title">
+                @if (count($alertas) > 0)
+                    {{count($alertas)}}
+                    @if (count($alertas)>1)
+                        <small>Alertas</small>
+                    @elseif (count($alertas)==1)
+                        <small>Alerta</small>
+                    @endif
+                @else
+                    <small>Sin Alertas</small>
+                @endif
+
               </h3>
             </div>
             <div class="card-footer">
               <div class="stats">
                 <i class="material-icons text-danger">warning</i>
-                <a href="#pablo">Get More Space...</a>
+                <a href="{{ route('alertas.index_todas')}}">Ver todas las alertas</a>
               </div>
             </div>
           </div>

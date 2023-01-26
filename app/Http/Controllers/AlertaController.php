@@ -9,6 +9,7 @@ use App\Models\EquiposMSAN;
 use App\Models\GravedadAlerta;
 use App\Models\Slot;
 use App\Models\SlotMSAN;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class AlertaController extends Controller
@@ -28,6 +29,44 @@ class AlertaController extends Controller
         $gravedad = GravedadAlerta::all();
         $detalles = DetalleCable::find($id);
         return view('alertas.index_detallecable', compact('detalles','gravedad'));
+    }
+    public function index_todaslasalertas(Request $request)
+    {
+        if ($request) {
+            $texto = trim($request->get('texto'));
+            $alertas = Alerta::whereRaw('UPPER(observacion) LIKE ?', ['%' . strtoupper($texto) . '%'])
+            ->orWhereHas('detallecable', function (Builder $query) use ($texto){
+                $query->where('filamento','LIKE','%'.$texto.'%')
+                ->orWhereHas('cable', function (Builder $query) use ($texto){
+                    $query->whereRaw('UPPER(nombre_cable) LIKE ?', ['%' . strtoupper($texto) . '%'])
+                    ->orWhereHas('sitio', function (Builder $query) use ($texto){
+                        $query->whereRaw('UPPER(abreviacion) LIKE ?', ['%' . strtoupper($texto) . '%']);
+                    })
+                    ->orWhereHas('tipocable', function (Builder $query) use ($texto){
+                        $query->whereRaw('UPPER(tipo) LIKE ?', ['%' . strtoupper($texto) . '%']);
+                    });
+                });
+            })
+            ->orWhereHas('olt', function (Builder $query) use ($texto){
+                $query->where('olt','LIKE','%'.$texto.'%')
+                ->orWhereHas('msan', function (Builder $query) use ($texto){
+                    $query->whereRaw('UPPER(slot_msan) LIKE ?', ['%' . strtoupper($texto) . '%'])
+                    ->orWhereHas('equiposmsan', function (Builder $query) use ($texto){
+                        $query->WhereHas('sitio', function (Builder $query) use ($texto){
+                            $query->whereRaw('UPPER(abreviacion) LIKE ?', ['%' . strtoupper($texto) . '%']);
+                        });
+                    });
+                });
+            })
+            ->orWhereHas('gravedad', function (Builder $query) use ($texto){
+                $query->whereRaw('UPPER(gravedad) LIKE ?', ['%' . strtoupper($texto) . '%']);
+            })
+            ->orderBy('id','asc')
+            ->paginate(10);
+
+            return view('alertas.index_alertas', ['alertas' => $alertas, 'texto' => $texto]);
+        }
+        return view('alertas.index_alertas',['alertas'=>Alerta::paginate(10)]);
     }
 
     /**

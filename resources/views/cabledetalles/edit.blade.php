@@ -9,8 +9,8 @@
                     @method('PUT')
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-tittle">Actualizar Datos del Cable {{ $cable->sitio->abreviacion}} {{ $cable->nombre_cable}}</h4>
-                            <p class="card-category">Ingresar datos del Cable {{ $cable->sitio->abreviacion }} {{ $cable->nombre_cable}}</p>
+                            <h4 class="card-tittle">Actualizar Datos del Cable {{ $cable->sitio->abreviacion}} {{ $cable->nombre_cable}} FILAM: {{ $detalles->filamento}}</h4>
+                            <p class="card-category">Ingresar datos del Cable {{ $cable->sitio->abreviacion }} {{ $cable->nombre_cable}} FILAM: {{ $detalles->filamento}}</p>
                         </div>
                         <div class="card-body">
                             <div class="row">

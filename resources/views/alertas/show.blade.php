@@ -8,7 +8,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header card-header-primary">
-                                    <h4 class="card-tittle">Cable: </h4>
+                                    <h4 class="card-tittle">Slot {{$slot->slot_msan}} OLT: {{ $olt->olt}}</h4>
                                     <p class="card-category">Filamento Alertado</p>
                                 </div>
                                 <div class="card-body">
@@ -25,7 +25,8 @@
                                     <div class="row">
                                         <div class="col-12 text-right">
                                             <a href="{{ route('equiposmsan.slots.olt.alertas.edit',[$equipo,$slot,$olt,$alerta])}}" class="btn btn-warning">Editar Alerta</a>
-                                            <a href="{{ route('equiposmsan.slots.olt.index',[$equipo,$slot,$olt])}}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>
+                                            <!--a href="{{ route('equiposmsan.slots.olt.index',[$equipo,$slot,$olt])}}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a-->
+                                            <a href="{{ url()->previous()}}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>
                                         </div>
                                     </div>
                                     <div class="table-responsive">
@@ -39,6 +40,7 @@
                                                 <th>Filam</th>
                                                 <th>Estado</th>
                                                 <th>Fecha Modificación</th>
+                                                <th class="text-right">Acciones</th>
                                             </thead>
                                             <tbody>
                                                 <tr>
@@ -63,6 +65,9 @@
                                                         <td class="text-danger">{{ $olt->estad->estado}}</td>
                                                     @endif
                                                     <td>{{ $olt->updated_at}} <br> por {{ $olt->usuario->name}}</td>
+                                                    <td class="td-actions text-right">
+                                                        <a href="{{ route('equiposmsan.slots.olt.edit', [$equipo,$slot,$olt])}}" class="btn btn-primary"><i class="material-icons">edit</i></a>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>

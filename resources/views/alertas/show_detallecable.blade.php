@@ -20,7 +20,8 @@
                                     <div class="row">
                                         <div class="col-12 text-right">
                                             <a href="{{ route('cables.edit_cable', $alerta->detallecable)}}" class="btn btn-warning">Editar Alerta</a>
-                                            <a href="{{ route('cable.detallecable.index', [$alerta->detallecable->cable,$alerta->detallecable])}}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>
+                                            <!--a href="{{ route('cable.detallecable.index', [$alerta->detallecable->cable,$alerta->detallecable])}}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a-->
+                                            <a href="{{ url()->previous()}}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>
                                         </div>
                                     </div>
                                     <div class="table-responsive">
@@ -34,6 +35,7 @@
                                                 <th>Estado</th>
                                                 <th>Longitud</th>
                                                 <th>Fecha Modificación</th>
+                                                <th class="text-right">Acciones</th>
                                             </thead>
                                             <tbody>
                                                 <tr>
@@ -61,6 +63,9 @@
                                                     @endif
                                                     <td>{{ $alerta->detallecable->longitud}} mts</td>
                                                     <td>{{ $alerta->detallecable->updated_at}}</td>
+                                                    <td class="td-actions text-right">
+                                                        <a href="{{ route('cable.detallecable.edit',[$alerta->detallecable->cable, $alerta->detallecable])}}" class="btn btn-primary"><i class="material-icons">edit</i></a>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>

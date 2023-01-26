@@ -214,7 +214,7 @@ class SlotMSANController extends Controller
                         'id_usuario'=>$idusuario
                     ]));
                 }
-                
+
                 return redirect()->route('equiposmsan.slots.olt.index', [$equipo,$slot,$olt])->with('success','OLT actualizada correctamente.');
             }
             else

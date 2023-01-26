@@ -31,8 +31,7 @@
                                 <label for="id_gravedad" class="col-sm-2 col-form-label">Gravedad</label>
                                 <div class="col-sm-7">
                                     <div class="form-group">
-                                        <select class="form-control micoso" data-style="btn btn-link" id="micoso" name="id_gravedad" required oninvalid="this.setCustomValidity('Seleccione la gravedad de la alerta')" oninput="this.setCustomValidity('')">
-                                            <option disabled selected value="">Seleccione Gravedad de la Alerta</option>
+                                        <select class="form-control micoso" data-style="btn btn-link" id="micoso" name="id_gravedad">
                                         @foreach ( $gravedad as $grave )
                                                 <option value="{{ $grave->id }}">{{ $grave->gravedad }}</option>
                                         @endforeach

@@ -9,7 +9,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $alertas = Alerta::paginate(5);
-        return view('dashboard', compact('alertas'));
+        $alertastodas = Alerta::all();
+        $alertas = Alerta::where('id_detallecable','!=',NULL)->paginate(5);
+        return view('dashboard', compact('alertas','alertastodas'));
     }
 }

@@ -12,11 +12,11 @@
               </div>
               <p class="card-category">Total de Alertas</p>
               <h3 class="card-title">
-                @if (count($alertas) > 0)
-                    {{count($alertas)}}
-                    @if (count($alertas)>1)
+                @if (count($alertastodas) > 0)
+                    {{count($alertastodas)}}
+                    @if (count($alertastodas)>1)
                         <small>Alertas</small>
-                    @elseif (count($alertas)==1)
+                    @elseif (count($alertastodas)==1)
                         <small>Alerta</small>
                     @endif
                 @else
@@ -37,14 +37,15 @@
           <div class="card card-stats">
             <div class="card-header card-header-success card-header-icon">
               <div class="card-icon">
-                <i class="material-icons">store</i>
+                <i class="material-icons">engineering</i>
               </div>
-              <p class="card-category">Revenue</p>
-              <h3 class="card-title">$34,245</h3>
+              <p class="card-category"></p>
+              <h3 class="card-title">Historial de Mantenciones</h3>
             </div>
             <div class="card-footer">
               <div class="stats">
-                <i class="material-icons">date_range</i> Last 24 Hours
+                <i class="material-icons">engineering</i>
+                <a href="{{ route('mantencionesmsan.index_todaslasmantenciones')}}">Todos los mantenimientos</a>
               </div>
             </div>
           </div>

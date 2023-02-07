@@ -45,6 +45,12 @@ class MantencionesController extends Controller
         return view('mantenciones.index_msan_mantencion', compact('equipo','mantenciones'));
     }
 
+    public function index_todaslasmantenciones(EquiposMSAN $equipo, MantencionMsan $mantenciones)
+    {
+        $mantenciones = MantencionMsan::orderBy('fecha_mantencion','desc')->paginate(15);
+        return view('mantencionesmsan.index_todaslasmantenciones', compact('mantenciones'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

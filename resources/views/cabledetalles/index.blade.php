@@ -79,6 +79,8 @@
                                                             <td class="text-success">{{ $detalle->estado->estado}}</td>
                                                         @elseif ($detalle->estado->id == "2")
                                                             <td class="text-danger">{{ $detalle->estado->estado}}</td>
+                                                        @elseif ($detalle->estado->id == "3")
+                                                            <td class="text-warning">{{ $detalle->estado->estado}}</td>
                                                         @endif
                                                         <td>{{ $detalle->longitud}} mts</td>
                                                         <td>{{ $detalle->updated_at}}</td>

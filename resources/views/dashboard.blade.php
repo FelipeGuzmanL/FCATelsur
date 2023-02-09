@@ -40,7 +40,7 @@
                 <i class="material-icons">engineering</i>
               </div>
               <p class="card-category"></p>
-              <h3 class="card-title">Historial de Mantenciones</h3>
+              <h3 class="card-title">Historial Mantenciones</h3>
             </div>
             <div class="card-footer">
               <div class="stats">

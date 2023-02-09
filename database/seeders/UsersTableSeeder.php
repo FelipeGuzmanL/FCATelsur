@@ -29,22 +29,29 @@ class UsersTableSeeder extends Seeder
             'estado' => 'Ocupado'
         ]);
         DB::table('tecnologia')->insert([
-            'nombre_tec' => 'Fiberhome'
-        ]);
-        DB::table('tecnologia')->insert([
             'nombre_tec' => 'Zhone'
         ]);
-        DB::table('slots_tec')->insert([
-            'id_tecnologia' => '1',
-            'slots' => '8'
+        DB::table('tecnologia')->insert([
+            'nombre_tec' => 'Fiberhome 5000 Series'
         ]);
-        DB::table('slots_tec')->insert([
-            'id_tecnologia' => '1',
-            'slots' => '16'
+        DB::table('tecnologia')->insert([
+            'nombre_tec' => 'Fiberhome 6000 Series'
         ]);
         DB::table('slots_tec')->insert([
             'id_tecnologia' => '2',
+            'slots' => '8'
+        ]);
+        DB::table('slots_tec')->insert([
+            'id_tecnologia' => '2',
+            'slots' => '16'
+        ]);
+        DB::table('slots_tec')->insert([
+            'id_tecnologia' => '1',
             'slots' => '4'
+        ]);
+        DB::table('slots_tec')->insert([
+            'id_tecnologia' => '3',
+            'slots' => '16'
         ]);
         DB::table('ciudad')->insert([
             'nombre' => 'Osorno',

@@ -53,6 +53,12 @@
             <p>{{ __('Cables') }}</p>
         </a>
       </li>
+      <li class="nav-item{{ $activePage == 'cablestroncales' ? ' active' : '' }}">
+        <a class="nav-link" href="{{ route('cablestroncales.index')}}">
+          <i class="material-icons">cable</i>
+            <p>{{ __('Cables Troncales') }}</p>
+        </a>
+      </li>
       <li class="nav-item{{ $activePage == 'equiposmsan' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('equiposmsan.index') }}">
           <i class="material-icons">dns</i>

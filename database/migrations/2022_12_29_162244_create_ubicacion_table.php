@@ -32,7 +32,7 @@ class CreateUbicacionTable extends Migration
             $table->id();
             $table->timestamps();
             $table->integer('slots');
-            $table->UnsignedBigInteger('id_tecnologia');
+            $table->UnsignedBigInteger('id_tecnologia')->nullable();
             $table->foreign('id_tecnologia')->references('id')->on('tecnologia');
 
         });

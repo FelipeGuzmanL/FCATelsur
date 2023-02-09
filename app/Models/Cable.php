@@ -43,4 +43,8 @@ class Cable extends Model
     {
         return $this->belongsToMany(Slot::class);
     }
+    public function mufas()
+    {
+        return $this->hasMany(Mufa::class, 'id_cable');
+    }
 }

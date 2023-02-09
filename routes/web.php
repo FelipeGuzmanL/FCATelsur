@@ -82,6 +82,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('alertas', [App\Http\Controllers\AlertaController::class, 'index_todaslasalertas'])->name('alertas.index_todas');
     Route::get('todaslasmantencionesmsan', [App\Http\Controllers\MantencionesController::class, 'index_todaslasmantenciones'])->name('mantencionesmsan.index_todaslasmantenciones');
 	Route::resource('cablestroncales', App\Http\Controllers\CablesTroncalesController::class);
+    Route::resource('cable.mufas', App\Http\Controllers\MufasController::class);
 
 });
 

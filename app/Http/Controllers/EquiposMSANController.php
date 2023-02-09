@@ -58,15 +58,15 @@ class EquiposMSANController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $id_usuario = auth()->user()->id;
-        $ubicacion = Ubicacion::create(array_merge($request->only('id_ciudad','direccion','link_gmaps','sitio_fca','descripcion_sitio'),['id_ciudad'=>$request->id_ubicacion]));
-        $msan = EquiposMSAN::create(array_merge($request->only('id_ubicacion','id_usuario','id_sitio','id_tecnologia','id_slotec','numero'),[
-            'id_ubicacion'=>$ubicacion->id,
-            'id_sitio'=>$request->id_ubicacion,
-            'id_tecnologia'=>$request->id_tecnologia,
-            'id_usuario'=>$id_usuario
-        ]));
+        {
+            $id_usuario = auth()->user()->id;
+            $ubicacion = Ubicacion::create(array_merge($request->only('id_ciudad','direccion','link_gmaps','sitio_fca','descripcion_sitio'),['id_ciudad'=>$request->id_ubicacion]));
+            $msan = EquiposMSAN::create(array_merge($request->only('id_ubicacion','id_usuario','id_sitio','id_tecnologia','id_slotec','numero'),[
+                'id_ubicacion'=>$ubicacion->id,
+                'id_sitio'=>$request->id_ubicacion,
+                'id_tecnologia'=>$request->id_tecnologia,
+                'id_usuario'=>$id_usuario
+            ]));
         return redirect()->route('equiposmsan.index')->with('success','Equipo MSAN guardado correctamente.');
     }
 

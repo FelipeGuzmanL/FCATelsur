@@ -29,6 +29,10 @@ class CreateMufasTable extends Migration
             $table->text('link_gmaps')->nullable();
             $table->date('fecha')->nullable();
         });
+        Schema::table('alertas', function($table) {
+            $table->unsignedBigInteger('id_mufa');
+            $table->foreign('id_mufa')->references('id')->on('mufas');
+        });
     }
 
     /**

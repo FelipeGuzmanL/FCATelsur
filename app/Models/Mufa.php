@@ -29,4 +29,8 @@ class Mufa extends Model
     {
         return $this->belongsTo(Cable::class, 'id_cable');
     }
+    public function alerta()
+    {
+        return $this->hasOne(Alerta::class, 'id_mufa');
+    }
 }

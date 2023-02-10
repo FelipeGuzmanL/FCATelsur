@@ -14,6 +14,7 @@ class Alerta extends Model
     protected $fillable = [
         'id_gravedad',
         'id_detallecable',
+        'id_mufa',
         'id_olt',
         'observacion',
     ];
@@ -29,5 +30,9 @@ class Alerta extends Model
     public function detallecable()
     {
         return $this->belongsTo(DetalleCable::class, 'id_detallecable');
+    }
+    public function mufa()
+    {
+        return $this->belongsTo(Mufa::class, 'id_mufa');
     }
 }

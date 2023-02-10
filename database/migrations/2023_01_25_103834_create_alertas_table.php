@@ -42,6 +42,7 @@ class CreateAlertasTable extends Migration
             $table->dropColumn('id_gravedad');
             $table->dropColumn('id_olt');
             $table->dropColumn('id_detallecable');
+            $table->dropColumn('id_mufa');
         });
         Schema::dropIfExists('alertas');
     }

@@ -7,6 +7,7 @@ use App\Models\Cable;
 use App\Models\DetalleCable;
 use App\Models\EquiposMSAN;
 use App\Models\GravedadAlerta;
+use App\Models\Mufa;
 use App\Models\Slot;
 use App\Models\SlotMSAN;
 use Illuminate\Database\Eloquent\Builder;
@@ -29,6 +30,11 @@ class AlertaController extends Controller
         $gravedad = GravedadAlerta::all();
         $detalles = DetalleCable::find($id);
         return view('alertas.index_detallecable', compact('detalles','gravedad'));
+    }
+    public function index_mufas(Mufa $mufa)
+    {
+        $gravedad = GravedadAlerta::all();
+        return view ('alertas.index_mufa', compact('mufa','gravedad'));
     }
     public function index_todaslasalertas(Request $request)
     {
@@ -98,6 +104,12 @@ class AlertaController extends Controller
         'id_detallecable'=>$detalles->id]));
         return redirect()->route('cable.detallecable.index', [$detalles->cable,$detalles])->with('warning','Alerta del filamento '.$detalles->filamento.' creada correctamente.');
     }
+    public function store_mufas (Request $request, Mufa $mufa)
+    {
+        $cable = $mufa->cable;
+        $alerta = Alerta::create(array_merge($request->only('id_mufa','id_gravedad','observacion'),['id_mufa'=>$mufa->id,'id_gravedad'=>$request->id_gravedad]));
+        return redirect()->route('cable.mufas.index', [$cable, $mufa])->with('warning','Alerta de la mufa creada correctamente.');
+    }
 
     /**
      * Display the specified resource.
@@ -135,6 +147,11 @@ class AlertaController extends Controller
         return view('alertas.edit_detallecable', compact('detalles','alerta'),['gravedad'=>GravedadAlerta::all()]);
     }
 
+    public function edit_mufas(Request $request, Alerta $alerta)
+    {
+        $mufa = $alerta->mufa;
+        return view('alertas.edit_mufa', compact('mufa','alerta'),['gravedad'=>GravedadAlerta::all()]);
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -173,5 +190,12 @@ class AlertaController extends Controller
         $alerta = $detalles->alerta;
         $alerta->delete();
         return redirect()->route('cable.detallecable.index', [$detalles->cable,$detalles])->with('warning','Alerta del filamento '.$detalles->filamento.' eliminada correctamente.');
+    }
+    public function destroy_mufas(Mufa $mufa)
+    {
+        $cable = $mufa->cable;
+        $alerta = $mufa->alerta;
+        $alerta->delete();
+        return redirect()->route('cable.mufas.index', [$cable, $mufa])->with('warning','Alerta de la mufa eliminada correctamente.');
     }
 }

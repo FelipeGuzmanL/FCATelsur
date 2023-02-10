@@ -61,6 +61,10 @@
                                                                 <br> Tipo Cable: {{$alerta->detallecable->cable->tipocable->tipo}}
                                                             </td>
                                                         @endif
+                                                        @if ($alerta->id_olt == NULL && $alerta->id_detallecable == NULL && $alerta->id_mufa != NULL)
+                                                            <td>Mufa de Cable Troncal</td>
+                                                            <td></td>
+                                                        @endif
                                                         @if ($alerta->id_olt != NULL && $alerta->id_detallecable == NULL)
                                                             <td>{{$alerta->olt->msan->equiposmsan->sitio->abreviacion}} {{ $alerta->olt->msan->slot_msan}}
                                                             <br> OLT: {{$alerta->olt->olt}}
@@ -81,6 +85,9 @@
                                                         @endif
                                                         @if ($alerta->id_olt != NULL && $alerta->id_detallecable == NULL)
                                                             <td><a href="{{ route('equiposmsan.slots.olt.alertas.show', [$alerta->olt->msan->equiposmsan,$alerta->olt->msan,$alerta->olt,$alerta])}}">Ver</a></td>
+                                                        @endif
+                                                        @if ($alerta->id_olt == NULL && $alerta->id_detallecable == NULL && $alerta->id_mufa != NULL)
+                                                            <td><a href="{{ route('mufas.index_mufa', [$alerta])}}">Ver</a></td>
                                                         @endif
                                                     </tr>
                                                 @endforeach

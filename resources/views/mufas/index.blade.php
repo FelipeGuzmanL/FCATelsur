@@ -69,7 +69,7 @@
                                                     <td class="td-actions text-right">
                                                         @if ( $mufa->alerta == NULL)
                                                             @elseif ( $mufa->alerta != NULL)
-                                                                <a href="{{ route('mufas.edit_mufa', $mufa->alerta)}}" class="btn btn-warning"><i class="material-icons">warning</i></a>
+                                                                <a href="{{ route('mufas.index_mufa', $mufa->alerta)}}" class="btn btn-warning"><i class="material-icons">warning</i></a>
                                                                 <form action="{{ route('mufas.destroy_mufa', $mufa)}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Está seguro de eliminar esta alerta?')">
                                                                     @csrf
                                                                     @method('DELETE')

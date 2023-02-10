@@ -31,10 +31,15 @@ class AlertaController extends Controller
         $detalles = DetalleCable::find($id);
         return view('alertas.index_detallecable', compact('detalles','gravedad'));
     }
-    public function index_mufas(Mufa $mufa)
+    public function index_mufas(Alerta $alerta)
     {
         $gravedad = GravedadAlerta::all();
-        return view ('alertas.index_mufa', compact('mufa','gravedad'));
+        return view ('alertas.index_mufa', compact('alerta'));
+    }
+    public function create_mufas(Mufa $mufa)
+    {
+        $gravedad = GravedadAlerta::all();
+        return view ('alertas.create_mufa', compact('mufa','gravedad'));
     }
     public function index_todaslasalertas(Request $request)
     {
@@ -170,6 +175,13 @@ class AlertaController extends Controller
         $alerta = $detalles->alerta;
         $alerta->update(array_merge($request->only('id_gravedad','observacion'),['id_gravedad'=>$request->id_gravedad]));
         return redirect()->route('cables.show_cable', $alerta)->with('warning','Alerta del filamento '.$detalles->filamento.' actualizada correctamente.');
+    }
+
+    public function update_mufas(Request $request, Alerta $alerta)
+    {
+        $mufa = $alerta->mufa;
+        $alerta->update(array_merge($request->only('observacion','id_gravedad'),['id_gravedad'=>$request->id_gravedad]));
+        return redirect()->route('cable.mufas.index', $mufa)->with('warning','Alerta actualizada correctamente.');
     }
 
     /**

@@ -84,7 +84,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('cablestroncales', App\Http\Controllers\CablesTroncalesController::class);
     Route::resource('cable.mufas', App\Http\Controllers\MufasController::class);
     Route::get('cable/{alerta}/alertasmufasedit', [App\Http\Controllers\AlertaController::class, 'edit_mufas'])->name('mufas.edit_mufa');
-    Route::get('cable/{mufa}/alertasmufas', [App\Http\Controllers\AlertaController::class, 'index_mufas'])->name('mufas.index_mufa');
+    Route::put('cable/{alerta}/alertasmufasedit', [App\Http\Controllers\AlertaController::class, 'update_mufas'])->name('mufas.update_mufa');
+    Route::get('cable/{mufa}/alertasmufascreate', [App\Http\Controllers\AlertaController::class, 'create_mufas'])->name('mufas.create_mufa');
+    Route::get('cable/{alerta}/alertasmufas', [App\Http\Controllers\AlertaController::class, 'index_mufas'])->name('mufas.index_mufa');
     Route::post('cable/{mufa}/alertasmufas', [App\Http\Controllers\AlertaController::class, 'store_mufas'])->name('mufas.store_mufa');
     Route::delete('cable/{mufa}/alertasmufas', [App\Http\Controllers\AlertaController::class, 'destroy_mufas'])->name('mufas.destroy_mufa');
 

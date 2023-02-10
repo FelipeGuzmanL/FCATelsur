@@ -30,7 +30,7 @@ class CreateMufasTable extends Migration
             $table->date('fecha')->nullable();
         });
         Schema::table('alertas', function($table) {
-            $table->unsignedBigInteger('id_mufa');
+            $table->unsignedBigInteger('id_mufa')->nullable();
             $table->foreign('id_mufa')->references('id')->on('mufas');
         });
     }

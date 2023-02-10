@@ -5,9 +5,8 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <form action="{{route('mufas.update_mufa', $alerta)}}" method="post" class="form-horizontal" enctype="multipart/form-data">
+                <form action="{{route('mufas.store_mufa', $mufa)}}" method="post" class="form-horizontal" enctype="multipart/form-data">
                     @csrf
-                    @method('PUT')
                     <div class="card">
                         <div class="card-header card-header-primary">
                             <h4 class="card-tittle">Cable</h4>
@@ -22,7 +21,7 @@
                             <div class="row">
                                 <label for="observacion" class="col-sm-2 col-form-label">Observación</label>
                                 <div class="col-sm-7">
-                                    <textarea class="form-control" name="observacion" rows="10" placeholder="Observaciones sobre la alerta" required oninvalid="this.setCustomValidity('Ingrese una observación sobre la alerta')" oninput="this.setCustomValidity('')"/>{{ old('descrpcion', $alerta->observacion)}}</textarea>
+                                    <textarea class="form-control" name="observacion" rows="10" placeholder="Observaciones sobre la alerta" required oninvalid="this.setCustomValidity('Ingrese una observación sobre la alerta')" oninput="this.setCustomValidity('')"/>{{ old('descrpcion')}}</textarea>
                                     @if ($errors->has('observacion'))
                                         <span class="error text-danger" for="input-observacion">{{$errors -> first('observacion')}}</span>
                                     @endif
@@ -34,14 +33,14 @@
                                     <div class="form-group">
                                         <select class="form-control micoso" data-style="btn btn-link" id="micoso" name="id_gravedad">
                                         @foreach ( $gravedad as $grave )
-                                                <option value="{{ $grave->id }}" {{$grave->id == $mufa->alerta->id_gravedad ? 'selected' : ''}}>{{ $grave->gravedad }}</option>
+                                                <option value="{{ $grave->id }}">{{ $grave->gravedad }}</option>
                                         @endforeach
                                         </select>
                                       </div>
                                 </div>
                             </div>
                         <div class="card-footer ml-auto mr-auto">
-                            <button type="submit" class="btn btn-warning">{{ __('Actualizar Alerta') }}</button>
+                            <button type="submit" class="btn btn-warning">{{ __('Generar Alerta') }}</button>
                         </div>
                     </div>
                 </form>

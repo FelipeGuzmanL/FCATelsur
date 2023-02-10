@@ -15,7 +15,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 text-right">
-                                    <a href="{{ route('mufas.index_mufa', $mufa)}}" class="btn btn-warning">Generar Alerta</a>
+                                    <a href="{{ route('mufas.create_mufa', $mufa)}}" class="btn btn-warning">Generar Alerta</a>
                                     <a href="{{ url()->previous() }}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>
                                 </div>
                             </div>

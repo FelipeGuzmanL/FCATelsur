@@ -47,4 +47,8 @@ class Cable extends Model
     {
         return $this->hasMany(Mufa::class, 'id_cable');
     }
+    public function etiqueta()
+    {
+        return $this->hasMany(Etiquetas::class, 'id_cable');
+    }
 }

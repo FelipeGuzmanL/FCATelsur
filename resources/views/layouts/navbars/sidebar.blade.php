@@ -71,6 +71,12 @@
             <p>{{ __('Mantenciones') }}</p>
         </a>
       </li>
+      <li class="nav-item{{ $activePage == 'etiquetas' ? ' active' : '' }}">
+        <a class="nav-link" href="{{ route('etiquetas.index')}}">
+          <i class="material-icons">confirmation_number</i>
+            <p>{{ __('Etiquetas') }}</p>
+        </a>
+      </li>
       <!--li class="nav-item{{ $activePage == 'table' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('table') }}">
           <i class="material-icons">content_paste</i>

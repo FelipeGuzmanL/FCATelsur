@@ -89,6 +89,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('cable/{alerta}/alertasmufas', [App\Http\Controllers\AlertaController::class, 'index_mufas'])->name('mufas.index_mufa');
     Route::post('cable/{mufa}/alertasmufas', [App\Http\Controllers\AlertaController::class, 'store_mufas'])->name('mufas.store_mufa');
     Route::delete('cable/{mufa}/alertasmufas', [App\Http\Controllers\AlertaController::class, 'destroy_mufas'])->name('mufas.destroy_mufa');
+	Route::resource('etiquetas',App\Http\Controllers\EtiquetasController::class);
 
 });
 

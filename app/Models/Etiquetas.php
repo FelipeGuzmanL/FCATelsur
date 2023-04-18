@@ -14,6 +14,7 @@ class Etiquetas extends Model
     protected $fillable = [
         'id_cable',
         'etiqueta',
+        'filam',
     ];
 
     public function cable()

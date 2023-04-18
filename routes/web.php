@@ -90,6 +90,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('cable/{mufa}/alertasmufas', [App\Http\Controllers\AlertaController::class, 'store_mufas'])->name('mufas.store_mufa');
     Route::delete('cable/{mufa}/alertasmufas', [App\Http\Controllers\AlertaController::class, 'destroy_mufas'])->name('mufas.destroy_mufa');
 	Route::resource('etiquetas',App\Http\Controllers\EtiquetasController::class);
-
+    Route::get('etiquetas/{etiqueta}/show', [App\Http\Controllers\EtiquetasController::class, 'show_filamento'])->name('etiquetas.show_filamento');
 });
 

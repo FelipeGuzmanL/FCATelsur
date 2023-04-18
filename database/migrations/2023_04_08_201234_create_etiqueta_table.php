@@ -18,6 +18,7 @@ class CreateEtiquetaTable extends Migration
             $table->timestamps();
             $table->text('etiqueta');
             $table->unsignedBigInteger('id_cable');
+            $table->integer('filam')->nullable();
             $table->foreign('id_cable')->references('id')->on('cable');
         });
     }

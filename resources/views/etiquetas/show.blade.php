@@ -45,6 +45,7 @@
                                         <table class="table">
                                             <thead class="text-primary">
                                                 <th>Cable</th>
+                                                <th>Filam</th>
                                                 <th>Sitio</th>
                                                 <th>Etiqueta</th>
                                                 <th class="text-right">Acciones</th>
@@ -52,6 +53,7 @@
                                             <tbody>
                                                     <tr>
                                                         <td><a href="{{ route('cable.detallecable.index', $etiqueta->cable->id)}}">{{ $etiqueta->cable->nombre_cable}}</a></td>
+                                                        <td>{{ $etiqueta->filam}}</td>
                                                         <td>{{ $etiqueta->cable->sitio->abreviacion}}</td>
                                                         <td>{{ $etiqueta->etiqueta}}</td>
                                                         <td class="td-actions text-right">

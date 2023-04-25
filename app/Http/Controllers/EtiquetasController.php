@@ -7,6 +7,10 @@ use App\Models\DetalleCable;
 use App\Models\Etiquetas;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\EtiquetasExport;
+use League\Csv\Writer;
+
 
 class EtiquetasController extends Controller
 {
@@ -78,6 +82,24 @@ class EtiquetasController extends Controller
     {
         $cables = $etiqueta->cable;
         return view('etiquetas.show', compact('etiqueta','cables'));
+    }
+
+    public function export()
+    {
+        $etiquetas = Etiquetas::all();
+        $csv = Writer::createFromString('');
+        $csv->insertOne(['ID', 'Etiqueta', 'Nombre del cable', 'Filamento']);
+
+        foreach ($etiquetas as $etiqueta) {
+            $csv->insertOne([
+                $etiqueta->id,
+                $etiqueta->etiqueta,
+                $etiqueta->cable->nombre_cable,
+                $etiqueta->filam
+            ]);
+        }
+
+        $csv->output('etiquetas.csv');
     }
 
     public function show_filamento(Etiquetas $etiqueta)

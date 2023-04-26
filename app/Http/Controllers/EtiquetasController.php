@@ -59,16 +59,18 @@ class EtiquetasController extends Controller
     public function store(Request $request)
     {
         $cable = Cable::find($request->id_cable);
-        $verificar = Etiquetas::where('filam',$request->filam)->exists();
-        if ($cable->cant_filam < $request->filam)
-        {
+        $verificar = Etiquetas::where('id_cable', $request->id_cable)->where('filam', $request->filam)->exists();
+
+        if ($cable->cant_filam < $request->filam) {
             return redirect()->route('etiquetas.create')->with('danger','Numero de filamento invalido.');
         }
-        if ($verificar == true)
-        {
+
+        if ($verificar == true) {
             return redirect()->route('etiquetas.create')->with('danger','Filamento ya etiquetado anteriormente.');
         }
+
         $etiquetas = Etiquetas::create(array_merge($request->only('etiqueta','id_cable','filam'),['id_cable'=>$request->id_cable]));
+
         return redirect()->route('etiquetas.index')->with('success','Etiqueta creada correctamente');
     }
 

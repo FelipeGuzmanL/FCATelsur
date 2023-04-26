@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cable;
+use App\Models\DetalleCable;
 use App\Models\Etiquetas;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\EtiquetasExport;
+use League\Csv\Writer;
+
 
 class EtiquetasController extends Controller
 {
@@ -13,8 +19,22 @@ class EtiquetasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request) {
+            $texto = trim($request->get('texto'));
+            $etiquetas = Etiquetas::WhereRaw('UPPER(etiqueta) LIKE ?', ['%' . strtoupper($texto) . '%'])
+            ->orWhereHas('cable', function (Builder $query) use ($texto){
+                $query->whereRaw('UPPER(nombre_cable) LIKE ?', ['%' . strtoupper($texto) . '%'])
+                ->orWhereHas('sitio', function (Builder $query) use ($texto){
+                    $query->whereRaw('UPPER(abreviacion) LIKE ?', ['%' . strtoupper($texto) . '%']);
+                });
+            })
+            ->orderBy('id','asc')
+            ->paginate(25);
+
+            return view('etiquetas.index', ['etiquetas' => $etiquetas, 'texto' => $texto]);
+        }
         $etiquetas = Etiquetas::all();
         return view('etiquetas.index', compact('etiquetas'));
     }
@@ -38,8 +58,20 @@ class EtiquetasController extends Controller
      */
     public function store(Request $request)
     {
-        $etiquetas = Etiquetas::create(array_merge($request->only('etiqueta','id_cable'),['id_cable'=>$request->id_cable]));
-        return redirect()->route('etiquetas.index')->with('success','etiqueta creada correctamente');
+        $cable = Cable::find($request->id_cable);
+        $verificar = Etiquetas::where('id_cable', $request->id_cable)->where('filam', $request->filam)->exists();
+
+        if ($cable->cant_filam < $request->filam) {
+            return redirect()->route('etiquetas.create')->with('danger','Numero de filamento invalido.');
+        }
+
+        if ($verificar == true) {
+            return redirect()->route('etiquetas.create')->with('danger','Filamento ya etiquetado anteriormente.');
+        }
+
+        $etiquetas = Etiquetas::create(array_merge($request->only('etiqueta','id_cable','filam'),['id_cable'=>$request->id_cable]));
+
+        return redirect()->route('etiquetas.index')->with('success','Etiqueta creada correctamente');
     }
 
     /**
@@ -48,9 +80,35 @@ class EtiquetasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Etiquetas $etiqueta)
     {
-        //
+        $cables = $etiqueta->cable;
+        return view('etiquetas.show', compact('etiqueta','cables'));
+    }
+
+    public function export()
+    {
+        $etiquetas = Etiquetas::all();
+        $csv = Writer::createFromString('');
+        $csv->insertOne(['ID', 'Etiqueta', 'Nombre del cable', 'Filamento']);
+
+        foreach ($etiquetas as $etiqueta) {
+            $csv->insertOne([
+                $etiqueta->id,
+                $etiqueta->etiqueta,
+                $etiqueta->cable->nombre_cable,
+                $etiqueta->filam
+            ]);
+        }
+
+        $csv->output('etiquetas.csv');
+    }
+
+    public function show_filamento(Etiquetas $etiqueta)
+    {
+        $id_cable = $etiqueta->cable->id;
+        $detalle = DetalleCable::where('id_cable', $id_cable)->where('filamento',$etiqueta->filam)->get();
+        return view('etiquetas.show_filamento', compact('etiqueta','detalle'));
     }
 
     /**
@@ -74,7 +132,7 @@ class EtiquetasController extends Controller
      */
     public function update(Request $request, Etiquetas $etiqueta)
     {
-        $etiqueta->update(array_merge($request->only('etiqueta','id_cable'),['id_cable'=>$request->id_cable]));
+        $etiqueta->update(array_merge($request->only('etiqueta','id_cable','filam'),['id_cable'=>$request->id_cable]));
         return redirect()->route('etiquetas.index')->with('success','etiqueta actualizada correctamente');
     }
 

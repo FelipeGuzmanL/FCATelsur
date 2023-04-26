@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EtiquetasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,6 +91,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('cable/{mufa}/alertasmufas', [App\Http\Controllers\AlertaController::class, 'store_mufas'])->name('mufas.store_mufa');
     Route::delete('cable/{mufa}/alertasmufas', [App\Http\Controllers\AlertaController::class, 'destroy_mufas'])->name('mufas.destroy_mufa');
 	Route::resource('etiquetas',App\Http\Controllers\EtiquetasController::class);
+    Route::get('etiquetas/{etiqueta}/show', [App\Http\Controllers\EtiquetasController::class, 'show_filamento'])->name('etiquetas.show_filamento');
+    //Route::get('etiquetas/export', [EtiquetasController::class, 'export'])->name('etiquetas.export');
+    //Route::get('/etiquetas/export', 'EtiquetasController@export')->name('etiquetas.export');
+    //Route::get('etiquetas/export', 'App\Http\Controllers\EtiquetasController@export')->name('etiquetas.export');
+    Route::get('/exportar-etiquetas', [EtiquetasController::class, 'export'])->name('etiquetas.export');
+
+
 
 });
 

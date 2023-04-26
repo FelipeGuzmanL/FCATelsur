@@ -54,6 +54,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('detallecable', \App\Models\DetalleCable::class);
         Route::model('mantenciones', \App\Models\MantencionMsan::class);
         Route::model('mufas', \App\Models\Mufa::class);
+        Route::model('etiquetas', \App\Models\Etiquetas::class);
     }
 
     /**

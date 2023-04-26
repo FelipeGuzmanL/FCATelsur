@@ -19,6 +19,13 @@
                                     @endif
                                     <div class="row">
                                         <div class="col-12 text-right">
+                                            <form action="{{ route('cables.destroy_cable', $alerta->detallecable)}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Está seguro de eliminar esta alerta?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-danger" type="submit" rel="tooltip">
+                                                    Eliminar Alerta
+                                                </button>
+                                            </form>
                                             <a href="{{ route('cables.edit_cable', $alerta->detallecable)}}" class="btn btn-warning">Editar Alerta</a>
                                             <!--a href="{{ route('cable.detallecable.index', [$alerta->detallecable->cable,$alerta->detallecable])}}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a-->
                                             <a href="{{ url()->previous()}}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>

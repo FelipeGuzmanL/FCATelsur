@@ -100,6 +100,11 @@
                                                             @elseif ( $detalle->gmaps != NULL)
                                                                 <a href="{{ $detalle->gmaps }}" target="_blank" class="btn btn-success"><i class="material-icons">location_on</i></a>
                                                             @endif
+                                                            @foreach ( $detalle->cable->etiqueta as $etiqueta)
+                                                                @if ($etiqueta->filam == $detalle->filamento)
+                                                                    <a href="{{ route('etiquetas.show', $etiqueta->id)}}" class="btn btn-success"><i class="material-icons">confirmation_number</i></a>
+                                                                @endif
+                                                            @endforeach
                                                             <a href="{{ route('cable.detallecable.edit', [$cable,$detalle]) }}" class="btn btn-primary"><i class="material-icons">edit</i></a>
                                                             <form action="{{route('cable.detallecable.destroy', [$cable,$detalle])}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Estás seguro?')">
                                                             @csrf

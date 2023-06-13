@@ -91,6 +91,19 @@
                                                     @endif
                                                     <td>{{ $olt->updated_at}} <br> por {{ $olt->usuario->name}}</td>
                                                     <td class="td-actions text-right">
+                                                        @if($olt->etiquetado == 0 && $olt->sitio_fca && $olt->spl && $olt->filam != NULL)
+                                                            <a href="{{ route('olt.crearetiqueta', ['equipo' => $equipo, 'slot' => $slot, 'olt' => $olt]) }}" class="btn btn-success">Crear Etiqueta</a>
+                                                        @endif
+                                                        @foreach ($olt->cable->etiqueta as $etiqueta)
+                                                            @if ($olt->etiquetado == 1 && $olt->id == $etiqueta->id_olt && ($etiqueta->id_cable == $olt->cable->id && $etiqueta->filam == $olt->filam && $etiqueta->spl == $olt->spl && $etiqueta->sitio_fca == $olt->sitio_fca))
+                                                                <a href="{{ route('etiquetas.show', $etiqueta->id)}}" class="btn btn-success"><i class="material-icons">confirmation_number</i></a>
+                                                            @endif
+                                                            @if ($olt->etiquetado == 1 && $olt->id == $etiqueta->id_olt && ($etiqueta->id_cable != $olt->cable->id || $etiqueta->filam != $olt->filam || $etiqueta->spl != $olt->spl || $etiqueta->sitio_fca != $olt->sitio_fca) && ($olt->cable->id && $olt->filam && $olt->spl && $olt->sitio_fca != NULL))
+                                                                <a href="{{ route('olt.actualizaretiqueta', ['equipo' => $equipo, 'slot' => $slot, 'olt' => $olt, 'etiquetas'=>$etiqueta->id]) }}" class="btn btn-warning">Actualizar Etiqueta</a>
+                                                                @break
+                                                            @endif
+                                                        @endforeach
+
                                                         @if ( $olt->link_sitio_fca == NULL)
                                                         @elseif ( $olt->link_sitio_fca != NULL)
                                                             <a href="{{ $olt->link_sitio_fca }}" target="_blank" class="btn btn-success"><i class="material-icons">location_on</i></a>

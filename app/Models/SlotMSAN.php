@@ -22,6 +22,7 @@ class SlotMSAN extends Model
         'olt',
         'spl',
         'filam',
+        'etiquetado',
     ];
 
     public function msan()
@@ -51,5 +52,9 @@ class SlotMSAN extends Model
     public function alerta()
     {
         return $this->hasOne(Alerta::class, 'id_olt');
+    }
+    public function etiqueta()
+    {
+        return $this->hasOne(Etiquetas::class, 'id_olt');
     }
 }

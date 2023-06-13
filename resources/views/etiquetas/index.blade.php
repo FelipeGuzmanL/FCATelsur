@@ -38,7 +38,7 @@
                                     @endif
                                     <div class="row">
                                         <div class="col-12 text-right">
-                                            <a href="{{ route('etiquetas.create')}}" class="btn btn-primary">Agregar Etiqueta</a>
+                                            <!--a href="{{ route('etiquetas.create')}}" class="btn btn-primary">Agregar Etiqueta</a*-->
                                             <a href="{{ route('etiquetas.export')}}" class="btn btn-success">Exportar a Excel</a>
                                         </div>
                                     </div>
@@ -57,13 +57,19 @@
                                                         <td><a href="{{ route('cable.detallecable.index', $etiqueta->cable->id)}}">{{ $etiqueta->cable->nombre_cable}}</a></td>
                                                         <td><a href="{{ route('etiquetas.show_filamento', $etiqueta)}}">{{ $etiqueta->filam}}</a></td>
                                                         <td>{{ $etiqueta->cable->sitio->abreviacion}}</td>
-                                                        <td>{{ $etiqueta->etiqueta}}</td>
+                                                        <td>{{ $etiqueta->ladoMSANLEFT.' '.$etiqueta->ladoMSANRIGHT}}</td>
                                                         <td class="td-actions text-right">
+                                                            <form action="{{ route('imprimir', $etiqueta) }}" method="POST" target="_blank" style="display: inline-block">
+                                                                @csrf
+                                                                <button type="submit" class="btn btn-primary">
+                                                                    <i class="material-icons">print</i>
+                                                                </button>
+                                                            </form>
                                                             @if ($etiqueta->cable->sitio->url == NULL)
                                                             @elseif ($etiqueta->cable->sitio->url != NULL)
                                                                 <a href="{{$etiqueta->cable->sitio->url }}" target="_blank" class="btn btn-success"><i class="material-icons">location_on</i></a>
                                                             @endif
-                                                            <a href="{{ route('etiquetas.edit', $etiqueta->id)}}" class="btn btn-primary"><i class="material-icons">edit</i></a>
+                                                            <!--a href="{{ route('etiquetas.edit', $etiqueta->id)}}" class="btn btn-primary"><i class="material-icons">edit</i></a-->
                                                             <form action="{{ route('etiquetas.destroy', $etiqueta->id)}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Estás seguro?')">
                                                             @csrf
                                                             @method('DELETE')

@@ -92,12 +92,15 @@ class EtiquetasController extends Controller
     {
         $etiquetas = Etiquetas::all();
         $csv = Writer::createFromString('');
-        $csv->insertOne(['ID', 'Etiqueta', 'Nombre del cable', 'Filamento']);
+        $csv->insertOne(['ID', 'ladoMSANLEFT','ladoMSANRIGHT','ladocabeceraLEFT','ladocabeceraRIGHT', 'Nombre del cable', 'Filamento']);
 
         foreach ($etiquetas as $etiqueta) {
             $csv->insertOne([
                 $etiqueta->id,
-                $etiqueta->etiqueta,
+                $etiqueta->ladoMSANLEFT,
+                $etiqueta->ladoMSANRIGHT,
+                $etiqueta->ladocabeceraLEFT,
+                $etiqueta->ladocabeceraRIGHT,
                 $etiqueta->cable->nombre_cable,
                 $etiqueta->filam
             ]);

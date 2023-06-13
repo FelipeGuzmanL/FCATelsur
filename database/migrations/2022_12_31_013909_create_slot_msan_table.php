@@ -31,6 +31,7 @@ class CreateSlotMsanTable extends Migration
             $table->integer('spl')->nullable();
             $table->integer('filam')->nullable();
             $table->string('estado')->nullable();
+            $table->integer('etiquetado')->nullable();
         });
     }
 

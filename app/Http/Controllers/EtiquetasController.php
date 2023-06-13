@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\EtiquetasExport;
+use App\Models\SlotMSAN;
 use League\Csv\Writer;
 
 
@@ -23,7 +24,8 @@ class EtiquetasController extends Controller
     {
         if ($request) {
             $texto = trim($request->get('texto'));
-            $etiquetas = Etiquetas::WhereRaw('UPPER(etiqueta) LIKE ?', ['%' . strtoupper($texto) . '%'])
+            $etiquetas = Etiquetas::WhereRaw('UPPER(ladoMSANLEFT) LIKE ?', ['%' . strtoupper($texto) . '%'])
+            ->orWhereRaw('UPPER(ladoMSANRIGHT) LIKE ?', ['%' . strtoupper($texto) . '%'])
             ->orWhereHas('cable', function (Builder $query) use ($texto){
                 $query->whereRaw('UPPER(nombre_cable) LIKE ?', ['%' . strtoupper($texto) . '%'])
                 ->orWhereHas('sitio', function (Builder $query) use ($texto){
@@ -69,7 +71,7 @@ class EtiquetasController extends Controller
             return redirect()->route('etiquetas.create')->with('danger','Filamento ya etiquetado anteriormente.');
         }
 
-        $etiquetas = Etiquetas::create(array_merge($request->only('etiqueta','id_cable','filam'),['id_cable'=>$request->id_cable]));
+        $etiquetas = Etiquetas::create(array_merge($request->only('etiqueta','id_cable','filam','spl','sitio_fca'),['id_cable'=>$request->id_cable]));
 
         return redirect()->route('etiquetas.index')->with('success','Etiqueta creada correctamente');
     }
@@ -142,8 +144,10 @@ class EtiquetasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Etiquetas $etiqueta)
+    public function destroy(Etiquetas $etiqueta, Request $request)
     {
+        $olt = $etiqueta->olt;
+        $olt->update(array_merge($request->only('etiquetado'),['etiquetado'=>0]));
         $etiqueta->delete();
         return redirect()->route('etiquetas.index')->with('warning','Etiqueta se ha eliminado correctamente.');
     }

@@ -16,8 +16,8 @@ class CreateCruzadaTable extends Migration
         Schema::create('cruzada', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('id_fil1');
-            $table->unsignedBigInteger('id_fil2');
+            $table->unsignedBigInteger('id_fil1')->nullable();
+            $table->unsignedBigInteger('id_fil2')->nullable();
             $table->foreign('id_fil1')->references('id')->on('detallecable');
             $table->foreign('id_fil2')->references('id')->on('detallecable');
         });

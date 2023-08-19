@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <form action="{{route('cable.detallecable.update', [$cable,$detalles])}}" method="post" class="form-horizontal" enctype="multipart/form-data">
+                <form action="{{route('cable.detallecable.update', ['cable'=>$cable,'detallecable'=>$detalles])}}" method="post" class="form-horizontal" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="card">
@@ -61,6 +61,37 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <label for="id_cable" class="col-sm-2 col-form-label">Cruzada</label>
+                                <label for="id_cable" class="col-sm-1 col-form-label">Cable</label>
+                                <div class="col-sm-6 col-md-2">
+                                    <div class="form-group">
+                                        <select class="form-control sitios" data-style="btn btn-link" id="sitios" name="id_cable">
+                                            @foreach ($cables as $cable)
+                                            @if ($cable->id == "1")
+                                                <option value="{{ $cable->id }}" >{{ $cable->nombre_cable }}</option>
+                                            @elseif ($cable->id > "1")
+                                                <option value="{{ $cable->id }}" >{{ $cable->nombre_cable }} - {{ $cable->sitio->abreviacion }} - {{ $cable->tipocable->tipo}}</option>
+                                            @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <label for="id_filamento" class="col-sm-1 col-form-label">Filamento</label>
+                                <div class="col-sm-6 col-md-3">
+                                    <div class="form-group">
+                                        <select class="form-control sitios" data-style="btn btn-link" id="sitios2" name="id_filamento" disabled>
+                                            @foreach ($filamentos as $detalle)
+                                                <option value="{{ $detalle->id }}" data-cable="{{ $detalle->id_cable }}">
+                                                    {{ $detalle->filamento }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!--div class="row">
                                 <label for="cruzada" class="col-sm-2 col-form-label">Cruzada</label>
                                 <div class="col-sm-7">
                                     <input type="text" class="form-control" name="cruzada" placeholder="Cruzada" value="{{old('cruzada', $detalles->cruzada)}}">
@@ -77,7 +108,7 @@
                                         <span class="error text-danger" for="input-observaciones">{{$errors -> first('observaciones')}}</span>
                                     @endif
                                 </div>
-                            </div>
+                            </div-->
                             <!--div class="row">
                                 <label for="gmaps" class="col-sm-2 col-form-label">Link GMaps</label>
                                 <div class="col-sm-7">
@@ -106,18 +137,48 @@
                 </form>
             </div>
             <script>
-                $("#sitios").select2({
+                $(document).ready(function() {
+                    $("#sitios").select2();
+                    $("#sitios2").select2();
+                    $("#tipocables").select2();
+
+                    $('#sitios').on('change', function () {
+                        var cableId = $(this).val();
+
+                        $.ajax({
+                            url: "{{ route('cable.detallecable.getfilamentosbycable') }}",
+                            method: "GET",
+                            data: { cable_id: cableId },
+                            success: function (response) {
+                                $('#sitios2').empty();
+                                $.each(response, function (index, filamento) {
+                                    $('#sitios2').append($('<option>', {
+                                        value: parseInt(filamento.id), // Convertir el ID a un número
+                                        text: filamento.text
+                                    }));
+                                });
+
+                                // Habilitar o deshabilitar el select según si hay opciones disponibles
+                                if (cableId === "1") {
+                                    $('#sitios2').prop('disabled', true);
+                                } else {
+                                    $('#sitios2').prop('disabled', false);
+                                }
+                            },
+                            error: function () {
+                                // Manejar errores si es necesario
+                            }
+                        });
+                    });
                 });
-            </script>
-            <script>
-                $("#tipocables").select2({
-                });
-            </script>
-            <style>
-                .select2 {
-                    width: 100% !important;
-                }
-            </style>
+                </script>
+
+
+
+
+
+
+
         </div>
     </div>
 </div>

@@ -99,6 +99,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('crearetiqueta/{equipo}/{slot}/{olt}', [App\Http\Controllers\SlotMSANController::class, 'crear_etiqueta'])->name('olt.crearetiqueta');
     Route::get('actualizaretiqueta/{equipo}/{slot}/{olt}/{etiquetas}', [App\Http\Controllers\SlotMSANController::class, 'actualizar_etiqueta'])->name('olt.actualizaretiqueta');
     Route::post('/imprimir/{etiqueta}', [App\Http\Controllers\SlotMSANController::class, 'imprimir'])->name('imprimir');
+    Route::get('cable/detallecable/getfilamentosbycable', 'App\Http\Controllers\DetalleCableController@getFilamentosByCable')->name('cable.detallecable.getfilamentosbycable');
+
 
 
 

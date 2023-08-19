@@ -73,7 +73,14 @@
                                                         @endphp
                                                             <td><a href="{{ route('equiposmsan.slots.olt.index', [$equipo,$slot])}}">{{ $detalle->ocupacion}}</a></td>
                                                         @endif
-                                                        <td>{{ $detalle->cruzada}}</td>
+                                                        <td>
+                                                            @if ($detalle->cruzadaFil1)
+                                                                FIL {{ $detalle->cruzadaFil1->detalleFil2->filamento }} - {{ $detalle->cruzadaFil1->detalleFil2->cable->nombre_cable}}<br>
+                                                            @endif
+                                                            @if ($detalle->cruzadaFil2)
+                                                                FIL {{ $detalle->cruzadaFil2->detalleFil1->filamento}} - {{ $detalle->cruzadaFil2->detalleFil1->cable->nombre_cable }}<br>
+                                                            @endif
+                                                        </td>
                                                         <td>{{ $detalle->observaciones}}</td>
                                                         @if ($detalle->estado->id == "1")
                                                             <td class="text-success">{{ $detalle->estado->estado}}</td>

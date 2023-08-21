@@ -36,6 +36,11 @@
                                             {{ session('warning') }}
                                         </div>
                                     @endif
+                                    @if (session('danger'))
+                                        <div class="alert alert-danger text-center" role="danger">
+                                            {{ session('danger') }}
+                                        </div>
+                                    @endif
                                     <div class="row">
                                         <div class="col-12 text-right">
                                             <a href="{{ route('cable.index') }}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>

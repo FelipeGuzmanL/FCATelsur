@@ -55,7 +55,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('mantenciones', \App\Models\MantencionMsan::class);
         Route::model('mufas', \App\Models\Mufa::class);
         Route::model('etiquetas', \App\Models\Etiquetas::class);
-        Route::model('cruzadas', \App\Models\Cruzada::class);
+        Route::model('cruzadas', \App\Models\Cruzada1::class);
     }
 
     /**

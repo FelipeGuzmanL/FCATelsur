@@ -45,14 +45,23 @@ class DetalleCable extends Model
     {
         return $this->hasOne(Alerta::class, 'id_detallecable');
     }
-    public function cruzadaFil1()
+    public function cruzada1Fil1()
     {
-        return $this->hasOne(Cruzada::class, 'id_fil1', 'id');
+        return $this->hasOne(Cruzada1::class, 'id_fil1', 'id');
     }
 
-    public function cruzadaFil2()
+    public function cruzada1Fil2()
     {
-        return $this->hasOne(Cruzada::class, 'id_fil2', 'id');
+        return $this->hasOne(Cruzada1::class, 'id_fil2', 'id');
+    }
+    public function cruzada2Fil1()
+    {
+        return $this->hasOne(Cruzada2::class, 'id_fil1', 'id');
+    }
+
+    public function cruzada2Fil2()
+    {
+        return $this->hasOne(Cruzada2::class, 'id_fil2', 'id');
     }
 
 }

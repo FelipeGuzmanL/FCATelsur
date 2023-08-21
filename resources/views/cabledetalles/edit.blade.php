@@ -19,15 +19,6 @@
                                     <a href="{{ url()->previous() }}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>
                                 </div>
                             </div>
-                            <!--div class="row">
-                                <label for="filamento" class="col-sm-2 col-form-label">Filamento</label>
-                                <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="filamento" placeholder="Número del filamento" value="{{old('filamento', $detalles->filamento)}}" required oninvalid="this.setCustomValidity('Ingrese numero del filamento')" oninput="this.setCustomValidity('')"/>
-                                    @if ($errors->has('filamento'))
-                                        <span class="error text-danger" for="input-filamento">{{$errors -> first('filamento')}}</span>
-                                    @endif
-                                </div>
-                            </div-->
                             <div class="row">
                                 <label for="direccion" class="col-sm-2 col-form-label">DIR</label>
                                 <div class="col-sm-7">
@@ -61,7 +52,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label for="id_cable" class="col-sm-2 col-form-label">Cruzada</label>
+                                <label for="id_cable" class="col-sm-2 col-form-label">Cruzada 1</label>
                                 <label for="id_cable" class="col-sm-1 col-form-label">Cable</label>
                                 <div class="col-sm-6 col-md-2">
                                     <div class="form-group">
@@ -70,7 +61,11 @@
                                             @if ($cable->id == "1")
                                                 <option value="{{ $cable->id }}" >{{ $cable->nombre_cable }}</option>
                                             @elseif ($cable->id > "1")
+                                            @if ($detalles->cruzada1Fil1 != NULL)
+                                                <option value="{{ $cable->id }}" {{$detalles->cruzada1Fil1->detalleFil2->id_cable == $cable->id ? 'selected' : ''}}>{{ $cable->nombre_cable }} - {{ $cable->sitio->abreviacion }} - {{ $cable->tipocable->tipo}}</option>
+                                            @else
                                                 <option value="{{ $cable->id }}" >{{ $cable->nombre_cable }} - {{ $cable->sitio->abreviacion }} - {{ $cable->tipocable->tipo}}</option>
+                                            @endif
                                             @endif
                                             @endforeach
                                         </select>
@@ -79,25 +74,61 @@
                                 <label for="id_filamento" class="col-sm-1 col-form-label">Filamento</label>
                                 <div class="col-sm-6 col-md-3">
                                     <div class="form-group">
-                                        <select class="form-control sitios" data-style="btn btn-link" id="sitios2" name="id_filamento" disabled>
+                                        <select class="form-control sitios" data-style="btn btn-link" id="sitios2" name="id_filamento">
+                                            <option value="0">Sin Filamento</option>
                                             @foreach ($filamentos as $detalle)
-                                                <option value="{{ $detalle->id }}" data-cable="{{ $detalle->id_cable }}">
-                                                    {{ $detalle->filamento }}
-                                                </option>
+                                                @if ($detalles->cruzada1Fil1 != NULL)
+                                                    <option value="{{ $detalle->id }}" data-cable="{{ $detalle->id_cable }}" {{$detalles->cruzada1Fil1->id_fil2 == $detalle->id ? 'selected' : ''}}>
+                                                        {{ $detalle->filamento }} - {{ $detalle->servicio}}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $detalle->id }}" data-cable="{{ $detalle->id_cable }}">
+                                                        {{ $detalle->filamento }}
+                                                    </option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
                             </div>
-
-
-                            <!--div class="row">
-                                <label for="cruzada" class="col-sm-2 col-form-label">Cruzada</label>
-                                <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="cruzada" placeholder="Cruzada" value="{{old('cruzada', $detalles->cruzada)}}">
-                                    @if ($errors->has('cruzada'))
-                                        <span class="error text-danger" for="input-cruzada">{{$errors -> first('cruzada')}}</span>
-                                    @endif
+                            <div class="row">
+                                <label for="id_cable2" class="col-sm-2 col-form-label">Cruzada 2</label>
+                                <label for="id_cable2" class="col-sm-1 col-form-label">Cable</label>
+                                <div class="col-sm-6 col-md-2">
+                                    <div class="form-group">
+                                        <select class="form-control sitios" data-style="btn btn-link" id="sitios3" name="id_cable2">
+                                            @foreach ($cables as $cable)
+                                            @if ($cable->id == "1")
+                                                <option value="{{ $cable->id }}" >{{ $cable->nombre_cable }}</option>
+                                            @elseif ($cable->id > "1")
+                                                @if ($detalles->cruzada1Fil2 != NULL)
+                                                    <option value="{{ $cable->id }}" {{$detalles->cruzada1Fil2->detalleFil1->id_cable == $cable->id ? 'selected' : ''}}>{{ $cable->nombre_cable }} - {{ $cable->sitio->abreviacion }} - {{ $cable->tipocable->tipo}}</option>
+                                                @else
+                                                    <option value="{{ $cable->id }}" >{{ $cable->nombre_cable }} - {{ $cable->sitio->abreviacion }} - {{ $cable->tipocable->tipo}}</option>
+                                                @endif
+                                            @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <label for="id_filamento2" class="col-sm-1 col-form-label">Filamento</label>
+                                <div class="col-sm-6 col-md-3">
+                                    <div class="form-group">
+                                        <select class="form-control sitios" data-style="btn btn-link" id="sitios4" name="id_filamento2">
+                                            <option value="0">Sin Filamento</option>
+                                            @foreach ($filamentos2 as $detalle)
+                                                @if ($detalles->cruzada1Fil2 != NULL)
+                                                    <option value="{{ $detalle->id }}" data-cable="{{ $detalle->id_cable }}" {{$detalles->cruzada1Fil2->id_fil1 == $detalle->id ? 'selected' : ''}}>
+                                                        {{ $detalle->filamento }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $detalle->id }}" data-cable="{{ $detalle->id_cable }}" >
+                                                        {{ $detalle->filamento }}
+                                                    </option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -108,8 +139,8 @@
                                         <span class="error text-danger" for="input-observaciones">{{$errors -> first('observaciones')}}</span>
                                     @endif
                                 </div>
-                            </div-->
-                            <!--div class="row">
+                            </div>
+                            <div class="row">
                                 <label for="gmaps" class="col-sm-2 col-form-label">Link GMaps</label>
                                 <div class="col-sm-7">
                                     <input type="text" class="form-control" name="gmaps" placeholder="Link Ubicación en GMaps (opcional)" value="{{old('gmaps', $detalles->gmaps)}}">
@@ -117,7 +148,7 @@
                                         <span class="error text-danger" for="input-gmaps">{{$errors -> first('gmaps')}}</span>
                                     @endif
                                 </div>
-                            </div-->
+                            </div>
                             <div class="row">
                                 <label for="id_estado" class="col-sm-2 col-form-label">Estado</label>
                                 <div class="col-sm-7">
@@ -136,49 +167,89 @@
                     </div>
                 </form>
             </div>
+            <div id="cableStatus"></div>
+            <script>
+                /*document.addEventListener('DOMContentLoaded', function() {
+                    const selectCable = document.getElementById('sitios');
+
+                    selectCable.addEventListener('change', function() {
+                        const selectedCableId = selectCable.value;
+
+                        fetch(`/consulta-cable/${selectedCableId}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                const cableStatus = data.hasFilamentos ? 'Tiene filamentos' : 'No tiene filamentos';
+                                document.getElementById('cableStatus').textContent = cableStatus;
+                            })
+                            .catch(error => {
+                                console.error('Error al realizar la consulta:', error);
+                            });
+                    });
+
+                    selectCable.dispatchEvent(new Event('change'));
+                });*/
+            </script>
             <script>
                 $(document).ready(function() {
                     $("#sitios").select2();
                     $("#sitios2").select2();
+                    $("#sitios3").select2();
+                    $("#sitios4").select2();
                     $("#tipocables").select2();
 
-                    $('#sitios').on('change', function () {
-                        var cableId = $(this).val();
+                    // Obtener los valores de filamentos previamente seleccionados
+                    var selectedFilamentoId1 = {{ $detalles->cruzadaFil1->id_fil1 ?? 'null' }};
+                    var selectedFilamentoId2 = {{ $detalles->cruzadaFil1->id_fil2 ?? 'null' }};
 
+                    // Función para cargar los filamentos en un selector y mantener la selección
+                    function loadFilamentosAndSelect(cableId, selectId, selectedFilamentoId) {
                         $.ajax({
                             url: "{{ route('cable.detallecable.getfilamentosbycable') }}",
                             method: "GET",
                             data: { cable_id: cableId },
                             success: function (response) {
-                                $('#sitios2').empty();
+                                $(selectId).empty();
                                 $.each(response, function (index, filamento) {
-                                    $('#sitios2').append($('<option>', {
-                                        value: parseInt(filamento.id), // Convertir el ID a un número
+                                    $(selectId).append($('<option>', {
+                                        value: parseInt(filamento.id),
                                         text: filamento.text
                                     }));
                                 });
 
                                 // Habilitar o deshabilitar el select según si hay opciones disponibles
                                 if (cableId === "1") {
-                                    $('#sitios2').prop('disabled', true);
+                                    $(selectId).prop('disabled', true);
                                 } else {
-                                    $('#sitios2').prop('disabled', false);
+                                    $(selectId).prop('disabled', false);
+                                }
+
+                                // Seleccionar el filamento previamente seleccionado
+                                if (selectedFilamentoId) {
+                                    $(selectId).val(selectedFilamentoId).trigger('change');
                                 }
                             },
                             error: function () {
                                 // Manejar errores si es necesario
                             }
                         });
+                    }
+
+                    // Cargar los selectores de filamentos al cargar la página
+                    //loadFilamentosAndSelect($("#sitios").val(), '#sitios2', selectedFilamentoId1);
+                    //loadFilamentosAndSelect($("#sitios3").val(), '#sitios4', selectedFilamentoId2);
+
+                    // Manejar cambios en los selectores de cables
+                    $('#sitios').on('change', function () {
+                        var cableId = $(this).val();
+                        loadFilamentosAndSelect(cableId, '#sitios2', selectedFilamentoId1);
+                    });
+
+                    $('#sitios3').on('change', function () {
+                        var cableId = $(this).val();
+                        loadFilamentosAndSelect(cableId, '#sitios4', selectedFilamentoId2);
                     });
                 });
-                </script>
-
-
-
-
-
-
-
+            </script>
         </div>
     </div>
 </div>

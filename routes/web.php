@@ -101,10 +101,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/imprimir/{etiqueta}', [App\Http\Controllers\SlotMSANController::class, 'imprimir'])->name('imprimir');
     Route::get('cable/detallecable/getfilamentosbycable', 'App\Http\Controllers\DetalleCableController@getFilamentosByCable')->name('cable.detallecable.getfilamentosbycable');
     Route::get('/consulta-cable/{cableId}', 'DetalleCableController@consultaCable');
-
-
-
-
+    Route::get('/etiquetas/ejecutar-script', 'EtiquetasController@ejecutarScript')->name('etiquetas.ejecutar-script');
+    Route::get('/alertasolt', [App\Http\Controllers\AlertaController::class, 'index_olt'])->name('alertas.index_olt');
 
 });
 

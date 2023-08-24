@@ -38,6 +38,7 @@
                                     @endif
                                     <div class="row">
                                         <div class="col-12 text-right">
+                                            <a href="#" class="btn btn-primary" id="btnOpenCamera">Abrir Cámara</a>
                                             <a href="{{ route('etiquetas.create')}}" class="btn btn-primary">Agregar Etiqueta</a>
                                             <a href="{{ route('etiquetas.export')}}" class="btn btn-success">Exportar a Excel</a>
                                         </div>
@@ -93,4 +94,25 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const btnOpenCamera = document.getElementById('btnOpenCamera');
+
+            btnOpenCamera.addEventListener('click', async () => {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                    const videoElement = document.createElement('video');
+                    videoElement.srcObject = stream;
+                    videoElement.autoplay = true;
+
+                    const cardBody = document.querySelector('.card-body');
+                    cardBody.insertBefore(videoElement, cardBody.firstChild);
+                } catch (error) {
+                    console.error('Error al acceder a la cámara:', error);
+                }
+            });
+        });
+    </script>
 @endsection

@@ -36,6 +36,11 @@
                                             {{ session('warning') }}
                                         </div>
                                     @endif
+                                    @if (session('danger'))
+                                        <div class="alert alert-danger text-center" role="danger">
+                                            {{ session('danger') }}
+                                        </div>
+                                    @endif
                                     <div class="row">
                                         <div class="col-12 text-right">
                                             <a href="{{ route('cable.index') }}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>
@@ -73,7 +78,14 @@
                                                         @endphp
                                                             <td><a href="{{ route('equiposmsan.slots.olt.index', [$equipo,$slot])}}">{{ $detalle->ocupacion}}</a></td>
                                                         @endif
-                                                        <td>{{ $detalle->cruzada}}</td>
+                                                        <td>
+                                                            @if ($detalle->cruzadaFil1)
+                                                                FIL {{ $detalle->cruzadaFil1->detalleFil2->filamento }} - {{ $detalle->cruzadaFil1->detalleFil2->cable->nombre_cable}}<br>
+                                                            @endif
+                                                            @if ($detalle->cruzadaFil2)
+                                                                FIL {{ $detalle->cruzadaFil2->detalleFil1->filamento}} - {{ $detalle->cruzadaFil2->detalleFil1->cable->nombre_cable }}<br>
+                                                            @endif
+                                                        </td>
                                                         <td>{{ $detalle->observaciones}}</td>
                                                         @if ($detalle->estado->id == "1")
                                                             <td class="text-success">{{ $detalle->estado->estado}}</td>

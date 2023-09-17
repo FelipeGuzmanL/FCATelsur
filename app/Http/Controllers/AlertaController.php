@@ -80,6 +80,12 @@ class AlertaController extends Controller
         return view('alertas.index_alertas',['alertas'=>Alerta::paginate(10)]);
     }
 
+    public function index_olt(Request $request)
+    {
+        $alertas = Alerta::whereNotNull('id_olt')->paginate(10);
+        //dd($alertas);
+        return view('alertas.index_olt',compact('alertas'));
+    }
     /**
      * Show the form for creating a new resource.
      *

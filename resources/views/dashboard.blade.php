@@ -22,7 +22,6 @@
                 @else
                     <small>Sin Alertas</small>
                 @endif
-
               </h3>
             </div>
             <div class="card-footer">
@@ -44,7 +43,7 @@
             </div>
             <div class="card-footer">
               <div class="stats">
-                <i class="material-icons">engineering</i>
+                <i class="material-icons text-success">engineering</i>
                 <a href="{{ route('mantencionesmsan.index_todaslasmantenciones')}}">Todos los mantenimientos</a>
               </div>
             </div>
@@ -52,16 +51,28 @@
         </div>
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
-            <div class="card-header card-header-danger card-header-icon">
+            <div class="card-header card-header-warning card-header-icon">
               <div class="card-icon">
-                <i class="material-icons">info_outline</i>
+                <i class="material-icons">warning</i>
               </div>
-              <p class="card-category">Fixed Issues</p>
-              <h3 class="card-title">75</h3>
+              <p class="card-category">Alertas OLTs</p>
+              <h3 class="card-title">
+                @if (count($alertasolt) > 0)
+                    {{count($alertasolt)}}
+                    @if (count($alertasolt)>1)
+                        <small>Alertas</small>
+                    @elseif (count($alertasolt)==1)
+                        <small>Alerta</small>
+                    @endif
+                @else
+                    <small>Sin Alertas</small>
+                @endif
+              </h3>
             </div>
             <div class="card-footer">
               <div class="stats">
-                <i class="material-icons">local_offer</i> Tracked from Github
+                <i class="material-icons text-danger">warning</i>
+                <a href="{{ route('alertas.index_olt')}}">Ver todas las alertas de OLT</a>
               </div>
             </div>
           </div>

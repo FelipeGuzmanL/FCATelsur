@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html>select2
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
     <meta charset="utf-8" />
@@ -13,12 +13,15 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+
+
+
+
+
     <!-- CSS Files -->
     <link href="{{ asset('material') }}/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
@@ -26,7 +29,7 @@
     </head>
     <body class="{{ $class ?? '' }}">
         @auth()
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">c
                 @csrf
             </form>
             @include('layouts.page_templates.auth')
@@ -150,6 +153,9 @@
         <!-- Material Dashboard DEMO methods, don't include it in your project! -->
         <script src="{{ asset('material') }}/demo/demo.js"></script>
         <script src="{{ asset('material') }}/js/settings.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
         @stack('js')
     </body>
 </html>

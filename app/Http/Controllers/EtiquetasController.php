@@ -154,4 +154,13 @@ class EtiquetasController extends Controller
         $etiqueta->delete();
         return redirect()->route('etiquetas.index')->with('warning','Etiqueta se ha eliminado correctamente.');
     }
+    public function ejecutarScript()
+    {
+        $scriptPath = base_path('python_scripts/etiqueta_scan.py');
+
+        // Ejecutar el script de Python y capturar la salida
+        $output = shell_exec("python $scriptPath");
+
+        return view('etiquetas.ejecutar_script', ['output' => $output]);
+    }
 }

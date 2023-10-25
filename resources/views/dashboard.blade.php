@@ -83,12 +83,24 @@
               <div class="card-icon">
                 <i class="fa fa-twitter"></i>
               </div>
-              <p class="card-category">Followers</p>
-              <h3 class="card-title">+245</h3>
+              <p class="card-category">Capacidad Cables</p>
+              <h3 class="card-title">
+                @if (count($porcentajes) > 0)
+                    {{count($porcentajes)}}
+                    @if (count($porcentajes)>1)
+                        <small>Alertas</small>
+                    @elseif (count($porcentajes)==1)
+                        <small>Alerta</small>
+                    @endif
+                @else
+                    <small>Sin Alertas</small>
+                @endif
+              </h3>
             </div>
             <div class="card-footer">
               <div class="stats">
-                <i class="material-icons">update</i> Just Updated
+                <i class="material-icons text-danger">warning</i>
+                <a href="{{ route('alertas.index_capacidadcables') }}">Ver todas las alertas de cables</a>
               </div>
             </div>
           </div>

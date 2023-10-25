@@ -103,6 +103,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/consulta-cable/{cableId}', 'DetalleCableController@consultaCable');
     Route::get('/etiquetas/ejecutar-script', 'EtiquetasController@ejecutarScript')->name('etiquetas.ejecutar-script');
     Route::get('/alertasolt', [App\Http\Controllers\AlertaController::class, 'index_olt'])->name('alertas.index_olt');
+    Route::get('capacidadcables', [App\Http\Controllers\AlertaController::class, 'index_capacidadcables'])->name('alertas.index_capacidadcables');
 
 });
 

@@ -41,6 +41,31 @@ class AlertaController extends Controller
         $gravedad = GravedadAlerta::all();
         return view ('alertas.create_mufa', compact('mufa','gravedad'));
     }
+    public function index_capacidadcables()
+    {
+        $cables = Cable::all();
+        $cable_alarmados = [];
+        $porcentajes = [];
+        foreach($cables as $cable){
+            if($cable->id != 1){
+                $contador_estados = 0;
+                foreach($cable->detallecable as $filamento){
+                    if($filamento->id_estado == 2){
+                        $contador_estados += 1;
+                    }
+                }
+                $calculo_porcentaje = (100 * $contador_estados)/count($cable->detallecable);
+                if($calculo_porcentaje >= 75){
+                    $cable_alarmados[] = $cable;
+                    $porcentajes[] = $calculo_porcentaje;
+                }
+            }
+        }
+        //$cable_alarmados = json_decode($request->get('cable_alarmados'), true);
+        //dd($cable_alarmados);
+        return view ('alertas.index_capacidadcables', compact('cable_alarmados','porcentajes'));
+    }
+
     public function index_todaslasalertas(Request $request)
     {
         if ($request) {

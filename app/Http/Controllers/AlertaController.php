@@ -57,7 +57,7 @@ class AlertaController extends Controller
                 $calculo_porcentaje = (100 * $contador_estados)/count($cable->detallecable);
                 if($calculo_porcentaje >= 75){
                     $cable_alarmados[] = $cable;
-                    $porcentajes[] = $calculo_porcentaje;
+                    $porcentajes[] = intval($calculo_porcentaje);
                 }
             }
         }

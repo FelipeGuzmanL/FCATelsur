@@ -53,30 +53,30 @@ def procesar_palabras(texto):
 
 def texto(imagen):
     global doc
-    
+
     # Dirección de Pytesseract
     pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
     # Conversión a escala de grises
     gris = cv2.cvtColor(imagen, cv2.COLOR_BGR2GRAY)
-    
+
     # Filtro
     umbral = cv2.adaptiveThreshold(gris, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 55, 25)
 
     # Configuración OCR
     config = '--psm 1'
     texto_extraido = pytesseract.image_to_string(umbral, config=config)
-    
+
     # Procesar palabras clave
     resultados = procesar_palabras(texto_extraido)
-    
+
     for resultado in resultados:
         print(resultado)
 
 # Empezar
 while True:
     ret, frame = cap.read()
-    
+
     # Interfaz
     cv2.putText(frame, "Ubique el documento de identidad", (458, 80), cv2.FONT_HERSHEY_SIMPLEX, 0.71, (0,255,0),2)
     cv2.rectangle(frame, (cuadro,cuadro), (1280 - cuadro, 720 - cuadro), (0,255,0),2)
@@ -86,12 +86,12 @@ while True:
 
     t = cv2.waitKey(5)
     cv2.imshow('ID INTELIGENTE', frame)
-    
+
     if t == 27:
         break
-    
+
     elif t == 83 or t == 115:
         texto(frame)
-    
+
 cap.release()
 cv2.destroyAllWindows()

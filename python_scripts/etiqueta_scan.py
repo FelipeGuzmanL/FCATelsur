@@ -1,6 +1,8 @@
 import cv2
 import pytesseract
 import re
+import requests
+import json
 
 # Variables
 cuadro = 100
@@ -12,14 +14,14 @@ cap.set(4, 740)
 
 def procesar_palabras(texto):
     palabras = texto.split()  # Dividir el texto en palabras
-    print(palabras)
+    #print(palabras)
     resultados = []
 
     i = 0
     while i < len(palabras):
         clave = palabras[i]
 
-        if clave in ['FCA', 'CP', 'CE', 'FIL']:
+        if clave in ['FCA', 'CP', 'CE', 'FIL','SPL']:
             if i + 1 < len(palabras):
                 resultados.append([clave, palabras[i + 1]])
                 i += 2  # Saltar al siguiente conjunto de palabras
@@ -44,9 +46,11 @@ def procesar_palabras(texto):
         else:
             i += 1  # Continuar al siguiente conjunto de palabras si no coincide ninguna palabra clave
 
-    print('Resultados escaneo')
-    return resultados
+    #print('Resultados escaneo')
+    #return resultados
 
+    datos = {'resultados': resultados}
+    print(json.dumps(datos), flush=True)
 
 
 
@@ -70,19 +74,19 @@ def texto(imagen):
     # Procesar palabras clave
     resultados = procesar_palabras(texto_extraido)
 
-    for resultado in resultados:
-        print(resultado)
+    #for resultado in resultados:
+    #    print(resultado)
 
 # Empezar
 while True:
     ret, frame = cap.read()
 
     # Interfaz
-    cv2.putText(frame, "Ubique el documento de identidad", (458, 80), cv2.FONT_HERSHEY_SIMPLEX, 0.71, (0,255,0),2)
+    cv2.putText(frame, "Ubique la etiqueta en el cuadro", (458, 80), cv2.FONT_HERSHEY_SIMPLEX, 0.71, (0,255,0),2)
     cv2.rectangle(frame, (cuadro,cuadro), (1280 - cuadro, 720 - cuadro), (0,255,0),2)
 
     if doc == 0:
-        cv2.putText(frame, 'PRESIONA S PARA IDENTIFICAR', (470, 750 - cuadro), cv2.FONT_HERSHEY_SIMPLEX, 0.71, (0,255,0),2)
+        cv2.putText(frame, 'PRESIONA S PARA ESCANEAR', (470, 750 - cuadro), cv2.FONT_HERSHEY_SIMPLEX, 0.71, (0,255,0),2)
 
     t = cv2.waitKey(5)
     cv2.imshow('ID INTELIGENTE', frame)
@@ -92,6 +96,7 @@ while True:
 
     elif t == 83 or t == 115:
         texto(frame)
+        break
 
 cap.release()
 cv2.destroyAllWindows()

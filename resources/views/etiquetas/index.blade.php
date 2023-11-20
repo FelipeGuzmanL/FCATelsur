@@ -38,7 +38,7 @@
                                     @endif
                                     <div class="row">
                                         <div class="col-12 text-right">
-                                            <a href="#" class="btn btn-primary" id="btnOpenCamera">Abrir Cámara</a>
+                                            <a href="{{ route('apiCable')}}" class="btn btn-primary" id="btnOpenCamera">Abrir Cámara</a>
                                             <a href="{{ route('etiquetas.create')}}" class="btn btn-primary">Agregar Etiqueta</a>
                                             <a href="{{ route('etiquetas.export')}}" class="btn btn-success">Exportar a Excel</a>
                                         </div>

@@ -104,6 +104,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/etiquetas/ejecutar-script', 'EtiquetasController@ejecutarScript')->name('etiquetas.ejecutar-script');
     Route::get('/alertasolt', [App\Http\Controllers\AlertaController::class, 'index_olt'])->name('alertas.index_olt');
     Route::get('capacidadcables', [App\Http\Controllers\AlertaController::class, 'index_capacidadcables'])->name('alertas.index_capacidadcables');
+    #Route::post('/api/cable', [App\Http\Controllers\CableController::class, 'procesarDatosDesdePython']);
+    #Route::match(['get', 'post'],'/api/cable', [App\Http\Controllers\CableController::class, 'procesarDatosDesdePython']);
+    #Route::get('/api/cable/otra-funcion', [App\Http\Controllers\CableController::class, 'otraFuncion'])->name('otraFuncion');
+    #Route::post('/api/cable', 'App\Http\Controllers\CableController@procesarDatosDesdePython');
+    Route::get('/api/cable/otra-funcion', [App\Http\Controllers\CableController::class, 'otraFuncion'])->name('otraFuncion');
+
 
 });
+
+Route::group(['middleware' => ['web']], function () {
+    Route::match(['post','get'],'/api/cable', 'App\Http\Controllers\CableController@procesarDatosDesdePython')->name('apiCable');
+});
+
+
 

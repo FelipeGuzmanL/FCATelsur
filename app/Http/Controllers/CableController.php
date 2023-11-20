@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class CableController extends Controller
 {
+
+    private $datosDesdePython;
     /**
      * Display a listing of the resource.
      *
@@ -152,5 +154,58 @@ class CableController extends Controller
         }
         $cable->delete();
         return redirect()->route('cable.index')->with('succes','Cable'.$cable->nombre_cable.'se ha eliminado correctamente.');
+    }
+
+    public function procesarDatosDesdePython(Request $request)
+    {
+        //info('Datos recibidos desde Python:',['request'=> $request->all()]);
+        // Obtener los datos enviados desde Python
+        //$this->datosDesdePython = $request->all();
+
+        $directorio = base_path();
+        #$rutaScript = "{$directorio}/python_scripts/sinsolicitud.py";
+        $rutaScript = "{$directorio}/python_scripts/etiqueta_scan.py";
+
+        exec("python3 $rutaScript", $salida, $estado);
+
+        if ($estado === 0) {
+            // Éxito: $salida contiene la salida del script
+            $datos = json_decode(implode("\n", $salida), true);
+            info('Datos recibidos:', ['datos' => $datos]);
+
+            return redirect()->route('otraFuncion', ['datos'=>$datos]);
+        } else {
+            // Error: $estado contiene el código de error
+            dd("Error al ejecutar el script. Código de error: $estado");
+        }
+
+        info('Recibiendo solicitud en procesarDatosDesdePython');
+
+        // Obtener los datos enviados desde Python
+        $datos = $request->json()->all();
+
+
+        info('Datos recibidos:', ['datos' => $datos]);
+
+        return redirect()->route('otraFuncion');
+    }
+
+    public function otraFuncion(Request $request)
+    {
+        $datos = $request->query('datos');
+        //dd($datos['resultados'][0][1]);
+        $nombreSitio = $datos['resultados'][0][1];
+        $error = "No existe el sitio";
+        $cable = Cable::whereHas('sitio', function (Builder $query) use ($nombreSitio) {
+            $query->whereRaw('UPPER(abreviacion) LIKE ?', ['%' . strtoupper($nombreSitio) . '%']);
+        })->first();
+
+        if ($cable) {
+            // Se encontró un cable con el nombre de sitio
+            return redirect()->route('cable.detallecable.index', $cable->id);
+        } else {
+            // No se encontró un cable con el nombre de sitio
+            dd($error);
+        }
     }
 }

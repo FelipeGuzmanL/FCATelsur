@@ -21,7 +21,7 @@ def procesar_palabras(texto):
     while i < len(palabras):
         clave = palabras[i]
 
-        if clave in ['FCA', 'CP', 'CE', 'FIL','SPL']:
+        if clave in ['FCA', 'FIL','SPL']:
             if i + 1 < len(palabras):
                 resultados.append([clave, palabras[i + 1]])
                 i += 2  # Saltar al siguiente conjunto de palabras
@@ -43,6 +43,20 @@ def procesar_palabras(texto):
                 contenido_fot.append(palabras[i])
                 i += 1
             resultados.append(['FOT', ' '.join(contenido_fot)])
+        elif clave == 'CE' and i + 1 < len(palabras):
+            contenido_ce = [palabras[i + 1]]
+            i += 2  # Saltar al siguiente conjunto de palabras
+            while i < len(palabras) and palabras[i] != 'FIL':
+                contenido_ce.append(palabras[i])
+                i += 1
+            resultados.append(['CE', ' '.join(contenido_ce)])
+        elif clave == 'CP' and i + 1 < len(palabras):
+            contenido_cp = [palabras[i + 1]]
+            i += 2  # Saltar al siguiente conjunto de palabras
+            while i < len(palabras) and palabras[i] != 'FIL':
+                contenido_cp.append(palabras[i])
+                i += 1
+            resultados.append(['CP', ' '.join(contenido_cp)])
         else:
             i += 1  # Continuar al siguiente conjunto de palabras si no coincide ninguna palabra clave
 

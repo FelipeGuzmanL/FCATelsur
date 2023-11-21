@@ -194,15 +194,33 @@ class CableController extends Controller
     {
         $datos = $request->query('datos');
         //dd($datos['resultados'][0][1]);
-        $nombreSitio = $datos['resultados'][0][1];
+        //dd($datos);
+        $nombreCable = $datos['resultados'][0][1];
+        $filamento = $datos['resultados'][1][1];
         $error = "No existe el sitio";
-        $cable = Cable::whereHas('sitio', function (Builder $query) use ($nombreSitio) {
-            $query->whereRaw('UPPER(abreviacion) LIKE ?', ['%' . strtoupper($nombreSitio) . '%']);
-        })->first();
 
-        if ($cable) {
+        /*$cable = Cable::WhereRaw('UPPER(nombre_cable) LIKE ?', ['%' . strtoupper($nombreCable) . '%'])
+        ->orWhereHas('detallecable', function (Builder $query) use ($filamento){
+            $query->whereRaw('UPPER(nombre) LIKE ?', ['%' . strtoupper($filamento) . '%']);
+        })->first();*/
+
+        /*$cable = Cable::whereHas('detallecable', function (Builder $query) use ($filamento) {
+            $query->whereRaw('UPPER(filamento) LIKE ?', ['%' . strtoupper($filamento) . '%']);
+        })->whereRaw('UPPER(nombre_cable) LIKE ?', ['%' . strtoupper($nombreCable) . '%'])
+        ->first();*/
+
+        $detalleCable = DetalleCable::whereRaw('UPPER(filamento) LIKE ?', ['%' . strtoupper($filamento) . '%'])
+        ->whereHas('cable', function (Builder $query) use ($nombreCable) {
+            $query->whereRaw('UPPER(nombre_cable) LIKE ?', ['%' . strtoupper($nombreCable) . '%']);
+        })
+        ->first();
+
+        //dd($detalleCable->cable);
+        $etiqueta = $detalleCable->olt->etiqueta;
+
+        if ($detalleCable != null && $datos['resultados'][1][0] == 'FIL') {
             // Se encontró un cable con el nombre de sitio
-            return redirect()->route('cable.detallecable.index', $cable->id);
+            return redirect()->route('etiquetas.show_filamento', $etiqueta);
         } else {
             // No se encontró un cable con el nombre de sitio
             dd($error);

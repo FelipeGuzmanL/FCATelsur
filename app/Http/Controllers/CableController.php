@@ -194,36 +194,44 @@ class CableController extends Controller
     {
         $datos = $request->query('datos');
         //dd($datos['resultados'][0][1]);
+        //dd($datos['resultados'][0][0]);
         //dd($datos);
-        $nombreCable = $datos['resultados'][0][1];
-        $filamento = $datos['resultados'][1][1];
+
+        for($i=0;$i<count($datos['palabras']);$i++){
+            if ($datos['resultados'][0][0] == $datos['palabras'][$i]){
+                $nombreCable = $datos['resultados'][0][1];
+                $filamento = $datos['resultados'][1][1];
+            }
+        }
         $error = "No existe el sitio";
 
-        /*$cable = Cable::WhereRaw('UPPER(nombre_cable) LIKE ?', ['%' . strtoupper($nombreCable) . '%'])
-        ->orWhereHas('detallecable', function (Builder $query) use ($filamento){
-            $query->whereRaw('UPPER(nombre) LIKE ?', ['%' . strtoupper($filamento) . '%']);
-        })->first();*/
+        //dd($nombreCable,$filamento);
 
-        /*$cable = Cable::whereHas('detallecable', function (Builder $query) use ($filamento) {
-            $query->whereRaw('UPPER(filamento) LIKE ?', ['%' . strtoupper($filamento) . '%']);
-        })->whereRaw('UPPER(nombre_cable) LIKE ?', ['%' . strtoupper($nombreCable) . '%'])
-        ->first();*/
+        if($nombreCable && $filamento){
+            $detalleCable = DetalleCable::whereRaw('UPPER(filamento) LIKE ?', ['%' . strtoupper($filamento) . '%'])
+            ->whereHas('cable', function (Builder $query) use ($nombreCable) {
+                $query->whereRaw('UPPER(nombre_cable) LIKE ?', ['%' . strtoupper($nombreCable) . '%']);
+            })
+            ->first();
 
-        $detalleCable = DetalleCable::whereRaw('UPPER(filamento) LIKE ?', ['%' . strtoupper($filamento) . '%'])
-        ->whereHas('cable', function (Builder $query) use ($nombreCable) {
-            $query->whereRaw('UPPER(nombre_cable) LIKE ?', ['%' . strtoupper($nombreCable) . '%']);
-        })
-        ->first();
+            if($detalleCable == null){
+                dd('Error de lectura y/o no se encontró lo solicitado');
+            }
 
-        //dd($detalleCable->cable);
-        $etiqueta = $detalleCable->olt->etiqueta;
+            //dd($detalleCable->cable);
+            $etiqueta = $detalleCable->olt->etiqueta;
+            //dd($etiqueta);
 
-        if ($detalleCable != null && $datos['resultados'][1][0] == 'FIL') {
-            // Se encontró un cable con el nombre de sitio
-            return redirect()->route('etiquetas.show_filamento', $etiqueta);
-        } else {
-            // No se encontró un cable con el nombre de sitio
-            dd($error);
+            if ($detalleCable != null && $datos['resultados'][1][0] == 'FIL') {
+                // Se encontró un cable con el nombre de sitio
+                return redirect()->route('etiquetas.show_filamento', $etiqueta);
+            } else {
+                // No se encontró un cable con el nombre de sitio
+                dd($error);
+            }
+        }
+        else{
+            dd('Error de lectura');
         }
     }
 }

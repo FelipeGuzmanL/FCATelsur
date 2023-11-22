@@ -1,7 +1,5 @@
 import cv2
 import pytesseract
-import re
-import requests
 import json
 
 # Variables
@@ -62,8 +60,10 @@ def procesar_palabras(texto):
 
     #print('Resultados escaneo')
     #return resultados
+    #print(resultados)
 
-    datos = {'resultados': resultados}
+    claves = ['CP','CE','FOT','SPL','MSAN','FIL','FCA']
+    datos = {'resultados': resultados, 'palabras': claves}
     print(json.dumps(datos), flush=True)
 
 

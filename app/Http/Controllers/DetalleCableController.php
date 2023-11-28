@@ -8,6 +8,7 @@ use App\Models\Cruzada1;
 use App\Models\Cruzada2;
 use App\Models\DetalleCable;
 use App\Models\Estado;
+use App\Models\Etiquetas;
 use App\Models\Slot;
 use App\Models\SlotMSAN;
 use Illuminate\Http\Request;

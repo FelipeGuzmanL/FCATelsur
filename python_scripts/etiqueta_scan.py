@@ -1,23 +1,57 @@
 import cv2
 import pytesseract
 import json
+import openai
 
 # Variables
 cuadro = 100
 doc = 0
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 cap.set(3, 1280)
 cap.set(4, 740)
 
+def estandarizar_etiquetas(etiqueta):
+    openai.api_key = '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'
+
+    modelo = 'gpt-3.5-turbo'
+
+    prompt = f'reestandariza la siguiente etiqueta {etiqueta} y solo muestrame la etiqueta y nada mas'
+
+    mapeo = ['CE','FOT','Anillo','CP','CEMP']
+
+    contexto = f'El estandar de las etiquetas de redes es el siguiente: el tipo de cable que pueden ser {mapeo} (si aparece C ESP corresponde a CE), luego nombre del cable, despues FIL, numero del filamento, FCA, nombre del sitio fca, SPL, con guion y numero del spliter, ignorando todo el contenido innecesario.'
+
+    mensajes = [
+        {'role': 'system', 'content': contexto},
+        {'role': 'user','content':prompt}
+    ]
+
+    respuesta = openai.ChatCompletion.create(
+        model = modelo,
+        messages = mensajes,
+        temperature = 0.8,
+        max_tokens = 1000
+    )
+
+    texto_estandarizado = respuesta['choices'][0]['message']['content']
+
+    #print(texto_estandarizado)
+
+    procesar_palabras(texto_estandarizado)
+
 def procesar_palabras(texto):
+
     palabras = texto.split()  # Dividir el texto en palabras
-    #print(palabras)
+
     resultados = []
+    cl = []
 
     i = 0
     while i < len(palabras):
+        cl.append(palabras[i])
         clave = palabras[i]
+
 
         if clave in ['FCA', 'FIL','SPL']:
             if i + 1 < len(palabras):
@@ -32,7 +66,10 @@ def procesar_palabras(texto):
                 resultados.append(['SPL', int(numero_partes)])
             i += 2  # Saltar al siguiente conjunto de palabras
         elif i + 2 < len(palabras) and clave == 'MSAN':
-            resultados.append(['MSAN', palabras[i + 1], palabras[i + 2]])
+            msan_y_fca = palabras[i + 1].split('-')
+            msan_numero = msan_y_fca[0]
+            msan_fca = msan_y_fca[1]
+            resultados.append(['MSAN', msan_numero, msan_fca, palabras[i + 2]])
             i += 3  # Saltar al siguiente conjunto de palabras
         elif clave == 'FOT' and i + 1 < len(palabras):
             contenido_fot = [palabras[i + 1]]
@@ -58,16 +95,51 @@ def procesar_palabras(texto):
         else:
             i += 1  # Continuar al siguiente conjunto de palabras si no coincide ninguna palabra clave
 
-    #print('Resultados escaneo')
-    #return resultados
-    #print(resultados)
+    claves_escaneadas = []
 
-    claves = ['CP','CE','FOT','SPL','MSAN','FIL','FCA']
-    datos = {'resultados': resultados, 'palabras': claves}
-    print(json.dumps(datos), flush=True)
+    claves_encontradas = 0
+
+    for clave in cl:
+        #print(clave)
+        if clave in ['CE','FOT','Anillo','CP','CEMP','SPL','FIL','FCA','MSAN']:
+            claves_encontradas += 1
+            claves_escaneadas.append(clave)
+
+    if 'FIL' in claves_escaneadas and any(clave in ['CE', 'FOT', 'Anillo', 'CP', 'CEMP'] for clave in claves_escaneadas):
+        claves = ['CP','CE','FOT','SPL','MSAN','FIL','FCA']
+        datos = {'cable': resultados, 'palabras': claves}
+        print(json.dumps(datos), flush=True)
+
+    elif 'MSAN' in claves_escaneadas:
+        claves = ['CP','CE','FOT','SPL','MSAN','FIL','FCA']
+        resultados = resultados[0]
+        separados = resultados[3].split('-')
+        slot = separados[0] + '-' + separados[1]
+        olt = separados[2]
+        datos = {'msan': resultados, 'slot': slot ,'olt': olt, 'palabras': claves}
+        print(json.dumps(datos), flush=True)
+
+    else:
+        #print('claves_escaneadas no cumple con las condiciones especificadas.')
+        estandarizar_etiquetas(texto)
+
+    '''if resultados != []:
+        claves = ['CP','CE','FOT','SPL','MSAN','FIL','FCA']
+        print('claves', claves_escaneadas)
+        if claves_escaneadas[0] in ['CP','CE','FOT','SPL','FIL','FCA']:
+            datos = {'cable': resultados, 'palabras': claves}
+        elif claves_escaneadas[0] in ['MSAN']:
+            resultados = resultados[0]
+            separados = resultados[3].split('-')
+            slot = separados[0] + '-' + separados[1]
+            olt = separados[2]
+            datos = {'msan': resultados, 'slot': slot ,'olt': olt, 'palabras': claves}
+        print(json.dumps(datos), flush=True)
+    else:
+        print("Error al capturar imagen")'''
 
 
-
+    #print(claves_encontradas, claves_escaneadas,'\n',palabras, '\n',resultados)
 
 def texto(imagen):
     global doc
@@ -87,9 +159,7 @@ def texto(imagen):
 
     # Procesar palabras clave
     resultados = procesar_palabras(texto_extraido)
-
-    #for resultado in resultados:
-    #    print(resultado)
+    #estandarizar_etiquetas(texto_extraido)
 
 # Empezar
 while True:

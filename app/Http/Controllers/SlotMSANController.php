@@ -28,6 +28,8 @@ class SlotMSANController extends Controller
     {
         if ($request) {
             if ($slot->id_msan == $equipo->id){
+                $etiqueta = Etiquetas::where('id_olt', $olt->id)->get();
+
                 $texto = trim($request->get('texto'));
                 $olts = SlotMSAN::WhereRaw('UPPER(sitio_fca) LIKE ?', ['%' . strtoupper($texto) . '%'])
                 ->orWhere('olt','LIKE','%'.$texto.'%')
@@ -43,7 +45,7 @@ class SlotMSANController extends Controller
                 ->orderBy('id','asc')
                 ->get();
 
-                return view('olt.index', compact('equipo','slot','olts'), ['olts' => $olts, 'texto' => $texto]);
+                return view('olt.index', compact('equipo','slot','olts','etiqueta'), ['olts' => $olts, 'texto' => $texto, 'etiqueta'=> $etiqueta]);
             }
         }
         $olts = SlotMSAN::all();
@@ -137,7 +139,8 @@ class SlotMSANController extends Controller
         $verificar = Etiquetas::where('id_cable', $olt->id_cable)->where('filam', $olt->filam)->exists();
         $tipocable = isset($mapeo[$id_cable]) ? $mapeo[$id_cable] : '';
 
-        $ultimo_caracter = substr($slot->slot_msan, strlen($slot->slot_msan) - 1, 1);
+        $ultimo_caracter = substr($slot->slot_msan, strlen($slot->slot_msan) - 2);
+        $ultimo_caracter = str_replace('-', '', $ultimo_caracter);
 
         //dd($olt->cable->sitio->abreviacion);
 
@@ -182,9 +185,9 @@ class SlotMSANController extends Controller
         $id_cable = $olt->cable->tipocable->id;
         $tipocable = isset($mapeo[$id_cable]) ? $mapeo[$id_cable] : '';
 
-        $ultimo_caracter = substr($slot->slot_msan, strlen($slot->slot_msan) - 1, 1);
+        $ultimo_caracter = substr($slot->slot_msan, strlen($slot->slot_msan) - 2);
+        $ultimo_caracter = str_replace('-', '', $ultimo_caracter);
 
-        //dd($etiquetas);
 
         $ladoMSANLEFT = $tipocable.' '.$olt->cable->nombre_cable.' FIL '.$olt->filam."\nFCA ".$olt->sitio_fca.' SPL-'.$olt->spl;
         $ladoMSANRIGHT = 'MSAN '.$equipo->numero.'-'.$olt->cable->sitio->abreviacion.' 1-'.$ultimo_caracter.'-'.$olt->olt;

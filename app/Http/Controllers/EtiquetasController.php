@@ -154,6 +154,24 @@ class EtiquetasController extends Controller
         $etiqueta->delete();
         return redirect()->route('etiquetas.index')->with('warning','Etiqueta se ha eliminado correctamente.');
     }
+    public function destroy_all(Request $request)
+    {
+        // Obtener todas las etiquetas
+        $etiquetas = Etiquetas::all();
+
+        // Obtener los OLTs asociados a las etiquetas
+        $olts = $etiquetas->pluck('olt')->unique();
+
+        // Actualizar todos los OLTs a 0
+        $olts->each(function ($olt) {
+            $olt->update(['etiquetado' => 0]);
+        });
+
+        // Eliminar todas las etiquetas
+        Etiquetas::truncate();
+
+        return redirect()->route('etiquetas.index')->with('warning', 'Etiquetas y OLTs asociados se han eliminado correctamente.');
+    }
     public function ejecutarScript()
     {
         $scriptPath = base_path('python_scripts/etiqueta_scan.py');

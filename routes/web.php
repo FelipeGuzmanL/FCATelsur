@@ -110,6 +110,7 @@ Route::group(['middleware' => 'auth'], function () {
     #Route::post('/api/cable', 'App\Http\Controllers\CableController@procesarDatosDesdePython');
     Route::get('/api/cable/otra-funcion', [App\Http\Controllers\CableController::class, 'otraFuncion'])->name('otraFuncion');
     Route::delete('destroyall', 'App\Http\Controllers\EtiquetasController@destroy_all')->name('destroyall');
+    Route::post('etiquetascreateall', 'App\Http\Controllers\EtiquetasController@create_all')->name('createall');
 
 
 });

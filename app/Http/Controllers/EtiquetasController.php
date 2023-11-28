@@ -172,6 +172,59 @@ class EtiquetasController extends Controller
 
         return redirect()->route('etiquetas.index')->with('warning', 'Etiquetas y OLTs asociados se han eliminado correctamente.');
     }
+    public function create_all()
+    {
+        $olts = SlotMSAN::all();
+        //dd($olts[0]->msan->equiposmsan);
+        for ($i=0; $i<count($olts);$i++)
+        {
+            $mapeo = [
+                1 => 'CE',
+                2 => 'FOT',
+                3 => 'Anillo',
+                4 => 'CP',
+                5 => 'CEMP',
+            ];
+            $id_cable = $olts[$i]->id_cable;
+            $slot = $olts[$i]->msan;
+            $equipo = $olts[$i]->msan->equiposmsan;
+            $verificar = Etiquetas::where('id_cable', $olts[$i]->id_cable)->where('filam', $olts[$i]->filam)->exists();
+            $tipocable = isset($mapeo[$id_cable]) ? $mapeo[$id_cable] : '';
+
+            $ultimo_caracter = substr($slot->slot_msan, strlen($slot->slot_msan) - 2);
+            $ultimo_caracter = str_replace('-', '', $ultimo_caracter);
+
+            //dd($olts[$i]->cable->sitio->abreviacion);
+
+            if ($verificar == false)
+            {
+                $ladoMSANLEFT = $tipocable.' '.$olts[$i]->cable->nombre_cable.' FIL '.$olts[$i]->filam."\nFCA ".$olts[$i]->sitio_fca.' SPL-'.$olts[$i]->spl;
+                $ladoMSANRIGHT = 'MSAN '.$equipo->numero.'-'.$olts[$i]->cable->sitio->abreviacion.' 1-'.$ultimo_caracter.'-'.$olts[$i]->olt;
+
+                $ladoCabeceraLEFT = 'MSAN '.$equipo->numero.'-'.$olts[$i]->cable->sitio->abreviacion.' 1-'.$ultimo_caracter.'-'.$olts[$i]->olt."\nFCA ".$olts[$i]->sitio_fca.' SPL-'.$olts[$i]->spl;
+                $ladoCabeceraRIGHT = $tipocable.' '.$olts[$i]->cable->nombre_cable.' FIL '.$olts[$i]->filam;
+
+                $etiqueta = $ladoMSANLEFT.' '.$ladoMSANRIGHT;
+
+                //dd($ladoMSANRIGHT);
+
+                $etiquetas = Etiquetas::create([
+                    'ladoMSANLEFT'=>$ladoMSANLEFT,
+                    'ladoMSANRIGHT'=>$ladoMSANRIGHT,
+                    'ladocabeceraLEFT'=>$ladoCabeceraLEFT,
+                    'ladocabeceraRIGHT'=>$ladoCabeceraRIGHT,
+                    'id_cable'=>$olts[$i]->id_cable,
+                    'filam'=>$olts[$i]->filam,
+                    'spl'=>$olts[$i]->spl,
+                    'sitio_fca'=>$olts[$i]->sitio_fca,
+                    'id_olt'=>$olts[$i]->id
+                ]);
+                $olts[$i]->update(['etiquetado'=>1]);
+            }
+        }
+        return redirect()->route('etiquetas.index')->with('success','Etiquetas creadas correctamente.');
+    }
+
     public function ejecutarScript()
     {
         $scriptPath = base_path('python_scripts/etiqueta_scan.py');

@@ -111,7 +111,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/api/cable/otra-funcion', [App\Http\Controllers\CableController::class, 'otraFuncion'])->name('otraFuncion');
     Route::delete('destroyall', 'App\Http\Controllers\EtiquetasController@destroy_all')->name('destroyall');
     Route::post('etiquetascreateall', 'App\Http\Controllers\EtiquetasController@create_all')->name('createall');
-
+    Route::get('/webcam', [App\Http\Controllers\WebcamController::class, 'index']);
+    Route::post('/capture',[App\Http\Controllers\WebcamController::class, 'capture']);
+    Route::post('/procesar_imagen', [App\Http\Controllers\WebcamController::class, 'procesarImagen']);
 
 });
 

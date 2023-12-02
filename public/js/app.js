@@ -14,21 +14,47 @@ document.addEventListener('DOMContentLoaded', function () {
     var changeCameraButton = document.getElementById('changeCameraButton');
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
-    var isFrontCamera = true;
     var videoStream;
 
-    function startCamera() {
-        navigator.mediaDevices.enumerateDevices()
-            .then(function (devices) {
-                var videoDevices = devices.filter(device => device.kind === 'videoinput');
-                var constraints = {
-                    video: {
-                        deviceId: isFrontCamera ? { exact: videoDevices[0].deviceId } : { exact: videoDevices[1].deviceId }
-                    }
-                };
+    // Verificar la compatibilidad con la API mediaDevices
+    if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
+        console.log("La API mediaDevices está disponible");
+    }
 
-                return navigator.mediaDevices.getUserMedia(constraints);
-            })
+    // Solicitar permiso del usuario para acceder a la cámara
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function (stream) {
+            videoStream = stream;
+            video.srcObject = stream;
+        })
+        .catch(function (error) {
+            console.error('Error al acceder a la webcam: ', error);
+        });
+
+    // Cambiar entre cámara frontal y trasera
+    changeCameraButton.addEventListener('click', function () {
+        if (videoStream) {
+            videoStream.getTracks().forEach(track => track.stop());
+        }
+        var updatedConstraints = {
+            video: {
+                facingMode: isFrontCamera ? 'environment' : 'user'
+            }
+        };
+        startCamera(updatedConstraints);
+    });
+
+    // Capturar una foto
+    captureButton.addEventListener('click', function () {
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        var imageDataURL = canvas.toDataURL('image/png');
+
+        // Enviar la imagen al controlador de Laravel
+        enviarImagenAlServidor(imageDataURL);
+    });
+
+    function startCamera(constraints) {
+        navigator.mediaDevices.getUserMedia(constraints)
             .then(function (stream) {
                 videoStream = stream;
                 video.srcObject = stream;
@@ -37,26 +63,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error('Error al acceder a la webcam: ', error);
             });
     }
-
-    function toggleCamera() {
-        if (videoStream) {
-            videoStream.getTracks().forEach(track => track.stop());
-        }
-        isFrontCamera = !isFrontCamera;
-        startCamera();
-    }
-
-    changeCameraButton.addEventListener('click', function () {
-        toggleCamera();
-    });
-
-    captureButton.addEventListener('click', function () {
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        var imageDataURL = canvas.toDataURL('image/png');
-
-        // Enviar la imagen al controlador de Laravel
-        enviarImagenAlServidor(imageDataURL);
-    });
 
     function enviarImagenAlServidor(imageDataURL) {
         // Realizar una solicitud POST a Laravel
@@ -69,8 +75,6 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error al enviar la imagen al servidor:', error);
         });
     }
-
-    startCamera();
 });
 
 /***/ }),

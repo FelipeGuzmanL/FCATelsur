@@ -9,35 +9,68 @@
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 document.addEventListener('DOMContentLoaded', function () {
-  var video = document.getElementById('video');
-  var captureButton = document.getElementById('captureButton');
-  var canvas = document.getElementById('canvas');
-  var context = canvas.getContext('2d');
-  navigator.mediaDevices.getUserMedia({
-    video: true
-  }).then(function (stream) {
-    video.srcObject = stream;
-  })["catch"](function (error) {
-    console.error('Error al acceder a la webcam: ', error);
-  });
-  captureButton.addEventListener('click', function () {
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    var imageDataURL = canvas.toDataURL('image/png');
+    var video = document.getElementById('video');
+    var captureButton = document.getElementById('captureButton');
+    var changeCameraButton = document.getElementById('changeCameraButton');
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+    var isFrontCamera = true;
+    var videoStream;
 
-    // Enviar la imagen al controlador de Laravel
-    enviarImagenAlServidor(imageDataURL);
-  });
-  function enviarImagenAlServidor(imageDataURL) {
-    // Realizar una solicitud POST a Laravel
-    axios.post('/procesar_imagen', {
-      imagen: imageDataURL
-    }).then(function (response) {
-      console.log('Respuesta del servidor:', response.data);
-      // Puedes realizar acciones adicionales con la respuesta del servidor aquí
-    })["catch"](function (error) {
-      console.error('Error al enviar la imagen al servidor:', error);
+    function startCamera() {
+        navigator.mediaDevices.enumerateDevices()
+            .then(function (devices) {
+                var videoDevices = devices.filter(device => device.kind === 'videoinput');
+                var constraints = {
+                    video: {
+                        deviceId: isFrontCamera ? { exact: videoDevices[0].deviceId } : { exact: videoDevices[1].deviceId }
+                    }
+                };
+
+                return navigator.mediaDevices.getUserMedia(constraints);
+            })
+            .then(function (stream) {
+                videoStream = stream;
+                video.srcObject = stream;
+            })
+            .catch(function (error) {
+                console.error('Error al acceder a la webcam: ', error);
+            });
+    }
+
+    function toggleCamera() {
+        if (videoStream) {
+            videoStream.getTracks().forEach(track => track.stop());
+        }
+        isFrontCamera = !isFrontCamera;
+        startCamera();
+    }
+
+    changeCameraButton.addEventListener('click', function () {
+        toggleCamera();
     });
-  }
+
+    captureButton.addEventListener('click', function () {
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        var imageDataURL = canvas.toDataURL('image/png');
+
+        // Enviar la imagen al controlador de Laravel
+        enviarImagenAlServidor(imageDataURL);
+    });
+
+    function enviarImagenAlServidor(imageDataURL) {
+        // Realizar una solicitud POST a Laravel
+        axios.post('/procesar_imagen', {
+            imagen: imageDataURL
+        }).then(function (response) {
+            console.log('Respuesta del servidor:', response.data);
+            // Puedes realizar acciones adicionales con la respuesta del servidor aquí
+        }).catch(function (error) {
+            console.error('Error al enviar la imagen al servidor:', error);
+        });
+    }
+
+    startCamera();
 });
 
 /***/ }),
@@ -20505,7 +20538,7 @@ function buildURL(url, params, options) {
   if (!params) {
     return url;
   }
-  
+
   const _encode = options && options.encode || encode;
 
   const serializeFn = options && options.serialize;
@@ -22624,7 +22657,7 @@ module.exports = axios;
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -22638,20 +22671,20 @@ module.exports = axios;
 /******/ 			loaded: false,
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/ 	
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = __webpack_modules__;
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/chunk loaded */
 /******/ 	(() => {
@@ -22684,7 +22717,7 @@ module.exports = axios;
 /******/ 			return result;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
 /******/ 		__webpack_require__.g = (function() {
@@ -22696,12 +22729,12 @@ module.exports = axios;
 /******/ 			}
 /******/ 		})();
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -22712,7 +22745,7 @@ module.exports = axios;
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nmd = (module) => {
@@ -22721,11 +22754,11 @@ module.exports = axios;
 /******/ 			return module;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/jsonp chunk loading */
 /******/ 	(() => {
 /******/ 		// no baseURI
-/******/ 		
+/******/
 /******/ 		// object to store loaded and loading chunks
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
@@ -22733,19 +22766,19 @@ module.exports = axios;
 /******/ 			"/js/app": 0,
 /******/ 			"css/app": 0
 /******/ 		};
-/******/ 		
+/******/
 /******/ 		// no chunk on demand loading
-/******/ 		
+/******/
 /******/ 		// no prefetching
-/******/ 		
+/******/
 /******/ 		// no preloaded
-/******/ 		
+/******/
 /******/ 		// no HMR
-/******/ 		
+/******/
 /******/ 		// no HMR manifest
-/******/ 		
+/******/
 /******/ 		__webpack_require__.O.j = (chunkId) => (installedChunks[chunkId] === 0);
-/******/ 		
+/******/
 /******/ 		// install a JSONP callback for chunk loading
 /******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
 /******/ 			var [chunkIds, moreModules, runtime] = data;
@@ -22770,20 +22803,20 @@ module.exports = axios;
 /******/ 			}
 /******/ 			return __webpack_require__.O(result);
 /******/ 		}
-/******/ 		
+/******/
 /******/ 		var chunkLoadingGlobal = self["webpackChunk"] = self["webpackChunk"] || [];
 /******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
 /******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
 /******/ 	})();
-/******/ 	
+/******/
 /************************************************************************/
-/******/ 	
+/******/
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/app.js")))
 /******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/app.css")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
-/******/ 	
+/******/
 /******/ })()
 ;

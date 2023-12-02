@@ -14,40 +14,26 @@ document.addEventListener('DOMContentLoaded', function () {
     var changeCameraButton = document.getElementById('changeCameraButton');
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
-    var isFrontCamera = true;
     var videoStream;
 
     function startCamera() {
-        navigator.mediaDevices.enumerateDevices()
-            .then(function (devices) {
-                var videoDevices = devices.filter(device => device.kind === 'videoinput');
-                var constraints = {
-                    video: {
-                        deviceId: isFrontCamera ? { exact: videoDevices[0].deviceId } : { exact: videoDevices[1].deviceId }
-                    }
-                };
-
-                return navigator.mediaDevices.getUserMedia(constraints);
-            })
-            .then(function (stream) {
-                videoStream = stream;
-                video.srcObject = stream;
-            })
-            .catch(function (error) {
-                console.error('Error al acceder a la webcam: ', error);
-            });
-    }
-
-    function toggleCamera() {
-        if (videoStream) {
-            videoStream.getTracks().forEach(track => track.stop());
-        }
-        isFrontCamera = !isFrontCamera;
-        startCamera();
+        navigator.mediaDevices.getUserMedia({
+            video: {
+                facingMode: { exact: 'environment' } // Esto seleccionará la cámara trasera
+            }
+        }).then(function (stream) {
+            videoStream = stream;
+            video.srcObject = stream;
+        }).catch(function (error) {
+            console.error('Error al acceder a la cámara trasera: ', error);
+        });
     }
 
     changeCameraButton.addEventListener('click', function () {
-        toggleCamera();
+        if (videoStream) {
+            videoStream.getTracks().forEach(track => track.stop());
+        }
+        startCamera();
     });
 
     captureButton.addEventListener('click', function () {

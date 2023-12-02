@@ -9,6 +9,7 @@
     <h1>Webcam Capture</h1>
     <video id="video" width="640" height="480" autoplay></video>
     <button id="captureButton">Capturar Foto</button>
+    <button id="changeCameraButton">Cambiar Cámara</button>
     <canvas id="canvas" width="640" height="480"></canvas>
 
     <script src="{{ mix('js/app.js') }}"></script>

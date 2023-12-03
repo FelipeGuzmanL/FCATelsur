@@ -213,12 +213,12 @@ class CableController extends Controller
         $imagenBase64 = base64_encode($contenidoImagen);
 
         // Enviar la solicitud a la API de Flask
-        $response = Http::post('http://localhost:5000/procesar_imagen', [
+        $response = Http::post('http://127.0.0.1:5000/procesar_imagen', [
             'imagen' => $imagenBase64,
             'otroDato' => 'valor', // Puedes enviar otros datos si es necesario
         ]);
 
-        // Obtener la respuesta de la API de Flask
+        // Obtener la respuesta de la API de Flask/
         $datos = $response->json();
 
 

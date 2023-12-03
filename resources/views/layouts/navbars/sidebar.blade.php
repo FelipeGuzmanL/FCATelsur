@@ -77,6 +77,12 @@
             <p>{{ __('Etiquetas') }}</p>
         </a>
       </li>
+      <li class="nav-item{{ $activePage == 'escaner' ? ' active' : '' }}">
+        <a class="nav-link" href="{{ route('webcam')}}">
+          <i class="material-icons">photo_camera</i>
+            <p>{{ __('Escaner Etiquetas') }}</p>
+        </a>
+      </li>
       <!--li class="nav-item{{ $activePage == 'table' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('table') }}">
           <i class="material-icons">content_paste</i>

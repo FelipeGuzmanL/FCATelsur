@@ -28,6 +28,7 @@ return [
     */
     'allowed_methods' => ['*'],
 
+<<<<<<< HEAD
     /*
      * Matches the request origin. `['*']` allows all origins. Wildcards can be used, eg `*.mydomain.com`
      */
@@ -37,6 +38,11 @@ return [
      * Patterns that can be used with `preg_match` to match the origin.
      */
     'allowed_origins_patterns' => ['*'],
+=======
+    'allowed_origins' => ['http://localhost:8000'],
+
+    'allowed_origins_patterns' => ['*localhost*'],
+>>>>>>> c4c2c56cf27cd4cd6fa9d3eefb8f0278b7fe4fd9
 
     /*
      * Sets the Access-Control-Allow-Headers response header. `['*']` allows all headers.

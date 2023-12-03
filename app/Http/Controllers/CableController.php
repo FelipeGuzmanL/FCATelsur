@@ -12,6 +12,7 @@ use App\Models\TipoCable;
 use App\Models\Ubicacion;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Http;
 
 class CableController extends Controller
 {
@@ -192,10 +193,28 @@ class CableController extends Controller
 
     public function otraFuncion(Request $request)
     {
-        $datos = $request->query('datos');
-        //dd($datos['resultados'][0][1]);
-        //dd($datos['resultados'][0][0]);
-        //dd($datos);
+        // Ruta de la imagen en el directorio public/imagenes
+        $rutaImagen = public_path('imagenes/imagen.png');
+
+        // Verificar si la imagen existe
+        if (!file_exists($rutaImagen)) {
+            return response()->json(['error' => 'La imagen no existe'], 404);
+        }
+
+        // Cargar el contenido de la imagen
+        $contenidoImagen = file_get_contents($rutaImagen);
+
+        // Codificar la imagen en Base64
+        $imagenBase64 = base64_encode($contenidoImagen);
+
+        // Enviar la solicitud a la API de Flask
+        $response = Http::post('http://127.0.0.1:5000/procesar_imagen', [
+            'imagen' => $imagenBase64,
+            'otroDato' => 'valor', // Puedes enviar otros datos si es necesario
+        ]);
+
+        // Obtener la respuesta de la API de Flask
+        $datos = $response->json();
 
 
 

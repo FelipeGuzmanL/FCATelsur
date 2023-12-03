@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var captureButton = document.getElementById('captureButton');
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
+<<<<<<< HEAD
 
     navigator.mediaDevices.getUserMedia({
         video: true
@@ -39,6 +40,41 @@ document.addEventListener('DOMContentLoaded', function () {
         video.srcObject = stream;
     }).catch(function (error) {
         console.error('Error al acceder a la webcam: ', error);
+=======
+    var videoStream;
+    var isFrontCamera = true; // Variable que controla la orientación de la cámara
+
+    // Verificar la compatibilidad con la API mediaDevices
+    if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
+        console.log("La API mediaDevices está disponible");
+    }
+
+    // Solicitar permiso del usuario para acceder a la cámara
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function (stream) {
+            videoStream = stream;
+            video.srcObject = stream;
+
+            // Pausar el video para evitar la transmisión en vivo en iOS
+            video.pause();
+        })
+        .catch(function (error) {
+            console.error('Error al acceder a la webcam: ', error);
+        });
+
+    // Cambiar entre cámara frontal y trasera
+    changeCameraButton.addEventListener('click', function () {
+        if (videoStream) {
+            videoStream.getTracks().forEach(track => track.stop());
+        }
+        isFrontCamera = !isFrontCamera; // Alternar entre cámara frontal y trasera
+        var updatedConstraints = {
+            video: {
+                facingMode: isFrontCamera ? 'user' : 'environment'
+            }
+        };
+        startCamera(updatedConstraints);
+>>>>>>> c4c2c56cf27cd4cd6fa9d3eefb8f0278b7fe4fd9
     });
 
     captureButton.addEventListener('click', function () {
@@ -49,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var formData = new FormData();
         formData.append('imagen', dataURItoBlob(imageDataURL), 'captura.png');
 
+<<<<<<< HEAD
         axios.get('http://localhost:8000/flask', {
             withCredentials: true,
         });
@@ -62,6 +99,31 @@ document.addEventListener('DOMContentLoaded', function () {
             },
         }).then(function (response) {
             console.log('Respuesta del servidor:', response.data);
+=======
+    function startCamera(constraints) {
+        navigator.mediaDevices.getUserMedia(constraints)
+            .then(function (stream) {
+                videoStream = stream;
+                video.srcObject = stream;
+
+                // Pausar el video para evitar la transmisión en vivo en iOS
+                video.pause();
+            })
+            .catch(function (error) {
+                console.error('Error al acceder a la webcam: ', error);
+            });
+    }
+
+    function enviarImagenAlServidor(imageDataURL) {
+        // Realizar una solicitud POST a Laravel
+        console.log(imageDataURL);
+        axios.post('/procesar_imagen', {
+            imagen: imageDataURL
+        }).then(function (response) {
+            console.log('Respuesta del servidor:', response.data);
+            window.location.href = '/api/cable/otra-funcion';
+            // Puedes realizar acciones adicionales con la respuesta del servidor aquí
+>>>>>>> c4c2c56cf27cd4cd6fa9d3eefb8f0278b7fe4fd9
         }).catch(function (error) {
             console.error('Error al enviar la imagen al servidor:', error);
         });
@@ -82,6 +144,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+<<<<<<< HEAD
 
 /*document.addEventListener('DOMContentLoaded', function () {
     var video = document.getElementById('video');
@@ -140,6 +203,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });*/
 
+=======
+>>>>>>> c4c2c56cf27cd4cd6fa9d3eefb8f0278b7fe4fd9
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":

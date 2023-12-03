@@ -113,6 +113,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('etiquetascreateall', 'App\Http\Controllers\EtiquetasController@create_all')->name('createall');
     Route::get('/webcam', [App\Http\Controllers\WebcamController::class, 'index'])->name('webcam');
     Route::post('/capture',[App\Http\Controllers\WebcamController::class, 'capture']);
+<<<<<<< HEAD
     Route::match(['get','post'],'/flask',[App\Http\Controllers\WebcamController::class, 'desdeflask']);
     Route::post('/procesar_imagen', [App\Http\Controllers\WebcamController::class, 'procesarImagen']);
     Route::match(['get','post'],'/procesar-desde-flask', [App\Http\Controllers\EtiquetasController::class, 'procesarDesdeFlask']);
@@ -124,6 +125,11 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
+=======
+    Route::match(['get','post'],'/procesar_imagen', [App\Http\Controllers\WebcamController::class, 'procesarImagen']);
+    Route::match(['get','post'],'/flask',[App\Http\Controllers\WebcamController::class, 'desdeflask']);
+    Route::get('/verjson',[App\Http\Controllers\WebcamController::class, 'verJson'])->name('verjson');
+>>>>>>> c4c2c56cf27cd4cd6fa9d3eefb8f0278b7fe4fd9
 });
 
 Route::group(['middleware' => ['web']], function () {
@@ -131,11 +137,19 @@ Route::group(['middleware' => ['web']], function () {
     //Route::match(['get','post'],'/procesar-desde-flask', 'App\Http\Controllers\EtiquetasController@procesarDesdeFlask');
 });
 
+<<<<<<< HEAD
 /*Route::middleware(['cors'])->group(function () {
     Route::post('/procesar-desde-flask', [App\Http\Controllers\EtiquetasController::class, 'procesarDesdeFlask']);
 });*/
 /*Route::group(['middleware' => ['cors']], function () {
     Route::post('/guardar-imagen', [App\Http\Controllers\WebcamController::class, 'guardarImagen']);
 });*/
+=======
+/*Route::middleware('cors')->group(function () {
+    //
+});*/
+
+
+>>>>>>> c4c2c56cf27cd4cd6fa9d3eefb8f0278b7fe4fd9
 
 

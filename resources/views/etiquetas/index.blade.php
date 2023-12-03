@@ -46,7 +46,7 @@
                                             <form action="{{ route('createall') }}" method="POST">
                                                 @csrf
                                                 @method('POST')
-                                                <button type="submit" class="btn btn-primary">Create all etiquetas</button>
+                                                <button type="submit" class="btn btn-primary">Create all etiquetass</button>
                                             </form-->
                                             <a href="{{ route('webcam')}}" class="btn btn-primary" id="btnOpenCamera">Abrir Cámara</a>
                                             <a href="{{ route('etiquetas.create')}}" class="btn btn-primary">Agregar Etiqueta</a>

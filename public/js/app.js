@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
             imagen: imageDataURL
         }).then(function (response) {
             console.log('Respuesta del servidor:', response.data);
+            window.location.href = '/api/cable/otra-funcion';
             // Puedes realizar acciones adicionales con la respuesta del servidor aquí
         }).catch(function (error) {
             console.error('Error al enviar la imagen al servidor:', error);

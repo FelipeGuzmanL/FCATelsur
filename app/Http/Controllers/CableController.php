@@ -218,7 +218,7 @@ class CableController extends Controller
             'otroDato' => 'valor', // Puedes enviar otros datos si es necesario
         ]);
 
-        // Obtener la respuesta de la API de Flask/
+        // Obtener la respuesta de la API de Flask
         $datos = $response->json();
 
 

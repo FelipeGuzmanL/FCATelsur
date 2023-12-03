@@ -74,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function enviarImagenAlServidor(imageDataURL) {
         // Realizar una solicitud POST a Laravel
+        console.log(imageDataURL);
         axios.post('/procesar_imagen', {
             imagen: imageDataURL
         }).then(function (response) {

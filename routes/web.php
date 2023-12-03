@@ -111,15 +111,31 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/api/cable/otra-funcion', [App\Http\Controllers\CableController::class, 'otraFuncion'])->name('otraFuncion');
     Route::delete('destroyall', 'App\Http\Controllers\EtiquetasController@destroy_all')->name('destroyall');
     Route::post('etiquetascreateall', 'App\Http\Controllers\EtiquetasController@create_all')->name('createall');
-    Route::get('/webcam', [App\Http\Controllers\WebcamController::class, 'index']);
+    Route::get('/webcam', [App\Http\Controllers\WebcamController::class, 'index'])->name('webcam');
     Route::post('/capture',[App\Http\Controllers\WebcamController::class, 'capture']);
+    Route::match(['get','post'],'/flask',[App\Http\Controllers\WebcamController::class, 'desdeflask']);
     Route::post('/procesar_imagen', [App\Http\Controllers\WebcamController::class, 'procesarImagen']);
+    Route::match(['get','post'],'/procesar-desde-flask', [App\Http\Controllers\EtiquetasController::class, 'procesarDesdeFlask']);
+    Route::get('/verjsondesdeflask', [App\Http\Controllers\EtiquetasController::class, 'verjsondesdeflask']);
+    Route::match(['get','post'],'/procesar-imagen-laravel', [App\Http\Controllers\WebcamController::class, 'procesarImagenLaravel']);
+    Route::get('/cors-test', function() {
+        dd("This won't work");
+     });
+
+
 
 });
 
 Route::group(['middleware' => ['web']], function () {
     Route::match(['post','get'],'/api/cable', 'App\Http\Controllers\CableController@procesarDatosDesdePython')->name('apiCable');
+    //Route::match(['get','post'],'/procesar-desde-flask', 'App\Http\Controllers\EtiquetasController@procesarDesdeFlask');
 });
 
+/*Route::middleware(['cors'])->group(function () {
+    Route::post('/procesar-desde-flask', [App\Http\Controllers\EtiquetasController::class, 'procesarDesdeFlask']);
+});*/
+/*Route::group(['middleware' => ['cors']], function () {
+    Route::post('/guardar-imagen', [App\Http\Controllers\WebcamController::class, 'guardarImagen']);
+});*/
 
 

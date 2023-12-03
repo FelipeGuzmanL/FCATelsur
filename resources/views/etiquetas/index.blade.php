@@ -47,8 +47,13 @@
                                                 @csrf
                                                 @method('POST')
                                                 <button type="submit" class="btn btn-primary">Create all etiquetas</button>
+<<<<<<< HEAD
                                             </form-->
                                             <a href="{{ route('apiCable')}}" class="btn btn-primary" id="btnOpenCamera">Abrir Cámara</a>
+=======
+                                            </form>
+                                            <a href="{{ route('webcam')}}" class="btn btn-primary" id="btnOpenCamera">Abrir Cámara</a>
+>>>>>>> refs/remotes/origin/main
                                             <a href="{{ route('etiquetas.create')}}" class="btn btn-primary">Agregar Etiqueta</a>
                                             <a href="{{ route('etiquetas.export')}}" class="btn btn-success">Exportar a Excel</a>
                                         </div>

@@ -111,15 +111,21 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/api/cable/otra-funcion', [App\Http\Controllers\CableController::class, 'otraFuncion'])->name('otraFuncion');
     Route::delete('destroyall', 'App\Http\Controllers\EtiquetasController@destroy_all')->name('destroyall');
     Route::post('etiquetascreateall', 'App\Http\Controllers\EtiquetasController@create_all')->name('createall');
-    Route::get('/webcam', [App\Http\Controllers\WebcamController::class, 'index']);
+    Route::get('/webcam', [App\Http\Controllers\WebcamController::class, 'index'])->name('webcam');
     Route::post('/capture',[App\Http\Controllers\WebcamController::class, 'capture']);
-    Route::post('/procesar_imagen', [App\Http\Controllers\WebcamController::class, 'procesarImagen']);
-
+    Route::match(['get','post'],'/procesar_imagen', [App\Http\Controllers\WebcamController::class, 'procesarImagen']);
+    Route::match(['get','post'],'/flask',[App\Http\Controllers\WebcamController::class, 'desdeflask']);
+    Route::get('/verjson',[App\Http\Controllers\WebcamController::class, 'verJson'])->name('verjson');
 });
 
 Route::group(['middleware' => ['web']], function () {
     Route::match(['post','get'],'/api/cable', 'App\Http\Controllers\CableController@procesarDatosDesdePython')->name('apiCable');
 });
+
+/*Route::middleware('cors')->group(function () {
+    //
+});*/
+
 
 
 

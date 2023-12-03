@@ -23,6 +23,9 @@
                 <div class="mt-3">
                     <button id="changeCameraButton" class="btn btn-secondary">Cambiar Cámara</button>
                 </div>
+                <div class="mt-3">
+                    <a href="{{ url()->previous() }}" class="btn btn-primary">Volver</a>
+                  </div>
                 <div class="embed-responsive embed-responsive-16by9">
                     <canvas id="canvas" class="mt-3" width="640" height="480"></canvas>
                 </div>

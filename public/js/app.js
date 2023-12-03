@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
     var videoStream;
+    var isFrontCamera = true; // Variable que controla la orientación de la cámara
 
     // Verificar la compatibilidad con la API mediaDevices
     if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
@@ -36,9 +37,10 @@ document.addEventListener('DOMContentLoaded', function () {
         if (videoStream) {
             videoStream.getTracks().forEach(track => track.stop());
         }
+        isFrontCamera = !isFrontCamera; // Alternar entre cámara frontal y trasera
         var updatedConstraints = {
             video: {
-                facingMode: isFrontCamera ? 'environment' : 'user'
+                facingMode: isFrontCamera ? 'user' : 'environment'
             }
         };
         startCamera(updatedConstraints);
@@ -77,6 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
 
 /***/ }),
 

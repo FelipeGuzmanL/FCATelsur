@@ -42,7 +42,6 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error('Error al acceder a la webcam: ', error);
 =======
     var videoStream;
-    var isFrontCamera = true; // Variable que controla la orientación de la cámara
 
     // Verificar la compatibilidad con la API mediaDevices
     if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
@@ -67,10 +66,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if (videoStream) {
             videoStream.getTracks().forEach(track => track.stop());
         }
-        isFrontCamera = !isFrontCamera; // Alternar entre cámara frontal y trasera
         var updatedConstraints = {
             video: {
-                facingMode: isFrontCamera ? 'user' : 'environment'
+                facingMode: isFrontCamera ? 'environment' : 'user'
             }
         };
         startCamera(updatedConstraints);

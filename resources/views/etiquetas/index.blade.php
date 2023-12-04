@@ -46,8 +46,16 @@
                                             <form action="{{ route('createall') }}" method="POST">
                                                 @csrf
                                                 @method('POST')
+<<<<<<< HEAD
                                                 <button type="submit" class="btn btn-primary">Create all etiquetass</button>
+=======
+                                                <button type="submit" class="btn btn-primary">Create all etiquetas</button>
+<<<<<<< HEAD
+                                            </form>
+=======
+>>>>>>> 89a433ec427b04a3981fc8357bdf762a83be1a60
                                             </form-->
+>>>>>>> c4c2c56cf27cd4cd6fa9d3eefb8f0278b7fe4fd9
                                             <a href="{{ route('webcam')}}" class="btn btn-primary" id="btnOpenCamera">Abrir Cámara</a>
                                             <a href="{{ route('etiquetas.create')}}" class="btn btn-primary">Agregar Etiqueta</a>
                                             <a href="{{ route('etiquetas.export')}}" class="btn btn-success">Exportar a Excel</a>

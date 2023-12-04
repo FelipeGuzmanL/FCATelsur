@@ -38,7 +38,7 @@
                                     @endif
                                     <div class="row">
                                         <div class="col-12 text-right">
-                                            <form action="{{ route('destroyall') }}" method="POST">
+                                            <!--form action="{{ route('destroyall') }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">Eliminar Etiquetas</button>
@@ -47,7 +47,11 @@
                                                 @csrf
                                                 @method('POST')
                                                 <button type="submit" class="btn btn-primary">Create all etiquetas</button>
+<<<<<<< HEAD
                                             </form>
+=======
+                                            </form-->
+>>>>>>> c4c2c56cf27cd4cd6fa9d3eefb8f0278b7fe4fd9
                                             <a href="{{ route('webcam')}}" class="btn btn-primary" id="btnOpenCamera">Abrir Cámara</a>
                                             <a href="{{ route('etiquetas.create')}}" class="btn btn-primary">Agregar Etiqueta</a>
                                             <a href="{{ route('etiquetas.export')}}" class="btn btn-success">Exportar a Excel</a>

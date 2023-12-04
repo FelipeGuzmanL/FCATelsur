@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
+<<<<<<< HEAD
+    <h1>Webcam Capture</h1>
+    <video id="video" width="640" height="480" autoplay></video>
+    <button id="captureButton">Capturar Foto</button>
+    <canvas id="canvas" width="640" height="480"></canvas>
+=======
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
@@ -32,6 +38,7 @@
             </div>
         </div>
     </div>
+>>>>>>> c4c2c56cf27cd4cd6fa9d3eefb8f0278b7fe4fd9
 
     <script src="{{ mix('js/app.js') }}"></script>
     <!-- Agrega el enlace a Bootstrap JS y Popper.js -->

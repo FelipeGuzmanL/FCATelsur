@@ -8,39 +8,12 @@
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
-function getCookie(name) {
-    var value = "; " + document.cookie;
-    var parts = value.split("; " + name + "=");
-    if (parts.length == 2) return parts.pop().split(";").shift();
-}
-function getCsrfToken() {
-    // Intenta obtener el token de la cookie
-    var token = getCookie('XSRF-TOKEN');
-
-    // Si no está presente, intenta obtenerlo de la etiqueta meta
-    if (!token) {
-        var metaTag = document.head.querySelector('meta[name="csrf-token"]');
-        if (metaTag) {
-            token = metaTag.content;
-        }
-    }
-
-    return token;
-}
 document.addEventListener('DOMContentLoaded', function () {
     var video = document.getElementById('video');
     var captureButton = document.getElementById('captureButton');
+    var changeCameraButton = document.getElementById('changeCameraButton');
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
-<<<<<<< HEAD
-
-    navigator.mediaDevices.getUserMedia({
-        video: true
-    }).then(function (stream) {
-        video.srcObject = stream;
-    }).catch(function (error) {
-        console.error('Error al acceder a la webcam: ', error);
-=======
     var videoStream;
     var isFrontCamera = true; // Variable que controla la orientación de la cámara
 
@@ -74,32 +47,17 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         };
         startCamera(updatedConstraints);
->>>>>>> c4c2c56cf27cd4cd6fa9d3eefb8f0278b7fe4fd9
     });
 
+    // Capturar una foto
     captureButton.addEventListener('click', function () {
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
         var imageDataURL = canvas.toDataURL('image/png');
 
-        // Crear un objeto FormData y agregar la imagen
-        var formData = new FormData();
-        formData.append('imagen', dataURItoBlob(imageDataURL), 'captura.png');
+        // Enviar la imagen al controlador de Laravel
+        enviarImagenAlServidor(imageDataURL);
+    });
 
-<<<<<<< HEAD
-        axios.get('http://localhost:8000/flask', {
-            withCredentials: true,
-        });
-
-        // Realizar una solicitud POST a la API de Laravel
-        axios.post('http://localhost:8000/guardar-imagen', formData, {
-            withCredentials: true,
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'X-XSRF-TOKEN': getCsrfToken(),
-            },
-        }).then(function (response) {
-            console.log('Respuesta del servidor:', response.data);
-=======
     function startCamera(constraints) {
         navigator.mediaDevices.getUserMedia(constraints)
             .then(function (stream) {
@@ -123,88 +81,14 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('Respuesta del servidor:', response.data);
             window.location.href = '/api/cable/otra-funcion';
             // Puedes realizar acciones adicionales con la respuesta del servidor aquí
->>>>>>> c4c2c56cf27cd4cd6fa9d3eefb8f0278b7fe4fd9
         }).catch(function (error) {
             console.error('Error al enviar la imagen al servidor:', error);
         });
-    });
-
-    function dataURItoBlob(dataURI) {
-        // Convierte una cadena de datos URI a un objeto Blob
-        var byteString = atob(dataURI.split(',')[1]);
-        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-        var ab = new ArrayBuffer(byteString.length);
-        var ia = new Uint8Array(ab);
-        for (var i = 0; i < byteString.length; i++) {
-            ia[i] = byteString.charCodeAt(i);
-        }
-        return new Blob([ab], { type: mimeString });
     }
 });
 
 
 
-<<<<<<< HEAD
-
-/*document.addEventListener('DOMContentLoaded', function () {
-    var video = document.getElementById('video');
-    var captureButton = document.getElementById('captureButton');
-    var canvas = document.getElementById('canvas');
-    var context = canvas.getContext('2d');
-
-    navigator.mediaDevices.getUserMedia({
-        video: true
-    }).then(function (stream) {
-        video.srcObject = stream;
-    }).catch(function (error) {
-        console.error('Error al acceder a la webcam: ', error);
-    });
-
-    captureButton.addEventListener('click', function () {
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        var imageDataURL = canvas.toDataURL('image/png');
-
-        // Crear un objeto FormData y agregar la imagen
-        var formData = new FormData();
-        formData.append('imagen', dataURItoBlob(imageDataURL), 'captura.png');
-
-        // Realizar una solicitud POST a la API de Flask
-        axios.post('http://localhost:5000/procesar_imagen', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        }).then(function (response) {
-            console.log('Respuesta del servidor:', response.data);
-
-            /* Nueva solicitud para enviar data a Laravel
-            axios.post('http://localhost:8000/procesar-desde-flask', {
-                dataFromFlask: response.data,
-            }).then(function (laravelResponse) {
-                console.log('Respuesta desde Laravel:', laravelResponse.data);
-                // Puedes realizar acciones adicionales con la respuesta de Laravel aquí
-            }).catch(function (error) {
-                console.error('Error al enviar datos a Laravel:', error);
-            });
-        }).catch(function (error) {
-            console.error('Error al enviar la imagen al servidor:', error);
-        });
-    });
-
-    function dataURItoBlob(dataURI) {
-        // Convierte una cadena de datos URI a un objeto Blob
-        var byteString = atob(dataURI.split(',')[1]);
-        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-        var ab = new ArrayBuffer(byteString.length);
-        var ia = new Uint8Array(ab);
-        for (var i = 0; i < byteString.length; i++) {
-            ia[i] = byteString.charCodeAt(i);
-        }
-        return new Blob([ab], { type: mimeString });
-    }
-});*/
-
-=======
->>>>>>> c4c2c56cf27cd4cd6fa9d3eefb8f0278b7fe4fd9
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":

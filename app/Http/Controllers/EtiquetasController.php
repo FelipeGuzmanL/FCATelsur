@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\EtiquetasExport;
 use App\Models\SlotMSAN;
-use Illuminate\Support\Facades\Log;
 use League\Csv\Writer;
 
 
@@ -234,27 +233,5 @@ class EtiquetasController extends Controller
         $output = shell_exec("python $scriptPath");
 
         return view('etiquetas.ejecutar_script', ['output' => $output]);
-    }
-    public function procesarDesdeFlask(Request $request)
-    {
-        // Accede al JSON enviado desde Flask
-        $jsonDesdeFlask = $request->json()->all();
-
-        // Registra el contenido del JSON en el log
-        Log::info('JSON recibido desde Flask:', $jsonDesdeFlask);
-
-        dd($request->json());
-
-        //$this->verjsondesdeflask($jsonDesdeFlask);
-
-        // Realiza cualquier acción que necesites con el JSON recibido
-        // ...
-
-        // Devuelve una respuesta (si es necesario)
-        return response()->json(['message' => 'Datos procesados correctamente en Laravel', 'datos' => $jsonDesdeFlask]);
-    }
-    public function verjsondesdeflask($json)
-    {
-        dd($json);
     }
 }

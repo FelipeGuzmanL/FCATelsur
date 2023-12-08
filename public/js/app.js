@@ -28,8 +28,6 @@ document.addEventListener('DOMContentLoaded', function () {
             videoStream = stream;
             video.srcObject = stream;
 
-            // Pausar el video para evitar la transmisión en vivo en iOS
-            video.pause();
         })
         .catch(function (error) {
             console.error('Error al acceder a la webcam: ', error);
@@ -63,9 +61,6 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(function (stream) {
                 videoStream = stream;
                 video.srcObject = stream;
-
-                // Pausar el video para evitar la transmisión en vivo en iOS
-                video.pause();
             })
             .catch(function (error) {
                 console.error('Error al acceder a la webcam: ', error);

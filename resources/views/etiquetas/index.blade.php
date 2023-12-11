@@ -36,6 +36,11 @@
                                             {{ session('warning') }}
                                         </div>
                                     @endif
+                                    @if (session('error'))
+                                        <div class="alert alert-danger" role="error">
+                                            {{ session('error') }}
+                                        </div>
+                                    @endif
                                     <div class="row">
                                         <div class="col-12 text-right">
                                             <!--form action="{{ route('destroyall') }}" method="POST">

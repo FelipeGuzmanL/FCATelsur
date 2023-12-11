@@ -200,7 +200,6 @@ class CableController extends Controller
         if (!file_exists($rutaImagen)) {
             return response()->json(['error' => 'La imagen no existe'], 404);
         }
-
         // Cargar el contenido de la imagen
         $contenidoImagen = file_get_contents($rutaImagen);
 
@@ -215,8 +214,6 @@ class CableController extends Controller
 
         // Obtener la respuesta de la API de Flask
         $datos = $response->json();
-
-
 
         //dd($nombreCable,$filamento);
 
@@ -241,9 +238,14 @@ class CableController extends Controller
                     dd('Error de lectura y/o no se encontró lo solicitado');
                 }
 
-                //dd($detalleCable->cable);
-                $etiqueta = $detalleCable->olt->etiqueta;
-                //dd($etiqueta);
+                if ($detalleCable->olt === null || $detalleCable->olt->etiqueta === null)
+                {
+                    //dd("Filamento no registrado o sin etiquetar, por favor verifique el cable {$nombreCable} y Filamento {$filamento}");
+                    return redirect()->route('etiquetas.index')->with('error','Filamento no registrado o sin etiquetar, por favor verifique el cable: '.$nombreCable.' y Filamento: '.$filamento);
+                }
+                else{
+                    $etiqueta = $detalleCable->olt->etiqueta;
+                }
 
                 if ($detalleCable != null && $datos['cable'][1][0] == 'FIL') {
                     // Se encontró un cable con el nombre de sitio
@@ -254,7 +256,8 @@ class CableController extends Controller
                 }
             }
             else{
-                dd('Error de lectura');
+                //dd('Error de lectura');
+                return redirect()->route('etiquetas.index')->with('error','Error en la lectura de la etiqueta');
             }
         }
         elseif(isset($datos['msan']))
@@ -269,7 +272,8 @@ class CableController extends Controller
             dd($olt);
         }
         else{
-            dd('Error en la lectura');
+            //dd('Error en la lectura');
+            return redirect()->route('etiquetas.index')->with('error','Error en la lectura de la etiqueta');
         }
     }
 }

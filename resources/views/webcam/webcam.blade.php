@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <h1>Escanear etiqueta</h1>
-                <h3>Coloque la etiqueta centrada en la imagen, y luego precione "Escanear"</h3>
+                <h3>Coloque la etiqueta centrada en la imagen, y luego presione "Escanear"</h3>
                 <div class="embed-responsive embed-responsive-16by9">
                     <!-- Agrega la clase embed-responsive-item a tu video -->
                     <video id="video" class="embed-responsive-item" autoplay playsinline></video>

@@ -209,7 +209,6 @@ class CableController extends Controller
         // Enviar la solicitud a la API de Flask
         $response = Http::post('http://127.0.0.1:5000/procesar_imagen', [
             'imagen' => $imagenBase64,
-            'otroDato' => 'valor', // Puedes enviar otros datos si es necesario
         ]);
 
         // Obtener la respuesta de la API de Flask

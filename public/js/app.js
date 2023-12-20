@@ -33,6 +33,17 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error al acceder a la webcam: ', error);
         });
 
+    function startCamera(constraints) {
+        navigator.mediaDevices.getUserMedia(constraints)
+            .then(function (stream) {
+                videoStream = stream;
+                video.srcObject = stream;
+            })
+            .catch(function (error) {
+                console.error('Error al acceder a la webcam: ', error);
+            });
+    }
+
     // Cambiar entre cámara frontal y trasera
     changeCameraButton.addEventListener('click', function () {
         if (videoStream) {
@@ -51,21 +62,9 @@ document.addEventListener('DOMContentLoaded', function () {
     captureButton.addEventListener('click', function () {
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
         var imageDataURL = canvas.toDataURL('image/png');
-
         // Enviar la imagen al controlador de Laravel
         enviarImagenAlServidor(imageDataURL);
     });
-
-    function startCamera(constraints) {
-        navigator.mediaDevices.getUserMedia(constraints)
-            .then(function (stream) {
-                videoStream = stream;
-                video.srcObject = stream;
-            })
-            .catch(function (error) {
-                console.error('Error al acceder a la webcam: ', error);
-            });
-    }
 
     function enviarImagenAlServidor(imageDataURL) {
         // Realizar una solicitud POST a Laravel
@@ -75,7 +74,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }).then(function (response) {
             console.log('Respuesta del servidor:', response.data);
             window.location.href = '/api/cable/otra-funcion';
-            // Puedes realizar acciones adicionales con la respuesta del servidor aquí
         }).catch(function (error) {
             console.error('Error al enviar la imagen al servidor:', error);
         });

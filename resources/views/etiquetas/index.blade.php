@@ -36,6 +36,11 @@
                                             {{ session('warning') }}
                                         </div>
                                     @endif
+                                    @if (session('error'))
+                                        <div class="alert alert-danger" role="error">
+                                            {{ session('error') }}
+                                        </div>
+                                    @endif
                                     <div class="row">
                                         <div class="col-12 text-right">
                                             <!--form action="{{ route('destroyall') }}" method="POST">
@@ -46,7 +51,17 @@
                                             <form action="{{ route('createall') }}" method="POST">
                                                 @csrf
                                                 @method('POST')
+<<<<<<< HEAD
                                                 <button type="submit" class="btn btn-primary">Create all etiquetass</button>
+=======
+                                                <button type="submit" class="btn btn-primary">Create all etiquetas</button>
+<<<<<<< HEAD
+<<<<<<< HEAD
+                                            </form>
+=======
+>>>>>>> 89a433ec427b04a3981fc8357bdf762a83be1a60
+=======
+>>>>>>> parent of 89a433e (Merge branch 'main' of https://github.com/)
                                             </form-->
                                             <a href="{{ route('webcam')}}" class="btn btn-primary" id="btnOpenCamera">Abrir Cámara</a>
                                             <a href="{{ route('etiquetas.create')}}" class="btn btn-primary">Agregar Etiqueta</a>

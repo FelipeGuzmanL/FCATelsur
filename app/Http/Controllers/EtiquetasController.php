@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\EtiquetasExport;
+use App\Models\EquiposMSAN;
 use App\Models\SlotMSAN;
 use League\Csv\Writer;
 
@@ -112,8 +113,17 @@ class EtiquetasController extends Controller
     public function show_filamento(Etiquetas $etiqueta)
     {
         $id_cable = $etiqueta->cable->id;
-        $detalle = DetalleCable::where('id_cable', $id_cable)->where('filamento',$etiqueta->filam)->get();
-        return view('etiquetas.show_filamento', compact('etiqueta','detalle'));
+        $detalles = DetalleCable::where('id_cable', $id_cable)->where('filamento',$etiqueta->filam)->get();
+        if ($detalles[0]->olt)
+        {
+            $existe_olt = True;
+            return view('etiquetas.show_filamento', compact('etiqueta','detalles','existe_olt'));
+        }
+        else
+        {
+            $existe_olt = False;
+            return view('etiquetas.show_filamento', compact('etiqueta','detalles', 'existe_olt'));
+        }
     }
 
     /**

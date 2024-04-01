@@ -56,7 +56,7 @@
                                                 <th class="text-right">Acciones</th>
                                             </thead>
                                             <tbody>
-                                                @foreach ($mufas as $mufa)
+                                                @foreach ($cable->mufas as $mufa)
                                                 <tr>
                                                     <td>{{ $mufa->item}}</td>
                                                     <td>{{ $mufa->distancia_k}}</td>

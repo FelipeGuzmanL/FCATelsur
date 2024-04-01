@@ -69,7 +69,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('sitios/{sitios}/cables', [App\Http\Controllers\SitiosController::class, 'index_cable'])->name('sitios.index_cable');
     Route::get('sitios/{sitios}/equiposmsan', [App\Http\Controllers\SitiosController::class, 'index_equipo'])->name('sitios.index_equipo');
 	Route::resource('mantenciones', \App\Http\Controllers\MantencionesController::class);
-	//Route::get('mantencionesmsan',[App\Http\Controllers\MantencionesController::class, 'index_msan'])->name('mantenciones.index_msan');
 	Route::get('mantencionesmsan', ['as' => 'index_msan.index', 'uses' => 'App\Http\Controllers\MantencionesController@index_msan']);
 	Route::get('mantencionesmsan/{equipo}/msan', [App\Http\Controllers\MantencionesController::class, 'index_msan_mantencion'])->name('mantenciones.index_msan_mantencion');
 	Route::resource('equiposmsan.mantencionesmsan', \App\Http\Controllers\MantencionesMSANController::class);
@@ -92,9 +91,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('cable/{mufa}/alertasmufas', [App\Http\Controllers\AlertaController::class, 'destroy_mufas'])->name('mufas.destroy_mufa');
 	Route::resource('etiquetas',App\Http\Controllers\EtiquetasController::class);
     Route::get('etiquetas/{etiqueta}/show', [App\Http\Controllers\EtiquetasController::class, 'show_filamento'])->name('etiquetas.show_filamento');
-    //Route::get('etiquetas/export', [EtiquetasController::class, 'export'])->name('etiquetas.export');
-    //Route::get('/etiquetas/export', 'EtiquetasController@export')->name('etiquetas.export');
-    //Route::get('etiquetas/export', 'App\Http\Controllers\EtiquetasController@export')->name('etiquetas.export');
     Route::get('/exportar-etiquetas', [EtiquetasController::class, 'export'])->name('etiquetas.export');
     Route::get('crearetiqueta/{equipo}/{slot}/{olt}', [App\Http\Controllers\SlotMSANController::class, 'crear_etiqueta'])->name('olt.crearetiqueta');
     Route::get('actualizaretiqueta/{equipo}/{slot}/{olt}/{etiquetas}', [App\Http\Controllers\SlotMSANController::class, 'actualizar_etiqueta'])->name('olt.actualizaretiqueta');
@@ -104,10 +100,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/etiquetas/ejecutar-script', 'EtiquetasController@ejecutarScript')->name('etiquetas.ejecutar-script');
     Route::get('/alertasolt', [App\Http\Controllers\AlertaController::class, 'index_olt'])->name('alertas.index_olt');
     Route::get('capacidadcables', [App\Http\Controllers\AlertaController::class, 'index_capacidadcables'])->name('alertas.index_capacidadcables');
-    #Route::post('/api/cable', [App\Http\Controllers\CableController::class, 'procesarDatosDesdePython']);
-    #Route::match(['get', 'post'],'/api/cable', [App\Http\Controllers\CableController::class, 'procesarDatosDesdePython']);
-    #Route::get('/api/cable/otra-funcion', [App\Http\Controllers\CableController::class, 'otraFuncion'])->name('otraFuncion');
-    #Route::post('/api/cable', 'App\Http\Controllers\CableController@procesarDatosDesdePython');
     Route::get('/api/cable/otra-funcion', [App\Http\Controllers\CableController::class, 'otraFuncion'])->name('otraFuncion');
     Route::delete('destroyall', 'App\Http\Controllers\EtiquetasController@destroy_all')->name('destroyall');
     Route::post('etiquetascreateall', 'App\Http\Controllers\EtiquetasController@create_all')->name('createall');

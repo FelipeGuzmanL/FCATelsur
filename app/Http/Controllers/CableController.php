@@ -193,10 +193,6 @@ class CableController extends Controller
 
     public function otraFuncion(Request $request)
     {
-        //$datos = $request->query('datos');
-        //dd($datos['resultados'][0][1]);
-        //dd($datos['resultados'][0][0]);
-        //dd($datos);\
 
         // Ruta de la imagen en el directorio public/imagenes
         $rutaImagen = public_path('imagenes/imagen.png');

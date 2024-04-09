@@ -144,7 +144,7 @@ class AlertaController extends Controller
     {
         $cable = $mufa->cable;
         $alerta = Alerta::create(array_merge($request->only('id_mufa','id_gravedad','observacion'),['id_mufa'=>$mufa->id,'id_gravedad'=>$request->id_gravedad]));
-        return redirect()->route('cable.mufas.index', [$cable, $mufa])->with('warning','Alerta de la mufa creada correctamente.');
+        return redirect()->route('mufas.index_cable', [$cable, $mufa])->with('warning','Alerta de la mufa creada correctamente.');
     }
 
     /**
@@ -239,6 +239,6 @@ class AlertaController extends Controller
         $cable = $mufa->cable;
         $alerta = $mufa->alerta;
         $alerta->delete();
-        return redirect()->route('cable.mufas.index', [$cable, $mufa])->with('warning','Alerta de la mufa eliminada correctamente.');
+        return redirect()->route('mufas.index_cable', [$cable, $mufa])->with('warning','Alerta de la mufa eliminada correctamente.');
     }
 }

@@ -16,23 +16,55 @@ class MufasController extends Controller
      */
     public function index(Cable $cable, Request $request)
     {
+        $ordenamiento = $request->input('ordenamiento', 'asc'); // Obtiene el valor del ordenamiento del formulario, por defecto 'asc'
+
         if ($request) {
             $texto = trim($request->get('texto'));
-            $mufas = Mufa::WhereRaw('UPPER(distancia_k) LIKE ?', ['%' . strtoupper($texto) . '%'])
-            ->orWhereRaw('UPPER(ruta5_k) LIKE ?', ['%' . strtoupper($texto) . '%'])
-            ->orWhereRaw('UPPER(ubicacion) LIKE ?', ['%' . strtoupper($texto) . '%'])
-            ->orWhereRaw('UPPER(latitud) LIKE ?', ['%' . strtoupper($texto) . '%'])
-            ->orWhereRaw('UPPER(longitud) LIKE ?', ['%' . strtoupper($texto) . '%'])
-            ->orWhereRaw('UPPER(fecha) LIKE ?', ['%' . strtoupper($texto) . '%'])
-            ->orWhere('item','LIKE','%'.$texto.'%')
-            ->orderBy('id','asc')
-            ->paginate(15);
+            $mufas = Mufa::whereRaw('UPPER(distancia_k) LIKE ?', ['%' . strtoupper($texto) . '%'])
+                ->orWhereRaw('UPPER(ruta5_k) LIKE ?', ['%' . strtoupper($texto) . '%'])
+                ->orWhereRaw('UPPER(ubicacion) LIKE ?', ['%' . strtoupper($texto) . '%'])
+                ->orWhereRaw('UPPER(latitud) LIKE ?', ['%' . strtoupper($texto) . '%'])
+                ->orWhereRaw('UPPER(longitud) LIKE ?', ['%' . strtoupper($texto) . '%'])
+                ->orWhereRaw('UPPER(fecha) LIKE ?', ['%' . strtoupper($texto) . '%'])
+                ->orWhere('atenuacion','LIKE','%'.$texto.'%')
+                ->orderBy('distancia_k', $ordenamiento) // Ordena por la columna distancia_k utilizando el valor de la variable $ordenamiento
+                ->paginate(15);
 
             return view('mufas.index', compact('cable'), ['mufas' => $mufas, 'texto' => $texto]);
         }
         $mufas = Mufa::where('id_cable',$cable->id)->paginate(15);
         return view('mufas.index', compact('cable','mufas'));
     }
+
+    public function index_cable(Cable $cable, Request $request)
+    {
+        $ordenamiento = $request->input('ordenamiento', 'asc'); // Obtener el valor del ordenamiento del formulario, por defecto 'asc'
+
+        if ($request->has('texto')) {
+            $texto = trim($request->get('texto'));
+
+            $mufas = Mufa::where(function($query) use ($texto) {
+                $query->whereRaw('UPPER(distancia_k) LIKE ?', ['%' . strtoupper($texto) . '%'])
+                    ->orWhereRaw('UPPER(ruta5_k) LIKE ?', ['%' . strtoupper($texto) . '%'])
+                    ->orWhereRaw('UPPER(ubicacion) LIKE ?', ['%' . strtoupper($texto) . '%'])
+                    ->orWhereRaw('UPPER(latitud) LIKE ?', ['%' . strtoupper($texto) . '%'])
+                    ->orWhereRaw('UPPER(longitud) LIKE ?', ['%' . strtoupper($texto) . '%'])
+                    ->orWhereRaw('UPPER(fecha) LIKE ?', ['%' . strtoupper($texto) . '%'])
+                    ->orWhere('atenuacion', 'LIKE', '%' . $texto . '%');
+            })
+            ->orderBy('distancia_k', $ordenamiento)
+            ->paginate(15);
+
+            return view('mufas.mufa_cable', compact('cable'), ['mufas' => $mufas, 'texto' => $texto]);
+        }
+
+        $mufas = Mufa::where('id_cable', $cable->id)
+            ->orderBy('distancia_k', $ordenamiento)
+            ->paginate(15);
+
+        return view('mufas.mufa_cable', compact('cable', 'mufas'));
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -52,8 +84,8 @@ class MufasController extends Controller
      */
     public function store(Request $request, Cable $cable)
     {
-        $mufa = Mufa::create(array_merge($request->only('id_cable','item','distancia_k','ruta5_k','ubicacion','latitud','longitud','observaciones','link_gmaps','fecha'),['id_cable'=>$cable->id]));
-        return redirect()->route('cable.mufas.index',$cable)->with('success','Mufa creada correctamente');
+        $mufa = Mufa::create(array_merge($request->only('id_cable','atenuacion','distancia_k','ruta5_k','ubicacion','latitud','longitud','observaciones','link_gmaps','fecha'),['id_cable'=>$cable->id]));
+        return redirect()->route('mufas.index_cable',$cable)->with('success','Mufa creada correctamente');
     }
 
     /**
@@ -87,8 +119,8 @@ class MufasController extends Controller
      */
     public function update(Request $request, Cable $cable, Mufa $mufa)
     {
-        $mufa->update(array_merge($request->only('id_cable','item','distancia_k','ruta5_k','ubicacion','latitud','longitud','observaciones','link_gmaps','fecha'),['id_cable'=>$cable->id]));
-        return redirect()->route('cable.mufas.index',$cable)->with('success','Mufa actualizada correctamente');
+        $mufa->update(array_merge($request->only('id_cable','atenuacion','distancia_k','ruta5_k','ubicacion','latitud','longitud','observaciones','link_gmaps','fecha'),['id_cable'=>$cable->id]));
+        return redirect()->route('mufas.index_cable',$cable)->with('success','Mufa actualizada correctamente');
     }
 
     /**
@@ -100,6 +132,6 @@ class MufasController extends Controller
     public function destroy(Cable $cable, Mufa $mufa)
     {
         $mufa->delete();
-        return redirect()->route('cable.mufas.index', $cable)->with('warning','Mufa eliminada correctamente.');
+        return redirect()->route('mufas.index_cable', $cable)->with('warning','Mufa eliminada correctamente.');
     }
 }

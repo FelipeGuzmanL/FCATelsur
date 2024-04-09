@@ -15,7 +15,7 @@ use App\Http\Controllers\EtiquetasController;
 */
 
 Route::get('/', function () {
-    //return view('welcome');
+    //return view('dashboard');
     return redirect()->route('login');
 });
 Auth::routes();
@@ -83,6 +83,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('todaslasmantencionesmsan', [App\Http\Controllers\MantencionesController::class, 'index_todaslasmantenciones'])->name('mantencionesmsan.index_todaslasmantenciones');
 	Route::resource('cablestroncales', App\Http\Controllers\CablesTroncalesController::class);
     Route::resource('cable.mufas', App\Http\Controllers\MufasController::class);
+	Route::resource('mufas', App\Http\Controllers\MufasController::class);
+	Route::get('cable/{cable}/mufas', [App\Http\Controllers\MufasController::class, 'index_cable'])->name('mufas.index_cable');
     Route::get('cable/{alerta}/alertasmufasedit', [App\Http\Controllers\AlertaController::class, 'edit_mufas'])->name('mufas.edit_mufa');
     Route::put('cable/{alerta}/alertasmufasedit', [App\Http\Controllers\AlertaController::class, 'update_mufas'])->name('mufas.update_mufa');
     Route::get('cable/{mufa}/alertasmufascreate', [App\Http\Controllers\AlertaController::class, 'create_mufas'])->name('mufas.create_mufa');

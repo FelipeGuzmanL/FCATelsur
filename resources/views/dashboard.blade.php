@@ -33,22 +33,33 @@
           </div>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card card-stats">
-            <div class="card-header card-header-success card-header-icon">
-              <div class="card-icon">
-                <i class="material-icons">engineering</i>
+            <div class="card card-stats">
+              <div class="card-header card-header-warning card-header-icon">
+                <div class="card-icon">
+                  <i class="material-icons">cable</i>
+                </div>
+                <p class="card-category">Alertas Mufas</p>
+                <h3 class="card-title">
+                  @if (count($alertasMufas) > 0)
+                      {{count($alertasMufas)}}
+                      @if (count($alertasMufas)>1)
+                          <small>Alertas</small>
+                      @elseif (count($alertasMufas)==1)
+                          <small>Alerta</small>
+                      @endif
+                  @else
+                      <small>Sin Alertas</small>
+                  @endif
+                </h3>
               </div>
-              <p class="card-category"></p>
-              <h3 class="card-title">Historial Mantenciones</h3>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="material-icons text-success">engineering</i>
-                <a href="{{ route('mantencionesmsan.index_todaslasmantenciones')}}">Todos los mantenimientos</a>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons text-danger">warning</i>
+                  <a href="#">Ver todas las alertas de Mufas</a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
             <div class="card-header card-header-warning card-header-icon">
@@ -79,9 +90,9 @@
         </div>
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
-            <div class="card-header card-header-info card-header-icon">
+            <div class="card-header card-header-warning card-header-icon">
               <div class="card-icon">
-                <i class="fa fa-twitter"></i>
+                <i class="material-icons">cable</i>
               </div>
               <p class="card-category">Capacidad Cables</p>
               <h3 class="card-title">

@@ -5,7 +5,7 @@
       <script>
         document.write(new Date().getFullYear())
       </script>, desarrollado por
-      <a href="https://www.felipeguzman.cl" target="_blank">Felipe Guzmán.</a>
+      <a href="https://www.felipeguzmansolutions.com" target="_blank">Felipe Guzmán.</a>
     </div>
   </div>
 </footer>

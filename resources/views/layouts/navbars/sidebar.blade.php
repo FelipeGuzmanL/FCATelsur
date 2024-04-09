@@ -17,30 +17,6 @@
             <p>{{ __('Dashboard') }}</p>
         </a>
       </li>
-      <!--li class="nav-item {{ ($activePage == 'profile' || $activePage == 'user-management') ? ' active' : '' }}">
-        <a class="nav-link" data-toggle="collapse" href="#laravelExample" aria-expanded="true">
-          <i><img style="width:25px" src="{{ asset('material') }}/img/laravel.svg"></i>
-          <p>{{ __('Laravel Examples') }}
-            <b class="caret"></b>
-          </p>
-        </a>
-        <div class="collapse show" id="laravelExample">
-          <ul class="nav">
-            <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-              <a class="nav-link" href="{{ route('profile.edit') }}">
-                <span class="sidebar-mini"> UP </span>
-                <span class="sidebar-normal">{{ __('User profile') }} </span>
-              </a>
-            </li>
-            <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-              <a class="nav-link" href="{{ route('user.index') }}">
-                <span class="sidebar-mini"> UM </span>
-                <span class="sidebar-normal"> {{ __('User Management') }} </span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </li-->
       <li class="nav-item{{ $activePage == 'sitios' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('sitios.index') }}">
           <i class="material-icons">location_on</i>
@@ -53,12 +29,38 @@
             <p>{{ __('Cables') }}</p>
         </a>
       </li>
-      <li class="nav-item{{ $activePage == 'cablestroncales' ? ' active' : '' }}">
+      <li class="nav-item {{ ($activePage == 'cablestroncales' || $activePage == 'mufas') ? ' active' : '' }}">
+        <a class="nav-link" data-toggle="collapse" href="#laravelExample" aria-expanded="true">
+          <i class="material-icons">cable</i>
+          <p class="{{ ($activePage == 'cablestroncales' || $activePage == 'mufas') ? ' active' : '' }}">{{ __('Troncales') }}
+            <b class="caret"></b>
+          </p>
+        </a>
+        <div class="collapse" id="laravelExample">
+          <ul class="nav">
+            <li class="nav-item{{ $activePage == 'cablestroncales' ? ' active' : '' }}">
+              <a class="nav-link" href="{{ route('cablestroncales.index')}}">
+                <i class="material-icons">cable</i>
+                <p>{{ __('Cables Troncales') }}</p>
+              </a>
+            </li>
+            <li class="nav-item{{ $activePage == 'mufas' ? ' active' : '' }}">
+              <a class="nav-link" href="{{ route('mufas.index')}}">
+                <i class="material-icons">cable</i>
+                <p>{{ __('Mufas Troncales') }}</p>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+
+      <!--li class="nav-item{{ $activePage == 'cablestroncales' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('cablestroncales.index')}}">
           <i class="material-icons">cable</i>
             <p>{{ __('Cables Troncales') }}</p>
         </a>
-      </li>
+      </li-->
       <li class="nav-item{{ $activePage == 'equiposmsan' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('equiposmsan.index') }}">
           <i class="material-icons">dns</i>

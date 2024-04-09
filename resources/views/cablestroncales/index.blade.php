@@ -63,7 +63,7 @@
                                                     <td>{{ $cable->tipocable->tipo}}</td>
                                                     <td>{{ $cable->descripcion}}</td>
                                                     <td><a href="{{ route('cable.detallecable.index', $cable->id)}}">Ver Cable</a></td>
-                                                    <td><a href="{{ route('cable.mufas.index', [$cable])}}">Ver Mufas</a></td>
+                                                    <td><a href="{{ route('mufas.index_cable', [$cable])}}">Ver Mufas</a></td>
                                                     <td class="td-actions text-right">
                                                         @if ( $cable->sitio->url == NULL)
                                                             @elseif ( $cable->sitio->url != NULL)

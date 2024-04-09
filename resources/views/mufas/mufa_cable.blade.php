@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'mufas', 'titlePage' => 'Mufas del Cable'])
+@extends('layouts.app', ['activePage' => 'cablestroncales', 'titlePage' => 'Mufas del Cable'])
 @section('content')
     <div class="content">
         <div class="container-fuid">
@@ -8,10 +8,10 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header card-header-primary">
-                                    <h4 class="card-tittle">Mufas</h4>
+                                    <h4 class="card-tittle">Mufas del cable {{$cable->sitio->abreviacion }} {{ $cable->nombre_cable}}</h4>
                                     <div class="row">
                                         <div class="col-7 text-right d-felx">
-                                            <form action="{{route('mufas.index')}}" method="get">
+                                            <form action="{{route('mufas.index_cable', $cable->id)}}" method="get">
                                                 <div class="form-row">
                                                     <div class="col-sm-4 align-self-center" style="text-align: right">
                                                         <input type="text" class="form-control float-right" name="texto" value="{{$texto ?? ''}}" placeholder="Buscar...">
@@ -38,7 +38,7 @@
                                     @endif
                                     <div class="row justify-content-between">
                                         <div class="col-md-3 text-center">
-                                            <form action="{{ route('mufas.index', $cable) }}" method="GET">
+                                            <form action="{{ route('mufas.index_cable', $cable) }}" method="GET">
                                                 <div class="form-group">
                                                     <label for="ordenamiento">Ordenar Distancia OTDR:</label>
                                                     <select class="form-control" id="ordenamiento" name="ordenamiento">
@@ -50,13 +50,13 @@
                                             </form>
                                         </div>
                                         <div class="col-md-6 text-right">
+                                            <a href="{{ route('cable.mufas.create', [$cable])}}" class="btn btn-primary">Añadir Mufa</a>
                                             <a href="{{ route('cablestroncales.index') }}" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>
                                         </div>
                                     </div>
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead class="text-primary">
-                                                <th>Cable</th>
                                                 <th>Distancia OTDR</th>
                                                 <th>Distancia Ruta 5</th>
                                                 <th>Ubicación</th>
@@ -65,11 +65,11 @@
                                                 <th>Atenuación</th>
                                                 <th>Observaciones</th>
                                                 <th>Fecha de creación</th>
+                                                <th class="text-right">Acciones</th>
                                             </thead>
                                             <tbody>
-                                                @foreach ($mufas as $mufa)
+                                                @foreach ($cable->mufas as $mufa)
                                                 <tr>
-                                                    <td><a href="{{ route('cable.detallecable.index', $mufa->cable)}}">{{ $mufa->cable->nombre_cable}}</a></td>
                                                     <td>{{ $mufa->distancia_k}}</td>
                                                     <td>{{ $mufa->ruta5_k}}</td>
                                                     <td>{{ $mufa->ubicacion}}</td>
@@ -82,6 +82,31 @@
                                                     @endif
                                                     <td>{{ $mufa->observaciones}}</td>
                                                     <td>{{ $mufa->fecha}}</td>
+                                                    <td class="td-actions text-right">
+                                                        @if ( $mufa->alerta == NULL)
+                                                            @elseif ( $mufa->alerta != NULL)
+                                                                <a href="{{ route('mufas.index_mufa', $mufa->alerta)}}" class="btn btn-warning"><i class="material-icons">warning</i></a>
+                                                                <form action="{{ route('mufas.destroy_mufa', $mufa)}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Está seguro de eliminar esta alerta?')">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button class="btn btn-warning" type="submit" rel="tooltip">
+                                                                        <i class="material-icons">close</i>
+                                                                    </button>
+                                                                </form>
+                                                            @endif
+                                                        @if ( $mufa->link_gmaps == NULL)
+                                                            @elseif ( $mufa->link_gmaps != NULL)
+                                                                <a href="{{ $mufa->link_gmaps }}" target="_blank" class="btn btn-success"><i class="material-icons">location_on</i></a>
+                                                            @endif
+                                                        <a href="{{ route('cable.mufas.edit', [$cable, $mufa])}}" class="btn btn-primary"><i class="material-icons">edit</i></a>
+                                                        <form action="{{ route('cable.mufas.destroy', [$cable,$mufa])}}" method="post" style="display: inline-block" onsubmit="return confirm('¿Estás seguro?')">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-danger" type="submit" rel="tooltip">
+                                                            <i class="material-icons">close</i>
+                                                        </button>
+                                                        </form>
+                                                    </td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>

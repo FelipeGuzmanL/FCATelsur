@@ -20,16 +20,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label for="item" class="col-sm-2 col-form-label">Item</label>
-                                <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="item" placeholder="Item" value="{{old('item', $mufa->item)}}">
-                                    @if ($errors->has('item'))
-                                        <span class="error text-danger" for="input-item">{{$errors -> first('item')}}</span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label for="distancia_k" class="col-sm-2 col-form-label">Distancia K</label>
+                                <label for="distancia_k" class="col-sm-2 col-form-label">Distancia OTDR</label>
                                 <div class="col-sm-7">
                                     <input type="text" class="form-control" name="distancia_k" placeholder="Distancia en Kilometros" value="{{old('distancia_k', $mufa->distancia_k)}}">
                                     @if ($errors->has('distancia_k'))
@@ -38,7 +29,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label for="ruta5_k" class="col-sm-2 col-form-label">Ruta 5 K</label>
+                                <label for="ruta5_k" class="col-sm-2 col-form-label">Distancia Ruta 5</label>
                                 <div class="col-sm-7">
                                     <input type="text" class="form-control" name="ruta5_k" placeholder="Distancia en Kilometros Ruta 5" value="{{old('ruta5_k', $mufa->ruta5_k)}}">
                                     @if ($errors->has('ruta5_k'))
@@ -74,9 +65,12 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label for="fecha" class="col-sm-2 col-form-label">Fecha de creación</label>
+                                <label for="atenuacion" class="col-sm-2 col-form-label">Atenuación (DB)</label>
                                 <div class="col-sm-7">
-                                    <input type="date" class="form-control" name="fecha" value="{{old('fecha', $mufa->fecha)}}">
+                                    <input type="text" class="form-control" name="atenuacion" placeholder="Atenuación (DB)" value="{{old('atenuacion', $mufa->atenuacion)}}">
+                                    @if ($errors->has('atenuacion'))
+                                        <span class="error text-danger" for="input-atenuacion">{{$errors -> first('atenuacion')}}</span>
+                                    @endif
                                 </div>
                             </div>
                             <div class="row">
@@ -95,6 +89,12 @@
                                     @if ($errors->has('link_gmaps'))
                                         <span class="error text-danger" for="input-link_gmaps">{{$errors -> first('link_gmaps')}}</span>
                                     @endif
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label for="fecha" class="col-sm-2 col-form-label">Fecha de creación</label>
+                                <div class="col-sm-7">
+                                    <input type="date" class="form-control" name="fecha" value="{{old('fecha', $mufa->fecha)}}">
                                 </div>
                             </div>
                         <div class="card-footer ml-auto mr-auto">

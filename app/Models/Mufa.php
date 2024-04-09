@@ -14,7 +14,7 @@ class Mufa extends Model
 
     protected $fillable = [
         'id_cable',
-        'item',
+        'atenuacion',
         'distancia_k',
         'ruta5_k',
         'ubicacion',

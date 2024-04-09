@@ -29,6 +29,7 @@ class DashboardController extends Controller
         }
         $alertas = Alerta::where('id_detallecable','!=',NULL)->orderBy('id_gravedad','desc')->paginate(5);
         $alertasolt = Alerta::whereNotNull('id_olt')->get();
-        return view('dashboard', compact('alertas','alertastodas','alertasolt','contador_estados','porcentajes'));
+        $alertasMufas = Alerta::whereNotNull('id_mufa')->get();
+        return view('dashboard', compact('alertas','alertastodas','alertasolt','alertasMufas','contador_estados','porcentajes'));
     }
 }
